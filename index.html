@@ -2231,23 +2231,23 @@ async function placeOrder() {
 
   // build WhatsApp message
   const msg = [
-    `🎇 *NEW ORDER — Shri Gurudevdatta Fataka Traders*`,
+    `*NEW ORDER — Shri Gurudevdatta Fataka Traders*`,
     ``,
-    `📋 *Order #${orderId}*`,
+    `*Order #${orderId}*`,
     `📅 ${dateStr} at ${timeStr}`,
     ``,
-    `👤 *Customer Details:*`,
+    `*Customer Details:*`,
     `Name: ${name}`,
     `Phone: ${phone}`,
     `Address: ${address}`,
     `Pincode: ${pin}`,
     ``,
-    `🛒 *Items Ordered:*`,
+    `*Items Ordered:*`,
     ...itemLines,
     ``,
-    `💰 *Total Amount: ${fmt(sum)}*`,
+    `*Total Amount: ${fmt(sum)}*`,
     ``,
-    `⚠️ Please confirm this order with the customer.`,
+    `Note: Please confirm this order with the customer.`,
   ].join('\n');
 
   // save to Google Sheets (fire-and-forget — order still goes via WhatsApp even if this fails)
