@@ -1,0 +1,2381 @@
+<title>Shri Gurudevdatta Fataka Traders</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Poppins:wght@300;400;500;600;700&display=swap">
+
+<style>
+/* ── RESET & TOKENS ─────────────────────────────────── */
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+
+:root {
+  --dk:    #0a0a1c;
+  --dk2:   #13133a;
+  --gold:  #FFD700;
+  --org:   #FF7A1A;
+  --red:   #e91e63;
+  --cream: #fffaf2;
+  --text:  #1a1a2e;
+  --muted: #6b6b8a;
+  --bdr:   #e0e0e0;
+  --bg:    #f5f5f5;
+  --white: #ffffff;
+  --badge: #e91e63;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+  line-height: 1.6;
+  overflow-x: hidden;
+  padding-inline: 0;
+}
+
+img { max-width: 100%; }
+
+/* ── TOP BAR ─────────────────────────────────────────── */
+.topbar {
+  background: var(--dk);
+  color: rgba(255,255,255,0.7);
+  font-size: 0.72rem;
+  text-align: center;
+  padding: 0.4rem 1rem;
+  letter-spacing: 0.06em;
+}
+.topbar strong { color: var(--gold); }
+
+/* ── HEADER ──────────────────────────────────────────── */
+header {
+  position: sticky;
+  top: env(safe-area-inset-top,0px);
+  z-index: 200;
+  background: var(--dk);
+  border-bottom: 2px solid var(--gold);
+  padding: 0.75rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.logo {
+  font-family: 'Cinzel', serif;
+  font-size: 1.1rem;
+  font-weight: 900;
+  color: var(--gold);
+  line-height: 1.2;
+  white-space: nowrap;
+}
+.logo small {
+  display: block;
+  font-size: 0.6rem;
+  font-weight: 400;
+  color: rgba(255,215,0,0.6);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.header-nav {
+  display: flex;
+  gap: 1.5rem;
+  align-items: center;
+  flex: 1;
+  justify-content: center;
+}
+.header-nav a {
+  color: rgba(255,255,255,0.75);
+  text-decoration: none;
+  font-size: 0.8rem;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  transition: color 0.2s;
+}
+.header-nav a:hover { color: var(--gold); }
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.cart-btn {
+  position: relative;
+  background: var(--gold);
+  color: var(--dk);
+  border: none;
+  border-radius: 4px;
+  padding: 0.5rem 1rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: 'Poppins', sans-serif;
+  transition: background 0.2s;
+  white-space: nowrap;
+}
+.cart-btn:hover { background: var(--org); color: #fff; }
+
+.cart-count {
+  background: var(--red);
+  color: white;
+  border-radius: 50%;
+  width: 18px;
+  height: 18px;
+  font-size: 0.65rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+
+/* ── HERO BANNER ─────────────────────────────────────── */
+.hero {
+  position: relative;
+  background: var(--dk);
+  overflow: hidden;
+  padding: 3rem 1.5rem;
+  text-align: center;
+  min-height: 280px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+#fw-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.hero-tag {
+  font-size: 0.7rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--org);
+  font-weight: 600;
+  margin-bottom: 0.6rem;
+  position: relative;
+}
+.hero h1 {
+  font-family: 'Cinzel', serif;
+  font-size: clamp(1.6rem, 4vw, 3rem);
+  font-weight: 900;
+  color: var(--gold);
+  line-height: 1.1;
+  position: relative;
+  text-wrap: balance;
+  margin-bottom: 0.4rem;
+}
+.hero p {
+  color: rgba(255,255,255,0.65);
+  font-size: 0.9rem;
+  position: relative;
+  max-width: 500px;
+}
+.hero-badges {
+  display: flex;
+  gap: 0.6rem;
+  margin-top: 1.2rem;
+  flex-wrap: wrap;
+  justify-content: center;
+  position: relative;
+}
+.hero-badge {
+  background: rgba(255,215,0,0.12);
+  border: 1px solid rgba(255,215,0,0.3);
+  border-radius: 20px;
+  padding: 0.3rem 0.9rem;
+  font-size: 0.72rem;
+  color: var(--gold);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+/* ── SHOP LAYOUT ─────────────────────────────────────── */
+.shop-wrap {
+  max-width: 1240px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+  display: grid;
+  grid-template-columns: 230px 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+/* ── SIDEBAR ─────────────────────────────────────────── */
+.sidebar {
+  background: var(--white);
+  border: 1px solid var(--bdr);
+  border-radius: 6px;
+  overflow: hidden;
+  position: sticky;
+  top: calc(env(safe-area-inset-top,0px) + 60px);
+}
+
+.sidebar-title {
+  background: var(--dk);
+  color: var(--gold);
+  font-family: 'Cinzel', serif;
+  font-size: 0.9rem;
+  font-weight: 700;
+  padding: 0.9rem 1.2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.cat-list {
+  list-style: none;
+}
+.cat-item {
+  border-bottom: 1px solid #f0f0f0;
+}
+.cat-item:last-child { border-bottom: none; }
+
+.cat-btn {
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 0.65rem 1.2rem;
+  text-align: left;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.82rem;
+  color: var(--muted);
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: background 0.15s, color 0.15s;
+}
+.cat-btn:hover { background: #fafafa; color: var(--text); }
+.cat-btn.active {
+  background: #fff8e1;
+  color: var(--dk);
+  font-weight: 600;
+  border-left: 3px solid var(--gold);
+}
+.cat-count {
+  background: var(--bg);
+  border-radius: 10px;
+  padding: 0.1rem 0.5rem;
+  font-size: 0.7rem;
+  color: var(--muted);
+}
+.cat-btn.active .cat-count {
+  background: var(--gold);
+  color: var(--dk);
+}
+
+/* Brand filter */
+.brand-filter {
+  padding: 1rem 1.2rem;
+  border-top: 2px solid var(--bdr);
+}
+.brand-filter-title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--dk);
+  margin-bottom: 0.7rem;
+}
+.brand-check {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.45rem;
+  cursor: pointer;
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+.brand-check input { accent-color: var(--gold); cursor: pointer; }
+.brand-dot {
+  width: 10px; height: 10px; border-radius: 50%;
+  display: inline-block; flex-shrink: 0;
+}
+
+/* ── MAIN SHOP AREA ──────────────────────────────────── */
+.shop-main {}
+
+.shop-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.2rem;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+.result-count {
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+.result-count strong { color: var(--text); }
+
+.sort-select {
+  border: 1px solid var(--bdr);
+  border-radius: 4px;
+  padding: 0.4rem 0.8rem;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.82rem;
+  color: var(--text);
+  background: var(--white);
+  cursor: pointer;
+}
+
+/* ── PRODUCT GRID ────────────────────────────────────── */
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1.2rem;
+}
+
+.product-card {
+  background: var(--white);
+  border: 1px solid var(--bdr);
+  border-radius: 6px;
+  overflow: hidden;
+  transition: box-shadow 0.2s, transform 0.2s;
+  cursor: default;
+}
+.product-card:hover {
+  box-shadow: 0 6px 24px rgba(0,0,0,0.12);
+  transform: translateY(-2px);
+}
+
+/* Product image area */
+.prod-img {
+  position: relative;
+  height: 180px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  overflow: hidden;
+}
+
+.prod-brand-label {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  padding: 0.3rem 0.6rem;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: white;
+  text-align: center;
+}
+
+.prod-icon {
+  font-size: 3rem;
+  line-height: 1;
+  filter: drop-shadow(0 2px 8px rgba(0,0,0,0.3));
+  margin-top: 1.5rem;
+}
+
+.prod-name-overlay {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: white;
+  text-align: center;
+  padding: 0 0.6rem;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.5);
+  line-height: 1.3;
+}
+
+/* Badges */
+.badge-discount {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  background: var(--badge);
+  color: white;
+  border-radius: 50%;
+  width: 42px;
+  height: 42px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.68rem;
+  font-weight: 700;
+  line-height: 1.1;
+  text-align: center;
+  z-index: 2;
+}
+
+.badge-oos {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 3;
+}
+.badge-oos span {
+  background: rgba(0,0,0,0.8);
+  color: white;
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 0.4rem 1rem;
+  border-radius: 2px;
+  letter-spacing: 0.05em;
+}
+
+.wishlist-btn {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  background: white;
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  cursor: pointer;
+  z-index: 2;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  transition: transform 0.2s;
+}
+.wishlist-btn:hover { transform: scale(1.15); }
+.wishlist-btn.liked { color: var(--red); }
+
+/* Product info */
+.prod-info {
+  padding: 0.8rem;
+}
+
+.prod-company {
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.2rem;
+}
+
+.prod-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.3;
+  margin-bottom: 0.4rem;
+  min-height: 2.2em;
+}
+
+.prod-stars {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  margin-bottom: 0.5rem;
+}
+.stars {
+  color: #f5a623;
+  font-size: 0.8rem;
+  letter-spacing: -0.05em;
+}
+.review-count {
+  font-size: 0.7rem;
+  color: var(--muted);
+}
+
+.prod-price {
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+  margin-bottom: 0.7rem;
+  flex-wrap: wrap;
+}
+.price-orig {
+  font-size: 0.78rem;
+  color: var(--muted);
+  text-decoration: line-through;
+  font-variant-numeric: tabular-nums;
+}
+.price-sale {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--red);
+  font-variant-numeric: tabular-nums;
+}
+
+.add-to-cart {
+  width: 100%;
+  background: var(--dk);
+  color: var(--gold);
+  border: none;
+  border-radius: 4px;
+  padding: 0.55rem 0;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  letter-spacing: 0.04em;
+  transition: background 0.2s, color 0.2s;
+}
+.add-to-cart:hover { background: var(--gold); color: var(--dk); }
+.card-atc-row {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.card-qty-ctrl {
+  display: flex;
+  align-items: center;
+  background: #f5f5f5;
+  border-radius: 30px;
+  padding: 2px;
+  gap: 2px;
+  flex-shrink: 0;
+  box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
+}
+.card-qty-btn {
+  background: #fff;
+  border: none;
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--dk);
+  cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 0.2s, color 0.2s, transform 0.1s;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.12);
+  line-height: 1;
+}
+.card-qty-btn:hover { background: var(--gold); color: var(--dk); transform: scale(1.1); }
+.card-qty-btn:active { transform: scale(0.95); }
+.card-qty-num {
+  width: 26px;
+  text-align: center;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--dk);
+  font-variant-numeric: tabular-nums;
+}
+.card-atc-row .add-to-cart {
+  flex: 1;
+  border-radius: 30px;
+  font-size: 0.76rem;
+  padding: 0.45rem 0.5rem;
+}
+
+.add-to-cart:disabled {
+  background: #ccc;
+  color: #999;
+  cursor: not-allowed;
+}
+.add-to-cart.added { background: #2e7d32; color: white; }
+
+/* No results */
+.no-results {
+  grid-column: 1/-1;
+  text-align: center;
+  padding: 3rem;
+  color: var(--muted);
+}
+.no-results .emoji { font-size: 3rem; display: block; margin-bottom: 1rem; }
+
+/* ── TRUST BAND ──────────────────────────────────────── */
+.trust-band {
+  background: var(--dk2);
+  border-top: 1px solid rgba(255,215,0,0.15);
+  border-bottom: 1px solid rgba(255,215,0,0.15);
+  padding: 1.5rem 1.5rem;
+}
+.trust-inner {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 1.5rem;
+  text-align: center;
+}
+.trust-item { display: flex; flex-direction: column; align-items: center; gap: 0.3rem; }
+.trust-icon { font-size: 1.8rem; }
+.trust-label { font-size: 0.72rem; font-weight: 600; color: rgba(255,255,255,0.85); }
+.trust-sub { font-size: 0.66rem; color: rgba(255,255,255,0.45); }
+
+/* ── BRANDS STRIP ────────────────────────────────────── */
+.brands-section {
+  background: var(--white);
+  border-bottom: 1px solid var(--bdr);
+  padding: 1.5rem 1.5rem;
+}
+.brands-inner {
+  max-width: 1000px;
+  margin: 0 auto;
+}
+.brands-title {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--muted);
+  text-align: center;
+  margin-bottom: 1rem;
+}
+.brands-row {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.brand-pill {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--bg);
+  border: 1px solid var(--bdr);
+  border-radius: 30px;
+  padding: 0.4rem 1rem;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: border-color 0.2s;
+}
+.brand-pill:hover { border-color: var(--gold); }
+.brand-pill.active { border-color: var(--gold); background: #fff8e1; }
+
+/* ── CONTACT ─────────────────────────────────────────── */
+.contact-section {
+  background: var(--dk);
+  padding: 3rem 1.5rem;
+}
+.contact-inner {
+  max-width: 900px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: start;
+}
+.contact-head {
+  font-family: 'Cinzel', serif;
+  font-size: 1.4rem;
+  font-weight: 900;
+  color: var(--gold);
+  margin-bottom: 1.5rem;
+}
+.contact-row {
+  display: flex;
+  gap: 0.8rem;
+  align-items: flex-start;
+  margin-bottom: 1.2rem;
+}
+.ci {
+  width: 36px; height: 36px; min-width: 36px;
+  background: rgba(255,215,0,0.1);
+  border: 1px solid rgba(255,215,0,0.2);
+  border-radius: 4px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem;
+}
+.contact-row h4 {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--org);
+  font-weight: 600;
+  margin-bottom: 0.15rem;
+}
+.contact-row p, .contact-row a {
+  font-size: 0.85rem;
+  color: rgba(255,255,255,0.8);
+  text-decoration: none;
+}
+.contact-row a:hover { color: var(--gold); }
+.hours-table { font-size: 0.8rem; }
+.hours-row {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  padding: 0.25rem 0;
+  border-bottom: 1px solid rgba(255,255,255,0.06);
+  color: rgba(255,255,255,0.7);
+}
+.hours-row .day { font-weight: 500; color: rgba(255,255,255,0.9); }
+.hours-row .time { color: var(--gold); font-variant-numeric: tabular-nums; }
+
+.map-box {
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+  aspect-ratio: 4/3;
+  border: 2px solid rgba(255,215,0,0.2);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+}
+.map-box iframe {
+  width: 100%; height: 100%;
+  border: none; display: block;
+  filter: grayscale(20%);
+}
+.map-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.18);
+  pointer-events: none;
+}
+.map-open-btn {
+  pointer-events: all;
+  background: var(--gold);
+  color: var(--dk);
+  font-weight: 800;
+  font-size: 0.88rem;
+  padding: 0.7rem 1.6rem;
+  border-radius: 30px;
+  text-decoration: none;
+  letter-spacing: 0.03em;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.35);
+  display: flex; align-items: center; gap: 0.5rem;
+  transition: background 0.2s, transform 0.15s;
+}
+.map-open-btn:hover { background: var(--org); color: #fff; transform: scale(1.04); }
+
+/* ── FOOTER ──────────────────────────────────────────── */
+footer {
+  background: #04040e;
+  border-top: 1px solid rgba(255,215,0,0.1);
+  padding: 1.5rem 1.5rem;
+  text-align: center;
+}
+.footer-brand {
+  font-family: 'Cinzel', serif;
+  font-size: 1rem;
+  color: var(--gold);
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+}
+.footer-note {
+  font-size: 0.7rem;
+  color: rgba(255,255,255,0.3);
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* ── CART DRAWER ─────────────────────────────────────── */
+.cart-drawer {
+  position: fixed;
+  top: 0; right: 0; bottom: 0;
+  width: 320px;
+  background: var(--white);
+  z-index: 500;
+  box-shadow: -4px 0 24px rgba(0,0,0,0.2);
+  transform: translateX(100%);
+  transition: transform 0.3s;
+  display: flex;
+  flex-direction: column;
+}
+.cart-drawer.open { transform: none; }
+.cart-header {
+  background: var(--dk);
+  color: var(--gold);
+  padding: 1rem 1.2rem;
+  font-family: 'Cinzel', serif;
+  font-weight: 700;
+  font-size: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.cart-close {
+  background: none; border: none;
+  color: rgba(255,215,0,0.7);
+  font-size: 1.4rem;
+  cursor: pointer;
+}
+.cart-items { flex: 1; overflow-y: auto; padding: 1rem; }
+.cart-empty { text-align: center; color: var(--muted); padding: 2rem; font-size: 0.9rem; }
+.cart-item {
+  display: flex; gap: 0.8rem; align-items: center;
+  padding: 0.8rem 0; border-bottom: 1px solid var(--bdr);
+}
+.cart-item-icon {
+  width: 44px; height: 44px;
+  border-radius: 4px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.5rem; flex-shrink: 0;
+}
+.cart-item-name { font-size: 0.82rem; font-weight: 600; color: var(--text); }
+.cart-item-company { font-size: 0.7rem; color: var(--muted); }
+.cart-item-price { font-size: 0.9rem; font-weight: 700; color: var(--red); margin-top: 0.1rem; font-variant-numeric: tabular-nums; }
+.cart-item-qty {
+  display: flex; align-items: center; gap: 0.4rem;
+  margin-top: 0.3rem;
+}
+.qty-btn {
+  width: 26px; height: 26px;
+  border: none;
+  border-radius: 50%;
+  background: #fff;
+  color: var(--dk);
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Poppins', sans-serif;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.18);
+  transition: background 0.15s, transform 0.1s;
+}
+.qty-btn:hover { background: var(--gold); transform: scale(1.12); }
+.qty-btn:active { transform: scale(0.92); }
+.cart-item-qty { background: #f0f0f0; border-radius: 30px; padding: 2px 6px; display: inline-flex; align-items: center; gap: 4px; }
+.qty-val { font-size: 0.82rem; font-weight: 700; min-width: 18px; text-align: center; font-variant-numeric: tabular-nums; color: var(--dk); }
+.cart-footer {
+  padding: 1rem;
+  border-top: 2px solid var(--bdr);
+  background: #fafafa;
+}
+.cart-breakdown {
+  margin-bottom: 0.6rem;
+  padding-bottom: 0.6rem;
+  border-bottom: 1px dashed var(--bdr);
+}
+.cart-breakdown-row {
+  display: flex; justify-content: space-between; align-items: baseline;
+  font-size: 0.78rem; color: #555;
+  padding: 0.18rem 0;
+}
+.cart-breakdown-row span:last-child { font-weight: 600; color: var(--dk); font-variant-numeric: tabular-nums; }
+.cart-total {
+  display: flex; justify-content: space-between;
+  font-weight: 700; font-size: 0.95rem;
+  margin-bottom: 0.8rem;
+}
+.cart-total span:last-child { color: var(--red); font-variant-numeric: tabular-nums; }
+.checkout-btn {
+  width: 100%;
+  background: var(--dk);
+  color: var(--gold);
+  border: none;
+  border-radius: 4px;
+  padding: 0.75rem;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: 0.05em;
+  transition: background 0.2s;
+}
+.checkout-btn:hover { background: var(--gold); color: var(--dk); }
+
+.overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.5);
+  z-index: 499;
+  display: none;
+}
+.overlay.show { display: block; }
+
+/* ── MOBILE ──────────────────────────────────────────── */
+@media (max-width: 760px) {
+
+  /* Header */
+  header { padding: 0.6rem 1rem; gap: 0.6rem; }
+  .header-nav { display: none; }
+  .logo { font-size: 0.78rem; }
+  .logo small { font-size: 0.52rem; }
+  .cart-btn { padding: 0.45rem 0.7rem; font-size: 0.75rem; }
+
+  /* Hero */
+  .hero { padding: 2rem 1rem; min-height: 220px; }
+
+  /* Countdown */
+  .countdown-boxes { gap: 0.35rem; }
+  .cd-num { font-size: 1.4rem; padding: 0.45rem 0.65rem; min-width: 52px; }
+  .cd-label { font-size: 0.52rem; }
+  .cd-sep { font-size: 1.3rem; }
+
+  /* Brands */
+  .brands-row { gap: 0.5rem; }
+  .brand-pill { font-size: 0.75rem; padding: 0.35rem 0.75rem; }
+
+  /* Shop layout: sidebar on top as horizontal scroll, products below */
+  .shop-wrap { grid-template-columns: 1fr; gap: 1rem; padding: 1rem; }
+
+  .sidebar {
+    position: static;
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto;
+    gap: 0;
+    border-radius: 6px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .sidebar::-webkit-scrollbar { display: none; }
+
+  .sidebar-title { display: none; }
+
+  .cat-list {
+    display: flex;
+    flex-direction: row;
+    flex-shrink: 0;
+  }
+  .cat-item { border-bottom: none; border-right: 1px solid #f0f0f0; flex-shrink: 0; }
+  .cat-item:last-child { border-right: none; }
+  .cat-btn {
+    white-space: nowrap;
+    padding: 0.6rem 0.9rem;
+    font-size: 0.76rem;
+  }
+  .cat-btn.active { border-left: none; border-bottom: 3px solid var(--gold); }
+
+  .brand-filter { display: none; }
+
+  /* Product grid: 2 columns on phone */
+  .products-grid { grid-template-columns: repeat(2, 1fr); gap: 0.75rem; }
+  .prod-img { height: 140px; }
+  .prod-icon { font-size: 2.2rem; }
+  .prod-info { padding: 0.6rem; }
+  .prod-title { font-size: 0.78rem; min-height: auto; }
+  .prod-stars { display: none; }
+  .price-sale { font-size: 0.95rem; }
+  .add-to-cart { font-size: 0.72rem; padding: 0.5rem 0; }
+
+  /* Cart drawer: full width on mobile */
+  .cart-drawer { width: 100%; }
+
+  /* Trust band: 2 columns */
+  .trust-inner { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+
+  /* Contact */
+  .contact-inner { grid-template-columns: 1fr; gap: 2rem; }
+  .contact-section { padding: 2rem 1rem; }
+
+  /* FABs: shift left a bit so they don't overlap */
+  .wa-fab { bottom: 5rem; right: 1rem; font-size: 0.8rem; padding: 0.55rem 0.9rem 0.55rem 0.7rem; }
+  .admin-fab { bottom: 1rem; right: 1rem; }
+
+  /* Order modal: full screen */
+  .order-modal-box {
+    width: 100%;
+    max-width: 100%;
+    max-height: 100dvh;
+    border-radius: 0;
+    margin: 0;
+    overflow-y: auto;
+  }
+  .om-overlay { align-items: flex-end; padding: 0; }
+
+  /* Success overlay */
+  .suc-box { padding: 2rem 1.2rem; margin: 1rem; }
+
+  /* Admin panel */
+  .admin-panel { width: 100%; left: 0; right: 0; border-radius: 0; }
+  .admin-table-wrap { font-size: 0.72rem; }
+}
+
+/* ── COUNTDOWN TIMER ─────────────────────────────────── */
+.countdown-wrap {
+  position: relative;
+  margin-top: 1.6rem;
+  text-align: center;
+}
+.countdown-top-label {
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--org);
+  font-weight: 700;
+  margin-bottom: 0.7rem;
+}
+.countdown-boxes {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+.cd-unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+}
+.cd-num {
+  background: rgba(255,215,0,0.1);
+  border: 1.5px solid rgba(255,215,0,0.4);
+  border-radius: 6px;
+  padding: 0.6rem 1.1rem;
+  font-family: 'Cinzel', serif;
+  font-size: 2rem;
+  font-weight: 900;
+  color: var(--gold);
+  min-width: 72px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  line-height: 1;
+  letter-spacing: 0.05em;
+  text-shadow: 0 0 20px rgba(255,215,0,0.5);
+}
+.cd-label {
+  font-size: 0.6rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: rgba(255,255,255,0.5);
+  font-weight: 600;
+}
+.cd-sep {
+  font-size: 1.8rem;
+  color: rgba(255,215,0,0.4);
+  font-weight: 900;
+  margin-bottom: 1.2rem;
+  font-family: 'Cinzel', serif;
+}
+
+/* ── WHATSAPP BUTTON ─────────────────────────────────── */
+.wa-fab {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 300;
+  background: #25D366;
+  color: white;
+  text-decoration: none;
+  border-radius: 50px;
+  padding: 0.7rem 1.2rem 0.7rem 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.82rem;
+  font-weight: 700;
+  box-shadow: 0 4px 20px rgba(37,211,102,0.45);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.wa-fab:hover {
+  transform: translateY(-2px) scale(1.04);
+  box-shadow: 0 6px 28px rgba(37,211,102,0.55);
+}
+.wa-fab svg { width: 22px; height: 22px; flex-shrink: 0; }
+.wa-pulse {
+  position: absolute;
+  inset: -4px;
+  border-radius: 50px;
+  background: #25D366;
+  opacity: 0.25;
+  animation: wa-pulse 2s ease-out infinite;
+}
+@keyframes wa-pulse {
+  0% { transform: scale(1); opacity: 0.25; }
+  70% { transform: scale(1.18); opacity: 0; }
+  100% { transform: scale(1.18); opacity: 0; }
+}
+
+/* ── FLOATING SPARKLES ───────────────────────────────── */
+.sparkle-layer {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 10;
+  overflow: hidden;
+}
+.sp {
+  position: fixed;
+  font-size: 10px;
+  opacity: 0;
+  animation: sp-float linear forwards;
+  will-change: transform, opacity;
+}
+@keyframes sp-float {
+  0%   { opacity: 0;   transform: translateY(0)   rotate(0deg)   scale(0.5); }
+  15%  { opacity: 0.8; }
+  85%  { opacity: 0.4; }
+  100% { opacity: 0;   transform: translateY(-90px) rotate(180deg) scale(0.2); }
+}
+
+/* ── RANGOLI DIVIDER ─────────────────────────────────── */
+.rangoli-div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 1.2rem 1.5rem;
+  background: var(--dk);
+  border-top: 1px solid rgba(255,215,0,0.1);
+  border-bottom: 1px solid rgba(255,215,0,0.1);
+  overflow: hidden;
+}
+.rangoli-svg {
+  flex-shrink: 0;
+}
+.rangoli-center {
+  font-size: 1.5rem;
+  line-height: 1;
+  animation: diya-glow 2.5s ease-in-out infinite alternate;
+}
+@keyframes diya-glow {
+  from { filter: drop-shadow(0 0 4px rgba(255,180,0,0.6)); }
+  to   { filter: drop-shadow(0 0 12px rgba(255,120,0,0.9)); }
+}
+.rangoli-line {
+  flex: 1;
+  height: 1px;
+  max-width: 200px;
+  background: linear-gradient(90deg, transparent, rgba(255,215,0,0.5), transparent);
+  position: relative;
+}
+.rangoli-line::before {
+  content: '✦ ✧ ✦ ✧ ✦';
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.55rem;
+  color: rgba(255,215,0,0.4);
+  letter-spacing: 0.3em;
+  white-space: nowrap;
+}
+.rangoli-diamond {
+  width: 8px; height: 8px;
+  background: var(--gold);
+  transform: rotate(45deg);
+  opacity: 0.6;
+  flex-shrink: 0;
+}
+
+/* ── ORDER MODAL ─────────────────────────────────────── */
+.modal-overlay {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.65);
+  z-index: 600;
+  display: flex; align-items: center; justify-content: center;
+  padding: 1rem;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.22s;
+}
+.modal-overlay.show { opacity: 1; pointer-events: all; }
+.modal {
+  background: white;
+  border-radius: 12px;
+  width: 100%; max-width: 450px;
+  max-height: 92vh; overflow-y: auto;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.45);
+  transform: translateY(24px);
+  transition: transform 0.25s;
+}
+.modal-overlay.show .modal { transform: none; }
+.modal-hd {
+  background: var(--dk);
+  color: var(--gold);
+  padding: 1rem 1.2rem;
+  font-family: 'Cinzel', serif;
+  font-weight: 700; font-size: 1rem;
+  display: flex; justify-content: space-between; align-items: center;
+  border-radius: 12px 12px 0 0;
+  position: sticky; top: 0;
+}
+.modal-x { background: none; border: none; color: rgba(255,215,0,0.7); font-size: 1.4rem; cursor: pointer; }
+.modal-body { padding: 1.2rem; }
+.fg { margin-bottom: 1rem; }
+.fg label { display: block; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text); margin-bottom: 0.35rem; }
+.fg label .req { color: var(--red); }
+.fg input, .fg textarea {
+  width: 100%; border: 1.5px solid var(--bdr); border-radius: 6px;
+  padding: 0.65rem 0.85rem; font-family: 'Poppins', sans-serif;
+  font-size: 0.88rem; color: var(--text); background: #fafafa;
+  transition: border-color 0.18s; resize: none;
+}
+.fg input:focus, .fg textarea:focus { outline: none; border-color: var(--gold); background: white; }
+.fg input.err { border-color: var(--red); }
+.order-summary-box {
+  background: #fff8e1; border: 1px solid rgba(255,215,0,0.4);
+  border-radius: 6px; padding: 0.8rem 1rem; margin: 0.3rem 0 1rem;
+}
+.order-summary-box h4 { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.1em; color: var(--muted); margin-bottom: 0.5rem; }
+.osm-row { display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text); padding: 0.18rem 0; }
+.osm-total { display: flex; justify-content: space-between; font-size: 0.92rem; font-weight: 700; color: var(--red); padding-top: 0.5rem; border-top: 1px solid rgba(255,215,0,0.35); margin-top: 0.3rem; font-variant-numeric: tabular-nums; }
+.modal-ft { padding: 1rem 1.2rem; border-top: 1px solid var(--bdr); display: flex; gap: 0.7rem; }
+.btn-cancel { flex: 1; background: var(--bg); border: 1px solid var(--bdr); border-radius: 6px; padding: 0.7rem; font-family: 'Poppins', sans-serif; font-size: 0.85rem; font-weight: 600; cursor: pointer; color: var(--muted); }
+.btn-place { flex: 2; background: #25D366; color: white; border: none; border-radius: 6px; padding: 0.7rem; font-family: 'Poppins', sans-serif; font-size: 0.85rem; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.4rem; transition: background 0.2s; }
+.btn-place:hover { background: #1da851; }
+.btn-place:disabled { background: #ccc; cursor: not-allowed; }
+
+/* ── SUCCESS OVERLAY ─────────────────────────────────── */
+.success-overlay {
+  position: fixed; inset: 0;
+  background: rgba(10,10,28,0.93);
+  z-index: 700;
+  display: flex; align-items: center; justify-content: center;
+  padding: 1.5rem;
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.3s;
+}
+.success-overlay.show { opacity: 1; pointer-events: all; }
+.success-card { background: white; border-radius: 16px; padding: 2.5rem 2rem; text-align: center; max-width: 380px; width: 100%; box-shadow: 0 24px 64px rgba(0,0,0,0.55); }
+.suc-emoji { font-size: 3.5rem; display: block; margin-bottom: 0.8rem; animation: pop 0.4s ease-out; }
+@keyframes pop { 0% { transform: scale(0); } 80% { transform: scale(1.12); } 100% { transform: scale(1); } }
+.success-card h2 { font-family: 'Cinzel', serif; font-size: 1.5rem; color: var(--dk); margin-bottom: 0.4rem; }
+.success-card .suc-sub { color: var(--muted); font-size: 0.85rem; margin-bottom: 1rem; }
+.order-num-badge { background: linear-gradient(135deg, var(--dk), var(--dk2)); color: var(--gold); font-family: 'Cinzel', serif; font-size: 1.1rem; font-weight: 900; padding: 0.75rem 1.5rem; border-radius: 8px; display: inline-block; margin: 0.3rem 0 0.8rem; letter-spacing: 0.1em; border: 1px solid rgba(255,215,0,0.3); }
+.suc-note { font-size: 0.76rem; color: #999; margin-bottom: 1.5rem; line-height: 1.5; }
+.btn-continue { width: 100%; background: var(--dk); color: var(--gold); border: none; border-radius: 8px; padding: 0.85rem; font-family: 'Poppins', sans-serif; font-size: 0.88rem; font-weight: 700; cursor: pointer; transition: background 0.2s; margin-top: 0.3rem; }
+.btn-continue:hover { background: var(--gold); color: var(--dk); }
+
+/* ── ADMIN PANEL ─────────────────────────────────────── */
+.admin-fab { position: fixed; bottom: 1.5rem; left: 1.5rem; z-index: 300; background: var(--dk); color: var(--gold); border: 1.5px solid rgba(255,215,0,0.35); border-radius: 50px; padding: 0.6rem 1.1rem; font-family: 'Poppins', sans-serif; font-size: 0.8rem; font-weight: 700; cursor: pointer; display: none; align-items: center; gap: 0.4rem; box-shadow: 0 4px 20px rgba(0,0,0,0.35); transition: transform 0.2s; }
+.admin-fab.visible { display: flex; }
+.admin-fab:hover { transform: translateY(-2px); }
+.admin-panel { position: fixed; inset: 0; background: #f0f0f2; z-index: 800; display: flex; flex-direction: column; transform: translateX(-100%); transition: transform 0.3s; overflow: hidden; }
+.admin-panel.open { transform: none; }
+.admin-hd { background: var(--dk); color: var(--gold); padding: 1rem 1.5rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-shrink: 0; }
+.admin-hd h2 { font-family: 'Cinzel', serif; font-size: 1rem; font-weight: 900; }
+.admin-hd-r { display: flex; gap: 0.7rem; align-items: center; }
+.admin-export { background: #2e7d32; color: white; border: none; border-radius: 4px; padding: 0.45rem 0.9rem; font-family: 'Poppins', sans-serif; font-size: 0.78rem; font-weight: 700; cursor: pointer; }
+.admin-export:hover { background: #1b5e20; }
+.admin-close { background: none; border: none; color: rgba(255,215,0,0.7); font-size: 1.3rem; cursor: pointer; }
+.admin-body { flex: 1; overflow-y: auto; padding: 1.5rem; }
+.admin-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+.admin-stat { background: white; border: 1px solid var(--bdr); border-radius: 8px; padding: 1rem; text-align: center; }
+.astat-num { font-family: 'Cinzel', serif; font-size: 1.8rem; font-weight: 900; color: var(--dk); line-height: 1; font-variant-numeric: tabular-nums; }
+.astat-lbl { font-size: 0.7rem; color: var(--muted); margin-top: 0.3rem; text-transform: uppercase; letter-spacing: 0.08em; }
+.admin-note { background: #fff3cd; border: 1px solid #ffc107; border-radius: 6px; padding: 0.75rem 1rem; font-size: 0.78rem; color: #664d03; margin-bottom: 1rem; line-height: 1.5; }
+.admin-tbl-wrap { background: white; border: 1px solid var(--bdr); border-radius: 8px; overflow: auto; }
+.admin-tbl { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+.admin-tbl th { background: var(--dk); color: var(--gold); padding: 0.65rem 0.9rem; text-align: left; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.07em; white-space: nowrap; }
+.admin-tbl td { padding: 0.65rem 0.9rem; border-bottom: 1px solid var(--bdr); vertical-align: top; color: var(--text); }
+.admin-tbl tr:last-child td { border-bottom: none; }
+.admin-tbl tr:hover td { background: #fafafa; }
+.admin-empty { text-align: center; padding: 3rem; color: var(--muted); }
+.admin-empty .ae { font-size: 3rem; display: block; margin-bottom: 1rem; }
+.status-pill { display: inline-block; padding: 0.12rem 0.5rem; border-radius: 20px; font-size: 0.68rem; font-weight: 700; background: #e8f5e9; color: #2e7d32; }
+
+/* ── VIDEO SECTION ───────────────────────────────────── */
+.video-section {
+  background: var(--dk2);
+  padding: 2.5rem 1.5rem;
+  text-align: center;
+}
+.video-label {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--org);
+  font-weight: 700;
+  margin-bottom: 1.2rem;
+}
+.video-wrap {
+  position: relative;
+  max-width: 800px;
+  margin: 0 auto;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+  border: 2px solid rgba(255,215,0,0.2);
+  aspect-ratio: 16/9;
+  background: #000;
+}
+.video-wrap iframe {
+  width: 100%; height: 100%;
+  border: none; display: block;
+}
+.video-placeholder {
+  width: 100%; height: 100%;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 0.8rem; color: rgba(255,255,255,0.4);
+  font-size: 0.85rem;
+}
+.video-placeholder .vp-icon { font-size: 3rem; }
+.video-placeholder a { color: var(--gold); font-size: 0.8rem; }
+
+/* ── SCROLL REVEAL ANIMATIONS ────────────────────────── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes heroPulse {
+  0%, 100% { text-shadow: 0 0 30px rgba(255,215,0,0.3); }
+  50%       { text-shadow: 0 0 60px rgba(255,215,0,0.7), 0 0 120px rgba(255,122,26,0.3); }
+}
+@keyframes sparkleIn {
+  0%   { transform: scale(0) rotate(0deg); opacity: 1; }
+  80%  { opacity: 1; }
+  100% { transform: scale(1.5) rotate(45deg) translateY(-30px); opacity: 0; }
+}
+
+.reveal-card {
+  opacity: 0;
+  transform: translateY(24px);
+}
+.reveal-card.visible {
+  animation: fadeUp 0.5s ease forwards;
+}
+
+.hero h1 { animation: heroPulse 3s ease-in-out infinite; }
+
+/* ── CURSOR SPARKLE ──────────────────────────────────── */
+.cursor-spark {
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  font-size: 1rem;
+  animation: sparkleIn 0.7s ease forwards;
+  user-select: none;
+}
+
+/* ── ENHANCED PRODUCT PACKAGING ──────────────────────── */
+.prod-img::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.12) 0%, transparent 50%);
+  pointer-events: none;
+  z-index: 1;
+}
+.prod-packaging {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 38%;
+  background: rgba(0,0,0,0.35);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  padding: 0.3rem;
+  backdrop-filter: blur(2px);
+}
+.prod-pkg-name {
+  font-size: 0.68rem; font-weight: 800;
+  color: #fff; text-align: center;
+  text-transform: uppercase; letter-spacing: 0.06em;
+  line-height: 1.2; text-shadow: 0 1px 4px rgba(0,0,0,0.8);
+}
+.prod-pkg-tag {
+  font-size: 0.55rem; font-weight: 600;
+  color: var(--gold); letter-spacing: 0.1em;
+  text-transform: uppercase; margin-top: 2px;
+}
+
+@media (max-width: 760px) {
+  .video-section { padding: 1.5rem 1rem; }
+  .video-wrap { border-radius: 6px; }
+}
+</style>
+
+<!-- CART OVERLAY -->
+<div class="overlay" id="overlay"></div>
+
+<!-- CART DRAWER -->
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-header">
+    🛒 My Cart
+    <button class="cart-close" id="cartClose">✕</button>
+  </div>
+  <div class="cart-items" id="cartItems">
+    <div class="cart-empty">Your cart is empty.<br>Start adding crackers! 🎇</div>
+  </div>
+  <div class="cart-footer">
+    <div class="cart-breakdown" id="cartBreakdown"></div>
+    <div class="cart-total">
+      <span>Total</span>
+      <span id="cartTotal">₹0.00</span>
+    </div>
+    <button class="checkout-btn" onclick="openOrderModal()">
+      📲 Place Order
+    </button>
+  </div>
+</div>
+
+<!-- SPARKLE LAYER -->
+<div class="sparkle-layer" id="sparkleLayer"></div>
+
+<!-- WHATSAPP FAB -->
+<a class="wa-fab" href="https://wa.me/919922493694?text=Hello%2C%20I%20want%20to%20order%20crackers%20from%20Shri%20Gurudevdatta%20Fataka%20Traders" target="_blank" rel="noopener" aria-label="Order on WhatsApp">
+  <div class="wa-pulse"></div>
+  <svg viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+  </svg>
+  Order on WhatsApp
+</a>
+
+<!-- TOP BAR -->
+<div class="topbar">
+  🎇 <strong>Diwali Special:</strong> Best prices guaranteed! &nbsp;·&nbsp; 📞 +91 99224 93694
+</div>
+
+<!-- HEADER -->
+<header>
+  <div class="logo">
+    Shri Gurudevdatta
+    <small>Fataka Traders · Est. 1998</small>
+  </div>
+  <nav class="header-nav">
+    <a href="#shop">Shop</a>
+    <a href="#brands">Brands</a>
+    <a href="#contact">Contact</a>
+  </nav>
+  <div class="header-right">
+    <button class="cart-btn" id="cartToggle">
+      🛒 Cart
+      <div class="cart-count" id="cartCount">0</div>
+    </button>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <canvas id="fw-canvas"></canvas>
+  <p class="hero-tag">✦ Celebrating Every Festival Since 1998 ✦</p>
+  <h1>Shri Gurudevdatta<br>Fataka Traders</h1>
+  <p>Premium crackers from Anil, Supreme, Vadivel, Mori & more — at unbeatable prices</p>
+  <div class="hero-badges">
+    <span class="hero-badge">🛡️ PESO Licensed</span>
+    <span class="hero-badge">🎇 Diwali 2026 Collection</span>
+
+    <span class="hero-badge">⭐ Trusted Since 1998</span>
+  </div>
+
+  <!-- COUNTDOWN -->
+  <div class="countdown-wrap">
+    <div class="countdown-top-label">🪔 Diwali 2026 Countdown</div>
+    <div class="countdown-boxes">
+      <div class="cd-unit">
+        <div class="cd-num" id="cd-d">--</div>
+        <div class="cd-label">Days</div>
+      </div>
+      <div class="cd-sep">:</div>
+      <div class="cd-unit">
+        <div class="cd-num" id="cd-h">--</div>
+        <div class="cd-label">Hours</div>
+      </div>
+      <div class="cd-sep">:</div>
+      <div class="cd-unit">
+        <div class="cd-num" id="cd-m">--</div>
+        <div class="cd-label">Mins</div>
+      </div>
+      <div class="cd-sep">:</div>
+      <div class="cd-unit">
+        <div class="cd-num" id="cd-s">--</div>
+        <div class="cd-label">Secs</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- RANGOLI 1 -->
+<div class="rangoli-div">
+  <div class="rangoli-diamond"></div>
+  <div class="rangoli-line"></div>
+  <div class="rangoli-diamond"></div>
+  <div class="rangoli-center">🪔</div>
+  <div class="rangoli-diamond"></div>
+  <div class="rangoli-line"></div>
+  <div class="rangoli-diamond"></div>
+</div>
+
+
+<!-- BRANDS STRIP -->
+<div class="brands-section" id="brands">
+  <div class="brands-inner">
+    <div class="brands-title">Authorised Dealer For</div>
+    <div class="brands-row">
+      <div class="brand-pill" style="border-color:#d32f2f" onclick="filterBrand('Anil')">
+        <span class="brand-dot" style="background:#d32f2f"></span> Anil Fireworks
+      </div>
+      <div class="brand-pill" style="border-color:#1565c0" onclick="filterBrand('Supreme')">
+        <span class="brand-dot" style="background:#1565c0"></span> Supreme Crackers
+      </div>
+      <div class="brand-pill" style="border-color:#2e7d32" onclick="filterBrand('Vadivel')">
+        <span class="brand-dot" style="background:#2e7d32"></span> Vadivel Pyrotechs
+      </div>
+      <div class="brand-pill" style="border-color:#6a1b9a" onclick="filterBrand('Mori')">
+        <span class="brand-dot" style="background:#6a1b9a"></span> Mori Fireworks
+      </div>
+      <div class="brand-pill active" onclick="filterBrand(null)">
+        🎆 All Brands
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SHOP -->
+<div class="shop-wrap" id="shop">
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-title">☰ All Departments</div>
+    <ul class="cat-list" id="catList"></ul>
+    <div class="brand-filter">
+      <div class="brand-filter-title">Filter by Brand</div>
+      <label class="brand-check"><input type="checkbox" id="ck-anil" onchange="applyFilters()"> <span class="brand-dot" style="background:#d32f2f"></span> Anil</label>
+      <label class="brand-check"><input type="checkbox" id="ck-supreme" onchange="applyFilters()"> <span class="brand-dot" style="background:#1565c0"></span> Supreme</label>
+      <label class="brand-check"><input type="checkbox" id="ck-vadivel" onchange="applyFilters()"> <span class="brand-dot" style="background:#2e7d32"></span> Vadivel</label>
+      <label class="brand-check"><input type="checkbox" id="ck-mori" onchange="applyFilters()"> <span class="brand-dot" style="background:#6a1b9a"></span> Mori</label>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="shop-main">
+    <div class="shop-toolbar">
+      <div class="result-count" id="resultCount">Showing <strong>0</strong> results</div>
+      <select class="sort-select" id="sortSelect" onchange="applyFilters()">
+        <option value="default">Default sorting</option>
+        <option value="price-asc">Price: Low to High</option>
+        <option value="price-desc">Price: High to Low</option>
+        <option value="name">Name A–Z</option>
+      </select>
+    </div>
+    <div class="products-grid" id="productsGrid"></div>
+  </main>
+</div>
+
+<!-- RANGOLI 2 -->
+<div class="rangoli-div">
+  <div class="rangoli-diamond"></div>
+  <div class="rangoli-line"></div>
+  <div class="rangoli-diamond"></div>
+  <div class="rangoli-center">🎇</div>
+  <div class="rangoli-diamond"></div>
+  <div class="rangoli-line"></div>
+  <div class="rangoli-diamond"></div>
+</div>
+
+<!-- TRUST BAND -->
+<div class="trust-band">
+  <div class="trust-inner">
+    <div class="trust-item">
+      <div class="trust-icon">🛡️</div>
+      <div class="trust-label">PESO Approved</div>
+      <div class="trust-sub">All products licensed</div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-icon">💰</div>
+      <div class="trust-label">Best Prices</div>
+      <div class="trust-sub">Wholesale rates available</div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-icon">🚚</div>
+      <div class="trust-label">Free Delivery</div>
+      <div class="trust-sub">On orders above ₹1000</div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-icon">⭐</div>
+      <div class="trust-label">25+ Years</div>
+      <div class="trust-sub">Trusted since 1998</div>
+    </div>
+  </div>
+</div>
+
+<!-- RANGOLI 3 -->
+<div class="rangoli-div">
+  <div class="rangoli-diamond"></div>
+  <div class="rangoli-line"></div>
+  <div class="rangoli-diamond"></div>
+  <div class="rangoli-center">🪔</div>
+  <div class="rangoli-diamond"></div>
+  <div class="rangoli-line"></div>
+  <div class="rangoli-diamond"></div>
+</div>
+
+<!-- CONTACT -->
+<div class="contact-section" id="contact">
+  <div class="contact-inner">
+    <div>
+      <div class="contact-head">Visit Our Stall</div>
+      <div class="contact-row">
+        <div class="ci">📍</div>
+        <div>
+          <h4>Location</h4>
+          <p>Diagonal Business Centre,<br>Near Ganesh Mandir, Ayush Garden,<br>Raje Shivaji Nagar, Chikhali,<br>Pimpri-Chinchwad, Maharashtra 411019</p>
+        </div>
+      </div>
+      <div class="contact-row">
+        <div class="ci">👤</div>
+        <div>
+          <h4>Proprietor</h4>
+          <p>Ravindra Patil</p>
+        </div>
+      </div>
+      <div class="contact-row">
+        <div class="ci">📞</div>
+        <div>
+          <h4>Call / WhatsApp</h4>
+          <a href="tel:+919922493694">+91 99224 93694</a><br>
+          <a href="tel:+919922423694">+91 99224 23694</a>
+        </div>
+      </div>
+      <div class="contact-row">
+        <div class="ci">🕐</div>
+        <div>
+          <h4>Store Hours</h4>
+          <div class="hours-table">
+            <div class="hours-row"><span class="day">Mon – Fri</span><span class="time">9:00 AM – 9:00 PM</span></div>
+            <div class="hours-row"><span class="day">Sat – Sun</span><span class="time">8:00 AM – 10:00 PM</span></div>
+            <div class="hours-row"><span class="day">Diwali Season</span><span class="time">7:00 AM – 11:00 PM</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="map-box">
+      <iframe
+        src="https://maps.google.com/maps?q=Shri+Gurudev+Datta+Fataka+Traders+Chikhali+Pimpri-Chinchwad+Maharashtra+411019&output=embed&z=16"
+        title="Shri Gurudevdatta Fataka Traders Location"
+        loading="lazy"
+        allowfullscreen
+        referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+      <div class="map-overlay">
+        <a class="map-open-btn" href="https://maps.app.goo.gl/qHFZCW5rWbVzyZei7" target="_blank" rel="noopener">
+          🗺️ Open in Google Maps
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-brand">Shri Gurudevdatta Fataka Traders</div>
+  <p class="footer-note">🪔 Lighting up celebrations since 1998 · PESO Licensed & Approved · Maharashtra, India<br>
+  Please burst crackers responsibly within permitted hours. Help keep our environment clean.</p>
+</footer>
+
+<!-- ORDER MODAL -->
+<div class="modal-overlay" id="orderModal">
+  <div class="modal">
+    <div class="modal-hd">
+      📋 Complete Your Order
+      <button class="modal-x" onclick="closeOrderModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="fg">
+        <label>Full Name <span class="req">*</span></label>
+        <input type="text" id="f-name" placeholder="e.g. Ramesh Kumar" autocomplete="name">
+      </div>
+      <div class="fg">
+        <label>Phone Number <span class="req">*</span></label>
+        <input type="tel" id="f-phone" placeholder="+91 XXXXX XXXXX" autocomplete="tel">
+      </div>
+      <div class="fg">
+        <label>Delivery Address <span class="req">*</span></label>
+        <textarea id="f-address" rows="3" placeholder="House/Flat No., Street, Area, City" autocomplete="street-address"></textarea>
+      </div>
+      <div class="fg">
+        <label>Pincode <span class="req">*</span></label>
+        <input type="text" id="f-pin" placeholder="411001" maxlength="6" inputmode="numeric">
+      </div>
+      <div class="order-summary-box">
+        <h4>🛒 Your Order</h4>
+        <div id="osMiniItems"></div>
+        <div class="osm-total"><span>Total</span><span id="osMiniTotal">₹0.00</span></div>
+      </div>
+    </div>
+    <div class="modal-ft">
+      <button class="btn-cancel" onclick="closeOrderModal()">Cancel</button>
+      <button class="btn-place" id="btnPlaceOrder" onclick="placeOrder()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        Send Order on WhatsApp
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- SUCCESS OVERLAY -->
+<div class="success-overlay" id="successOverlay">
+  <div class="success-card">
+    <span class="suc-emoji">🎇</span>
+    <h2>Order Placed!</h2>
+    <p class="suc-sub">Your order has been sent to<br><strong>Shri Gurudevdatta Fataka Traders</strong></p>
+    <div class="order-num-badge" id="sucOrderNum">GD-XXXXX</div>
+    <p class="suc-note">Please save this order number. We will contact you soon to confirm delivery details.</p>
+    <button class="btn-continue" onclick="closeSuccess()">🛒 Continue Shopping</button>
+  </div>
+</div>
+
+<!-- ADMIN FAB -->
+<button class="admin-fab" id="adminFab" onclick="openAdmin()">📊 Orders</button>
+
+<!-- ADMIN PANEL -->
+<div class="admin-panel" id="adminPanel">
+  <div class="admin-hd">
+    <h2>📊 Orders Dashboard — Shri Gurudevdatta Fataka Traders</h2>
+    <div class="admin-hd-r">
+      <button class="admin-export" id="adminExport" onclick="exportCSV()">⬇️ Export Excel/CSV</button>
+      <button class="admin-close" onclick="closeAdmin()">✕</button>
+    </div>
+  </div>
+  <div class="admin-body">
+    <div class="admin-note">
+      ℹ️ <strong>How it works:</strong> Orders placed by customers via WhatsApp are saved here automatically when they use this page while signed in to claude.ai. The WhatsApp message you receive always contains the full order details. Export as CSV to open in Excel or Google Sheets.
+    </div>
+    <div class="admin-stats">
+      <div class="admin-stat"><div class="astat-num" id="aStatOrders">—</div><div class="astat-lbl">Total Orders</div></div>
+      <div class="admin-stat"><div class="astat-num" id="aStatRevenue">—</div><div class="astat-lbl">Total Revenue</div></div>
+      <div class="admin-stat"><div class="astat-num" id="aStatToday">—</div><div class="astat-lbl">Today's Orders</div></div>
+    </div>
+    <div class="admin-tbl-wrap">
+      <table class="admin-tbl">
+        <thead>
+          <tr>
+            <th>Order #</th>
+            <th>Date & Time</th>
+            <th>Customer</th>
+            <th>Phone</th>
+            <th>Address</th>
+            <th>Items</th>
+            <th>Total</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="adminTbody">
+          <tr><td colspan="8"><div class="admin-empty"><span class="ae">📋</span>Loading orders…</div></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ── DATA ─────────────────────────────────────────── */
+const BRANDS = {
+  Anil:    { color: '#d32f2f', grad: 'linear-gradient(160deg,#b71c1c,#d32f2f,#ef5350)' },
+  Supreme: { color: '#1565c0', grad: 'linear-gradient(160deg,#0d47a1,#1565c0,#1976d2)' },
+  Vadivel: { color: '#2e7d32', grad: 'linear-gradient(160deg,#1b5e20,#2e7d32,#388e3c)' },
+  Mori:    { color: '#6a1b9a', grad: 'linear-gradient(160deg,#4a148c,#6a1b9a,#7b1fa2)' },
+};
+
+const CATEGORIES = [
+  { id:'all',           label:'All Products' },
+  { id:'singlesound',   label:'Single Sound Crackers' },
+  { id:'multisound',    label:'Multi Sound Crackers' },
+  { id:'sparklers',     label:'Sparklers' },
+  { id:'chakkars',      label:'Chakkars' },
+  { id:'flowerpots',    label:'Flower Pots' },
+  { id:'twinklingstars',label:'Twinkling Stars' },
+  { id:'pencil',        label:'Pencil Crackers' },
+  { id:'rockets',       label:'Rockets' },
+  { id:'atombomb',      label:'Atom Bomb' },
+  { id:'loosecrackers', label:'Loose Crackers' },
+  { id:'giftboxes',     label:'Gift Boxes' },
+  { id:'miniskyfunction',label:'Mini Sky Function' },
+  { id:'7shots',        label:'7 Shots' },
+  { id:'10to20shots',   label:'Fancy 10–20 Shots' },
+  { id:'25plusshots',   label:'Fancy 25+ Shots' },
+];
+
+const PRODUCTS = [
+  { id:1,  name:'Baby Twinkling Star',       company:'Anil',    cat:'sparklers',      orig:114,  price:57,  icon:'✨', rating:4.5, reviews:12 },
+  { id:2,  name:'10cm Colour Sparklers',     company:'Anil',    cat:'sparklers',      orig:68,   price:34,  icon:'🌟', rating:4,   reviews:8  },
+  { id:3,  name:'Electric Sparklers Deluxe', company:'Supreme', cat:'sparklers',      orig:60,   price:30,  icon:'⚡', rating:3.5, reviews:0  },
+  { id:4,  name:'Red Sparklers 10cm',        company:'Vadivel', cat:'sparklers',      orig:74,   price:37,  icon:'🎆', rating:4,   reviews:5  },
+  { id:5,  name:'Fancy Sparkler Assorted',   company:'Mori',    cat:'sparklers',      orig:90,   price:45,  icon:'🌠', rating:4,   reviews:10 },
+  { id:6,  name:'Ground Chakra (5 pcs)',     company:'Mori',    cat:'chakkars',       orig:90,   price:45,  icon:'🌀', rating:4.5, reviews:18 },
+  { id:7,  name:'Super Chakra Deluxe',       company:'Supreme', cat:'chakkars',       orig:130,  price:65,  icon:'💫', rating:4,   reviews:7  },
+  { id:8,  name:'Flower Pot Small',          company:'Anil',    cat:'flowerpots',     orig:130,  price:65,  icon:'🌸', rating:4,   reviews:22 },
+  { id:9,  name:'Flower Pot Jumbo',          company:'Supreme', cat:'flowerpots',     orig:240,  price:120, icon:'🌺', rating:4.5, reviews:14 },
+  { id:10, name:'Anaar Fancy XL',            company:'Vadivel', cat:'flowerpots',     orig:200,  price:100, icon:'🎇', rating:5,   reviews:20 },
+  { id:11, name:'10 KA Dhum',               company:'Vadivel', cat:'multisound',     orig:820,  price:410, icon:'💥', rating:4,   reviews:6  },
+  { id:12, name:'Ladi 1000 Wala',            company:'Anil',    cat:'multisound',     orig:300,  price:150, icon:'🧨', rating:4.5, reviews:35 },
+  { id:13, name:'Single Sound Ladi 100',     company:'Anil',    cat:'singlesound',    orig:65,   price:32,  icon:'🔊', rating:4,   reviews:40 },
+  { id:14, name:'Rocket Box (10 pcs)',        company:'Anil',    cat:'rockets',        orig:170,  price:85,  icon:'🚀', rating:4.5, reviews:31 },
+  { id:15, name:'Sky Rocket Super',          company:'Mori',    cat:'rockets',        orig:220,  price:110, icon:'🛸', rating:4,   reviews:13 },
+  { id:16, name:'Atom Bomb (Pack of 10)',    company:'Vadivel', cat:'atombomb',       orig:110,  price:55,  icon:'💣', rating:3.5, reviews:0  },
+  { id:17, name:'Pencil Cracker Box',        company:'Anil',    cat:'pencil',         orig:96,   price:48,  icon:'✏️', rating:4,   reviews:11 },
+  { id:18, name:'Twinkling Stars Fancy 5pcs',company:'Supreme', cat:'twinklingstars', orig:200,  price:100, icon:'⭐', rating:4.5, reviews:16 },
+  { id:19, name:'Loose Crackers Assorted',   company:'Mori',    cat:'loosecrackers',  orig:190,  price:95,  icon:'🎉', rating:4,   reviews:25 },
+  { id:20, name:'Deluxe Festival Gift Box',  company:'Supreme', cat:'giftboxes',      orig:1199, price:599, icon:'🎁', rating:4.5, reviews:47 },
+  { id:21, name:'Family Combo Gift Pack',    company:'Anil',    cat:'giftboxes',      orig:799,  price:399, icon:'🎀', rating:5,   reviews:28 },
+  { id:22, name:'Mini Sky Function',         company:'Supreme', cat:'miniskyfunction',orig:350,  price:175, icon:'🌠', rating:4,   reviews:7  },
+  { id:23, name:'Sky Shot 7 Shells',         company:'Mori',    cat:'7shots',         orig:420,  price:210, icon:'🎆', rating:5,   reviews:9  },
+  { id:24, name:'Fancy 15 Shots Multi-Color',company:'Mori',    cat:'10to20shots',    orig:560,  price:280, icon:'🎇', rating:4.5, reviews:19 },
+  { id:25, name:'Color Rain 20 Shots',       company:'Vadivel', cat:'10to20shots',    orig:700,  price:350, icon:'🌈', rating:4,   reviews:8  },
+  { id:26, name:'Grand Finale 30 Shots',     company:'Supreme', cat:'25plusshots',    orig:1400, price:700, icon:'🏆', rating:5,   reviews:33 },
+  { id:27, name:'Blister Pack 10cm',         company:'Mori',    cat:'singlesound',    orig:88,   price:44,  icon:'🔔', rating:4,   reviews:0  },
+];
+
+/* ── STATE ─────────────────────────────────────────── */
+let activeCat = 'all';
+let activeBrand = null;
+let cart = [];
+
+/* ── HELPERS ───────────────────────────────────────── */
+function fmt(n) { return '₹' + n.toFixed(2); }
+
+function stars(rating) {
+  let s = '';
+  for (let i = 1; i <= 5; i++) {
+    if (i <= Math.floor(rating)) s += '★';
+    else if (i - 0.5 <= rating) s += '½';
+    else s += '☆';
+  }
+  return s;
+}
+
+/* ── CATEGORIES ────────────────────────────────────── */
+function buildCategories() {
+  const list = document.getElementById('catList');
+  CATEGORIES.forEach(cat => {
+    const count = cat.id === 'all' ? PRODUCTS.length : PRODUCTS.filter(p => p.cat === cat.id).length;
+    if (count === 0 && cat.id !== 'all') return;
+    const li = document.createElement('li');
+    li.className = 'cat-item';
+    li.innerHTML = `<button class="cat-btn${cat.id === 'all' ? ' active' : ''}" data-cat="${cat.id}">
+      ${cat.label} <span class="cat-count">${count}</span>
+    </button>`;
+    li.querySelector('button').addEventListener('click', () => {
+      activeCat = cat.id;
+      document.querySelectorAll('.cat-btn').forEach(b => b.classList.toggle('active', b.dataset.cat === cat.id));
+      applyFilters();
+    });
+    list.appendChild(li);
+  });
+}
+
+/* ── FILTERS ───────────────────────────────────────── */
+function applyFilters() {
+  let items = [...PRODUCTS];
+
+  if (activeCat !== 'all') items = items.filter(p => p.cat === activeCat);
+
+  const checked = ['Anil','Supreme','Vadivel','Mori'].filter(b =>
+    document.getElementById('ck-' + b.toLowerCase()).checked
+  );
+  if (activeBrand) items = items.filter(p => p.company === activeBrand);
+  else if (checked.length) items = items.filter(p => checked.includes(p.company));
+
+  const sort = document.getElementById('sortSelect').value;
+  if (sort === 'price-asc')  items.sort((a,b) => a.price - b.price);
+  if (sort === 'price-desc') items.sort((a,b) => b.price - a.price);
+  if (sort === 'name')       items.sort((a,b) => a.name.localeCompare(b.name));
+
+  renderProducts(items);
+}
+
+function filterBrand(brand) {
+  activeBrand = brand;
+  document.querySelectorAll('.brand-pill').forEach(p => p.classList.remove('active'));
+  if (!brand) {
+    document.querySelectorAll('.brand-pill').forEach(p => { if (p.textContent.includes('All')) p.classList.add('active'); });
+  }
+  applyFilters();
+}
+
+/* ── RENDER ────────────────────────────────────────── */
+function renderProducts(items) {
+  const grid = document.getElementById('productsGrid');
+  const count = document.getElementById('resultCount');
+  count.innerHTML = `Showing <strong>${items.length}</strong> of <strong>${PRODUCTS.length}</strong> results`;
+  grid.innerHTML = '';
+
+  if (!items.length) {
+    grid.innerHTML = `<div class="no-results"><span class="emoji">🔍</span>No products found.<br>Try a different filter.</div>`;
+    return;
+  }
+
+  items.forEach(p => {
+    const brand = BRANDS[p.company];
+    const disc = Math.round((1 - p.price / p.orig) * 100);
+    const inCart = cart.find(c => c.id === p.id);
+
+    const card = document.createElement('div');
+    card.className = 'product-card reveal-card';
+    card.innerHTML = `
+      <div class="prod-img" style="background:${brand.grad}">
+        <div class="prod-brand-label" style="background:rgba(0,0,0,0.3)">${p.company} Fireworks</div>
+        <div class="prod-icon">${p.icon}</div>
+        <div class="prod-packaging">
+          <div class="prod-pkg-name">${p.name}</div>
+          <div class="prod-pkg-tag">${p.company} · Premium</div>
+        </div>
+        <button class="wishlist-btn" data-id="${p.id}" title="Add to wishlist">♡</button>
+      </div>
+      <div class="prod-info">
+        <div class="prod-company" style="color:${brand.color}">${p.company}</div>
+        <div class="prod-title">${p.name}</div>
+        <div class="prod-stars">
+          <span class="stars">${stars(p.rating)}</span>
+          <span class="review-count">(${p.reviews})</span>
+        </div>
+        <div class="prod-price">
+          <span class="price-orig">${fmt(p.orig)}</span>
+          <span class="price-sale">${fmt(p.price)}</span>
+        </div>
+        <div class="card-atc-row">
+          <div class="card-qty-ctrl" id="qc-${p.id}">
+            <button class="card-qty-btn card-qty-minus" data-id="${p.id}">−</button>
+            <span class="card-qty-num" id="qn-${p.id}">${inCart ? inCart.qty : 0}</span>
+            <button class="card-qty-btn card-qty-plus" data-id="${p.id}">+</button>
+          </div>
+          <button class="add-to-cart${inCart ? ' added' : ''}" data-id="${p.id}">
+            ${inCart ? '✓ In Cart' : '🛒 Add'}
+          </button>
+        </div>
+      </div>`;
+
+    card.querySelector('.wishlist-btn').addEventListener('click', function() {
+      this.classList.toggle('liked');
+      this.textContent = this.classList.contains('liked') ? '♥' : '♡';
+    });
+
+    card.querySelector('.add-to-cart').addEventListener('click', function() {
+      addToCart(p, 1);
+      this.classList.add('added');
+      this.textContent = '✓ In Cart';
+      const inC = cart.find(c => c.id === p.id);
+      document.getElementById('qn-' + p.id).textContent = inC ? inC.qty : 1;
+    });
+
+    card.querySelector('.card-qty-plus').addEventListener('click', () => {
+      addToCart(p, 1);
+      const inC = cart.find(c => c.id === p.id);
+      document.getElementById('qn-' + p.id).textContent = inC ? inC.qty : 0;
+      const btn = card.querySelector('.add-to-cart');
+      btn.classList.add('added'); btn.textContent = '✓ In Cart';
+    });
+
+    card.querySelector('.card-qty-minus').addEventListener('click', () => {
+      removeFromCart(p.id);
+      const inC = cart.find(c => c.id === p.id);
+      document.getElementById('qn-' + p.id).textContent = inC ? inC.qty : 0;
+      if (!inC) { const btn = card.querySelector('.add-to-cart'); btn.classList.remove('added'); btn.textContent = '🛒 Add'; }
+    });
+
+    grid.appendChild(card);
+  });
+  setTimeout(initScrollReveal, 50);
+}
+
+/* ── CART ──────────────────────────────────────────── */
+function addToCart(product, delta = 1) {
+  const existing = cart.find(c => c.id === product.id);
+  if (existing) existing.qty += delta;
+  else cart.push({ ...product, qty: delta });
+  updateCartUI();
+}
+
+function removeFromCart(id) {
+  const existing = cart.find(c => c.id === id);
+  if (!existing) return;
+  if (existing.qty > 1) existing.qty--;
+  else cart = cart.filter(c => c.id !== id);
+  updateCartUI();
+}
+
+function updateCartUI() {
+  const total = cart.reduce((s,c) => s + c.qty, 0);
+  document.getElementById('cartCount').textContent = total;
+
+  const itemsEl = document.getElementById('cartItems');
+  const totalEl = document.getElementById('cartTotal');
+
+  const breakdownEl = document.getElementById('cartBreakdown');
+
+  if (!cart.length) {
+    itemsEl.innerHTML = `<div class="cart-empty">Your cart is empty.<br>Start adding crackers! 🎇</div>`;
+    totalEl.textContent = '₹0.00';
+    breakdownEl.innerHTML = '';
+    breakdownEl.hidden = true;
+    return;
+  }
+
+  breakdownEl.hidden = false;
+  itemsEl.innerHTML = '';
+  let sum = 0;
+  const breakdownRows = [];
+  cart.forEach(item => {
+    const lineTotal = item.price * item.qty;
+    sum += lineTotal;
+    breakdownRows.push(`<div class="cart-breakdown-row"><span>${item.name} ×${item.qty}</span><span>${fmt(lineTotal)}</span></div>`);
+    const brand = BRANDS[item.company];
+    const div = document.createElement('div');
+    div.className = 'cart-item';
+    div.innerHTML = `
+      <div class="cart-item-icon" style="background:${brand.grad}">${item.icon}</div>
+      <div style="flex:1;min-width:0">
+        <div class="cart-item-name">${item.name}</div>
+        <div class="cart-item-company">${item.company}</div>
+        <div class="cart-item-price">${fmt(item.price)}</div>
+        <div class="cart-item-qty">
+          <button class="qty-btn" data-id="${item.id}" data-op="minus">−</button>
+          <span class="qty-val">${item.qty}</span>
+          <button class="qty-btn" data-id="${item.id}" data-op="plus">+</button>
+        </div>
+      </div>`;
+
+    div.querySelectorAll('.qty-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const cartItem = cart.find(c => c.id === item.id);
+        if (!cartItem) return;
+        if (btn.dataset.op === 'plus') cartItem.qty++;
+        else { cartItem.qty--; if (cartItem.qty <= 0) cart.splice(cart.indexOf(cartItem), 1); }
+        updateCartUI();
+      });
+    });
+
+    itemsEl.appendChild(div);
+  });
+  breakdownEl.innerHTML = breakdownRows.join('');
+  totalEl.textContent = fmt(sum);
+}
+
+function openCart() {
+  document.getElementById('cartDrawer').classList.add('open');
+  document.getElementById('overlay').classList.add('show');
+}
+
+function closeCart() {
+  document.getElementById('cartDrawer').classList.remove('open');
+  document.getElementById('overlay').classList.remove('show');
+}
+
+document.getElementById('cartToggle').addEventListener('click', openCart);
+document.getElementById('cartClose').addEventListener('click', closeCart);
+document.getElementById('overlay').addEventListener('click', closeCart);
+
+/* ── FIREWORKS ─────────────────────────────────────── */
+(function() {
+  const canvas = document.getElementById('fw-canvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, P = [];
+
+  function resize() { W = canvas.width = canvas.offsetWidth; H = canvas.height = canvas.offsetHeight; }
+  resize();
+  window.addEventListener('resize', resize);
+
+  const C = ['#FFD700','#FF7A1A','#FFF5E4','#E63946','#FFB347'];
+  const rc = () => C[Math.floor(Math.random() * C.length)];
+
+  class Spark {
+    constructor(x, y, burst) {
+      this.x = x; this.y = y;
+      const a = Math.random() * Math.PI * 2;
+      const s = burst ? (Math.random()*3+1) : (Math.random()*0.8+0.2);
+      this.vx = Math.cos(a)*s; this.vy = Math.sin(a)*s-(burst?0.8:0);
+      this.alpha=1; this.color=rc();
+      this.size = burst ? (Math.random()*2+0.8) : (Math.random()*1.2+0.4);
+      this.decay = burst ? (Math.random()*0.018+0.01) : (Math.random()*0.012+0.006);
+    }
+    update() { this.vx*=0.97; this.vy+=0.05; this.x+=this.vx; this.y+=this.vy; this.alpha-=this.decay; }
+    draw() {
+      ctx.beginPath(); ctx.arc(this.x,this.y,this.size,0,Math.PI*2);
+      ctx.fillStyle=this.color; ctx.globalAlpha=this.alpha; ctx.fill(); ctx.globalAlpha=1;
+    }
+  }
+
+  function burst(x,y) { for(let i=0;i<35;i++) P.push(new Spark(x,y,true)); }
+  let lb=0;
+  function loop(ts) {
+    requestAnimationFrame(loop);
+    ctx.clearRect(0,0,W,H);
+    if (ts-lb > 2000) { burst(W*0.2+Math.random()*W*0.6, H*0.1+Math.random()*H*0.5); lb=ts; }
+    if (Math.random()<0.25) P.push(new Spark(Math.random()*W, Math.random()*H*0.8, false));
+    P=P.filter(p=>p.alpha>0);
+    P.forEach(p=>{p.update();p.draw();});
+  }
+  requestAnimationFrame(loop);
+  setTimeout(()=>burst(W*0.3,H*0.3),400);
+  setTimeout(()=>burst(W*0.7,H*0.25),1000);
+})();
+
+/* ── VIDEO CONFIG ──────────────────────────────────── */
+// Paste your YouTube video ID here (the part after ?v= in the URL)
+// e.g. for https://youtube.com/watch?v=dQw4w9WgXcQ → VIDEO_ID = 'dQw4w9WgXcQ'
+const VIDEO_ID = '';
+
+function initVideo() {
+  if (!VIDEO_ID) return; // show placeholder until VIDEO_ID is set
+  const wrap = document.getElementById('videoWrap');
+  wrap.innerHTML = `<iframe
+    src="https://www.youtube.com/embed/${VIDEO_ID}?rel=0&modestbranding=1"
+    title="Shri Gurudevdatta Fataka Traders" frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowfullscreen></iframe>`;
+}
+initVideo();
+
+function promptVideo(e) {
+  e.preventDefault();
+  const url = prompt('Paste your YouTube video URL:');
+  if (!url) return;
+  const match = url.match(/(?:v=|youtu\.be\/)([A-Za-z0-9_-]{11})/);
+  if (!match) { alert('Could not find video ID. Make sure it\'s a youtube.com or youtu.be link.'); return; }
+  const id = match[1];
+  document.getElementById('videoWrap').innerHTML = `<iframe
+    src="https://www.youtube.com/embed/${id}?rel=0&modestbranding=1"
+    title="Fataka Traders" frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowfullscreen></iframe>`;
+}
+
+/* ── SCROLL REVEAL ─────────────────────────────────── */
+function initScrollReveal() {
+  const obs = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        const delay = (Array.from(el.parentElement.children).indexOf(el) % 4) * 80;
+        setTimeout(() => el.classList.add('visible'), delay);
+        obs.unobserve(el);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.reveal-card').forEach(el => obs.observe(el));
+}
+
+// Re-run after filters applied
+
+/* ── CURSOR SPARKLES ───────────────────────────────── */
+const SPARKS = ['🎇','✨','💥','🌟','⭐','🎆'];
+let lastSpark = 0;
+
+document.addEventListener('mousemove', (e) => {
+  const now = Date.now();
+  if (now - lastSpark < 120) return; // throttle
+  lastSpark = now;
+  const el = document.createElement('div');
+  el.className = 'cursor-spark';
+  el.textContent = SPARKS[Math.floor(Math.random() * SPARKS.length)];
+  el.style.left = (e.clientX - 10) + 'px';
+  el.style.top  = (e.clientY - 10) + 'px';
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 750);
+});
+
+/* ── INIT ──────────────────────────────────────────── */
+buildCategories();
+applyFilters();
+setTimeout(initScrollReveal, 100);
+
+/* ── GOOGLE SHEETS CONFIG ──────────────────────────── */
+// Paste your Google Apps Script Web App URL here after deploying:
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyfa-G6_WkLolIrRCE2Q3Oc53CAPfWaqOizWoiA7BnFEX1-k3frNkw9flhN1b4O_eLT/exec';
+// Paste your Google Sheet URL here so the admin button opens it:
+const SHEET_URL  = 'https://docs.google.com/spreadsheets/d/1Vn9Qi0rC85OJeKwgsT9PLmLNHzvxTP1hzJ3PWH7UjHI/edit?gid=0#gid=0';
+// Change this PIN to whatever you want (owner-only access):
+const ADMIN_PIN  = '1234';
+
+let adminUnlocked = false;
+let allOrders = [];
+
+function initAdmin() {
+  // Show admin FAB for anyone — PIN gate protects the sheet link
+  document.getElementById('adminFab').classList.add('visible');
+}
+initAdmin();
+
+/* ── ORDER MODAL ───────────────────────────────────── */
+function openOrderModal() {
+  if (!cart.length) return;
+  // populate summary
+  const itemsEl = document.getElementById('osMiniItems');
+  let sum = 0;
+  itemsEl.innerHTML = '';
+  cart.forEach(item => {
+    const line = item.price * item.qty;
+    sum += line;
+    const row = document.createElement('div');
+    row.className = 'osm-row';
+    row.innerHTML = `<span>${item.name} × ${item.qty}</span><span>${fmt(line)}</span>`;
+    itemsEl.appendChild(row);
+  });
+  document.getElementById('osMiniTotal').textContent = fmt(sum);
+  document.getElementById('orderModal').classList.add('show');
+  document.getElementById('f-name').focus();
+}
+
+function closeOrderModal() {
+  document.getElementById('orderModal').classList.remove('show');
+}
+
+function genOrderId() {
+  try {
+    const next = parseInt(localStorage.getItem('gd_order_counter') || '0') + 1;
+    localStorage.setItem('gd_order_counter', next);
+    return String(next);
+  } catch(e) {
+    return String(Math.floor(100000 + Math.random() * 900000));
+  }
+}
+
+async function placeOrder() {
+  const name    = document.getElementById('f-name').value.trim();
+  const phone   = document.getElementById('f-phone').value.trim();
+  const address = document.getElementById('f-address').value.trim();
+  const pin     = document.getElementById('f-pin').value.trim();
+
+  // validate
+  let valid = true;
+  [['f-name', name], ['f-phone', phone], ['f-address', address], ['f-pin', pin]].forEach(([id, val]) => {
+    const el = document.getElementById(id);
+    el.classList.toggle('err', !val);
+    if (!val) valid = false;
+  });
+  if (!valid) return;
+
+  const btn = document.getElementById('btnPlaceOrder');
+  btn.disabled = true;
+  btn.textContent = 'Sending…';
+
+  const orderId = genOrderId();
+  const now = new Date();
+  const dateStr = now.toLocaleDateString('en-IN', { day:'2-digit', month:'short', year:'numeric' });
+  const timeStr = now.toLocaleTimeString('en-IN', { hour:'2-digit', minute:'2-digit' });
+
+  let sum = 0;
+  const itemLines = cart.map(item => {
+    const line = item.price * item.qty;
+    sum += line;
+    return `• ${item.name} (${item.company}) × ${item.qty} — ${fmt(line)}`;
+  });
+
+  // build WhatsApp message
+  const msg = [
+    `🎇 *NEW ORDER — Shri Gurudevdatta Fataka Traders*`,
+    ``,
+    `📋 *Order #${orderId}*`,
+    `📅 ${dateStr} at ${timeStr}`,
+    ``,
+    `👤 *Customer Details:*`,
+    `Name: ${name}`,
+    `Phone: ${phone}`,
+    `Address: ${address}`,
+    `Pincode: ${pin}`,
+    ``,
+    `🛒 *Items Ordered:*`,
+    ...itemLines,
+    ``,
+    `💰 *Total Amount: ${fmt(sum)}*`,
+    ``,
+    `⚠️ Please confirm this order with the customer.`,
+  ].join('\n');
+
+  // save to Google Sheets (fire-and-forget — order still goes via WhatsApp even if this fails)
+  if (SCRIPT_URL && !SCRIPT_URL.startsWith('YOUR_')) {
+    // text/plain avoids CORS preflight — Apps Script receives it fine via e.postData.contents
+    fetch(SCRIPT_URL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'text/plain' },
+      body: JSON.stringify({
+        orderId, name, phone, address, pincode: pin,
+        items: cart.map(i => ({ name: i.name, company: i.company, qty: i.qty, price: i.price })),
+        total: sum, status: 'Pending',
+        createdAt: now.toISOString(), dateStr, timeStr,
+      }),
+    }).catch(() => {});
+  }
+
+  // open WhatsApp
+  const waUrl = `https://wa.me/919922493694?text=${encodeURIComponent(msg)}`;
+  window.open(waUrl, '_blank', 'noopener');
+
+  // show success
+  closeOrderModal();
+  document.getElementById('sucOrderNum').textContent = orderId;
+  document.getElementById('successOverlay').classList.add('show');
+
+  // clear cart
+  cart = [];
+  updateCartUI();
+  closeCart();
+
+  btn.disabled = false;
+  btn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg> Send Order on WhatsApp`;
+}
+
+function closeSuccess() {
+  document.getElementById('successOverlay').classList.remove('show');
+  // reset form
+  ['f-name','f-phone','f-address','f-pin'].forEach(id => {
+    const el = document.getElementById(id);
+    el.value = '';
+    el.classList.remove('err');
+  });
+}
+
+/* ── ADMIN PANEL ───────────────────────────────────── */
+function openAdmin() {
+  if (!adminUnlocked) {
+    const pin = prompt('Enter admin PIN:');
+    if (pin !== ADMIN_PIN) { alert('Incorrect PIN.'); return; }
+    adminUnlocked = true;
+  }
+  if (SHEET_URL && !SHEET_URL.startsWith('YOUR_')) {
+    window.open(SHEET_URL, '_blank', 'noopener');
+  } else {
+    alert('Google Sheet URL not configured yet.\nOpen fataka-traders.html and paste your SHEET_URL.');
+  }
+}
+
+function closeAdmin() {
+  document.getElementById('adminPanel').classList.remove('open');
+}
+
+function loadAdminOrders() {}
+
+function renderAdminOrders() {}
+
+function esc(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function exportCSV() {}
+
+/* ── COUNTDOWN TIMER ───────────────────────────────── */
+(function() {
+  // Diwali 2026: October 20, 2026 at 6 PM IST
+  const TARGET = new Date('2026-10-20T18:00:00+05:30').getTime();
+  function pad(n) { return String(n).padStart(2, '0'); }
+  function tick() {
+    const diff = TARGET - Date.now();
+    if (diff <= 0) {
+      document.getElementById('cd-d').textContent = '00';
+      document.getElementById('cd-h').textContent = '00';
+      document.getElementById('cd-m').textContent = '00';
+      document.getElementById('cd-s').textContent = '00';
+      return;
+    }
+    const d = Math.floor(diff / 864e5);
+    const h = Math.floor((diff % 864e5) / 36e5);
+    const m = Math.floor((diff % 36e5) / 6e4);
+    const s = Math.floor((diff % 6e4) / 1e3);
+    document.getElementById('cd-d').textContent = pad(d);
+    document.getElementById('cd-h').textContent = pad(h);
+    document.getElementById('cd-m').textContent = pad(m);
+    document.getElementById('cd-s').textContent = pad(s);
+  }
+  tick();
+  setInterval(tick, 1000);
+})();
+
+/* ── FLOATING SPARKLES ─────────────────────────────── */
+(function() {
+  const layer = document.getElementById('sparkleLayer');
+  const CHARS = ['✦','✧','⋆','✺','✸','·','✦'];
+  const COLORS = ['rgba(255,215,0,0.7)','rgba(255,122,26,0.6)','rgba(255,255,255,0.5)','rgba(255,180,70,0.65)'];
+
+  function addSparkle() {
+    try {
+      const el = document.createElement('span');
+      el.className = 'sp';
+      el.textContent = CHARS[Math.floor(Math.random() * CHARS.length)];
+      const size = Math.random() * 10 + 6;
+      el.style.cssText = [
+        'left:' + (Math.random() * 98) + 'vw',
+        'top:' + (Math.random() * 95 + 2) + 'vh',
+        'font-size:' + size + 'px',
+        'color:' + COLORS[Math.floor(Math.random() * COLORS.length)],
+        'animation-duration:' + (Math.random() * 3 + 3) + 's',
+        'animation-delay:' + (Math.random() * 1.5) + 's',
+      ].join(';');
+      layer.appendChild(el);
+      const dur = (parseFloat(el.style.animationDuration) + parseFloat(el.style.animationDelay)) * 1000 + 500;
+      setTimeout(() => { try { el.remove(); } catch(e){} }, dur);
+    } catch(e) {}
+  }
+
+  // Add sparkles gradually
+  for (let i = 0; i < 8; i++) setTimeout(addSparkle, i * 200);
+  setInterval(addSparkle, 600);
+})();
+</script>
