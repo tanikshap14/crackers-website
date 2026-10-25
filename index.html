@@ -1,3 +1,7 @@
+<!doctype html>
+<html lang="en">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Shri Gurudevdatta Fataka Traders</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Poppins:wght@300;400;500;600;700&display=swap">
 
@@ -314,6 +318,20 @@ header {
 }
 .result-count strong { color: var(--text); }
 
+.search-input {
+  flex: 1;
+  min-width: 160px;
+  max-width: 300px;
+  border: 1px solid var(--bdr);
+  border-radius: 4px;
+  padding: 0.4rem 0.8rem;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.82rem;
+  color: var(--text);
+  background: var(--white);
+}
+.search-input:focus { outline: none; border-color: var(--gold); }
+
 .sort-select {
   border: 1px solid var(--bdr);
   border-radius: 4px;
@@ -502,6 +520,30 @@ header {
   font-weight: 700;
   color: var(--red);
   font-variant-numeric: tabular-nums;
+}
+
+.price-unit {
+  font-size: 0.72rem;
+  color: var(--muted);
+}
+.opt-select {
+  width: 100%;
+  border: 1px solid var(--bdr);
+  border-radius: 4px;
+  padding: 0.35rem 0.5rem;
+  margin-bottom: 0.5rem;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.8rem;
+  color: var(--text);
+  background: var(--white);
+  cursor: pointer;
+}
+.opt-note {
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--org);
+  min-height: 1.1em;
+  margin: -0.5rem 0 0.4rem;
 }
 
 .add-to-cart {
@@ -956,7 +998,6 @@ footer {
 
   /* FABs: shift left a bit so they don't overlap */
   .wa-fab { bottom: 5rem; right: 1rem; font-size: 0.8rem; padding: 0.55rem 0.9rem 0.55rem 0.7rem; }
-  .admin-fab { bottom: 1rem; right: 1rem; }
 
   /* Order modal: full screen */
   .order-modal-box {
@@ -972,9 +1013,6 @@ footer {
   /* Success overlay */
   .suc-box { padding: 2rem 1.2rem; margin: 1rem; }
 
-  /* Admin panel */
-  .admin-panel { width: 100%; left: 0; right: 0; border-radius: 0; }
-  .admin-table-wrap { font-size: 0.72rem; }
 }
 
 /* ── COUNTDOWN TIMER ─────────────────────────────────── */
@@ -1182,14 +1220,23 @@ footer {
 .fg { margin-bottom: 1rem; }
 .fg label { display: block; font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: var(--text); margin-bottom: 0.35rem; }
 .fg label .req { color: var(--red); }
-.fg input, .fg textarea {
+.fg input, .fg textarea, .fg select {
   width: 100%; border: 1.5px solid var(--bdr); border-radius: 6px;
   padding: 0.65rem 0.85rem; font-family: 'Poppins', sans-serif;
   font-size: 0.88rem; color: var(--text); background: #fafafa;
   transition: border-color 0.18s; resize: none;
 }
-.fg input:focus, .fg textarea:focus { outline: none; border-color: var(--gold); background: white; }
-.fg input.err { border-color: var(--red); }
+.fg input:focus, .fg textarea:focus, .fg select:focus { outline: none; border-color: var(--gold); background: white; }
+.fg input.err, .fg textarea.err, .fg select.err { border-color: var(--red); }
+.order-type { display: flex; gap: 0.5rem; flex-wrap: wrap; }
+.fg .ot-opt {
+  flex: 1; min-width: 140px; display: flex; align-items: center; gap: 0.45rem;
+  border: 1.5px solid var(--bdr); border-radius: 6px; padding: 0.6rem 0.75rem; margin: 0;
+  font-size: 0.85rem; font-weight: 600; text-transform: none; letter-spacing: 0; cursor: pointer;
+}
+.fg .ot-opt:has(input:checked) { border-color: var(--gold); background: #fff8e1; }
+.fg .ot-opt input { width: auto; padding: 0; margin: 0; accent-color: var(--org); }
+.pay-note { font-size: 0.78rem; color: var(--muted); margin: -0.3rem 0 1rem; line-height: 1.5; }
 .order-summary-box {
   background: #fff8e1; border: 1px solid rgba(255,215,0,0.4);
   border-radius: 6px; padding: 0.8rem 1rem; margin: 0.3rem 0 1rem;
@@ -1225,31 +1272,6 @@ footer {
 .btn-continue:hover { background: var(--gold); color: var(--dk); }
 
 /* ── ADMIN PANEL ─────────────────────────────────────── */
-.admin-fab { position: fixed; bottom: 1.5rem; left: 1.5rem; z-index: 300; background: var(--dk); color: var(--gold); border: 1.5px solid rgba(255,215,0,0.35); border-radius: 50px; padding: 0.6rem 1.1rem; font-family: 'Poppins', sans-serif; font-size: 0.8rem; font-weight: 700; cursor: pointer; display: none; align-items: center; gap: 0.4rem; box-shadow: 0 4px 20px rgba(0,0,0,0.35); transition: transform 0.2s; }
-.admin-fab.visible { display: flex; }
-.admin-fab:hover { transform: translateY(-2px); }
-.admin-panel { position: fixed; inset: 0; background: #f0f0f2; z-index: 800; display: flex; flex-direction: column; transform: translateX(-100%); transition: transform 0.3s; overflow: hidden; }
-.admin-panel.open { transform: none; }
-.admin-hd { background: var(--dk); color: var(--gold); padding: 1rem 1.5rem; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-shrink: 0; }
-.admin-hd h2 { font-family: 'Cinzel', serif; font-size: 1rem; font-weight: 900; }
-.admin-hd-r { display: flex; gap: 0.7rem; align-items: center; }
-.admin-export { background: #2e7d32; color: white; border: none; border-radius: 4px; padding: 0.45rem 0.9rem; font-family: 'Poppins', sans-serif; font-size: 0.78rem; font-weight: 700; cursor: pointer; }
-.admin-export:hover { background: #1b5e20; }
-.admin-close { background: none; border: none; color: rgba(255,215,0,0.7); font-size: 1.3rem; cursor: pointer; }
-.admin-body { flex: 1; overflow-y: auto; padding: 1.5rem; }
-.admin-stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 1rem; margin-bottom: 1.5rem; }
-.admin-stat { background: white; border: 1px solid var(--bdr); border-radius: 8px; padding: 1rem; text-align: center; }
-.astat-num { font-family: 'Cinzel', serif; font-size: 1.8rem; font-weight: 900; color: var(--dk); line-height: 1; font-variant-numeric: tabular-nums; }
-.astat-lbl { font-size: 0.7rem; color: var(--muted); margin-top: 0.3rem; text-transform: uppercase; letter-spacing: 0.08em; }
-.admin-note { background: #fff3cd; border: 1px solid #ffc107; border-radius: 6px; padding: 0.75rem 1rem; font-size: 0.78rem; color: #664d03; margin-bottom: 1rem; line-height: 1.5; }
-.admin-tbl-wrap { background: white; border: 1px solid var(--bdr); border-radius: 8px; overflow: auto; }
-.admin-tbl { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
-.admin-tbl th { background: var(--dk); color: var(--gold); padding: 0.65rem 0.9rem; text-align: left; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.07em; white-space: nowrap; }
-.admin-tbl td { padding: 0.65rem 0.9rem; border-bottom: 1px solid var(--bdr); vertical-align: top; color: var(--text); }
-.admin-tbl tr:last-child td { border-bottom: none; }
-.admin-tbl tr:hover td { background: #fafafa; }
-.admin-empty { text-align: center; padding: 3rem; color: var(--muted); }
-.admin-empty .ae { font-size: 3rem; display: block; margin-bottom: 1rem; }
 .status-pill { display: inline-block; padding: 0.12rem 0.5rem; border-radius: 20px; font-size: 0.68rem; font-weight: 700; background: #e8f5e9; color: #2e7d32; }
 
 /* ── VIDEO SECTION ───────────────────────────────────── */
@@ -1401,14 +1423,14 @@ footer {
 
 <!-- TOP BAR -->
 <div class="topbar">
-  🎇 <strong>Diwali Special:</strong> Best prices guaranteed! &nbsp;·&nbsp; 📞 +91 99224 93694
+  🎇 <strong>Skip the queue:</strong> Order online, pick up ready-packed at the shop &nbsp;·&nbsp; 📞 +91 99224 93694
 </div>
 
 <!-- HEADER -->
 <header>
   <div class="logo">
     Shri Gurudevdatta
-    <small>Fataka Traders · Est. 1998</small>
+    <small>Fataka Traders · Est. 2006</small>
   </div>
   <nav class="header-nav">
     <a href="#shop">Shop</a>
@@ -1426,14 +1448,14 @@ footer {
 <!-- HERO -->
 <div class="hero">
   <canvas id="fw-canvas"></canvas>
-  <p class="hero-tag">✦ Celebrating Every Festival Since 1998 ✦</p>
+  <p class="hero-tag">✦ Celebrating Every Festival Since 2006 ✦</p>
   <h1>Shri Gurudevdatta<br>Fataka Traders</h1>
-  <p>Premium crackers from Anil, Supreme, Vadivel, Mori & more — at unbeatable prices</p>
+  <p>Anil, Standard, Mori, Sunshine, Ayyanar, Raju Khanna & Classic crackers. Order online and pick up your packed order without waiting in line.</p>
   <div class="hero-badges">
     <span class="hero-badge">🛡️ PESO Licensed</span>
     <span class="hero-badge">🎇 Diwali 2026 Collection</span>
 
-    <span class="hero-badge">⭐ Trusted Since 1998</span>
+    <span class="hero-badge">⭐ Trusted Since 2006</span>
   </div>
 
   <!-- COUNTDOWN -->
@@ -1478,22 +1500,28 @@ footer {
 <!-- BRANDS STRIP -->
 <div class="brands-section" id="brands">
   <div class="brands-inner">
-    <div class="brands-title">Authorised Dealer For</div>
+    <div class="brands-title">Brands We Stock</div>
     <div class="brands-row">
-      <div class="brand-pill" style="border-color:#d32f2f" onclick="filterBrand('Anil')">
-        <span class="brand-dot" style="background:#d32f2f"></span> Anil Fireworks
+      <div class="brand-pill" style="border-color:#d32f2f;cursor:default">
+        <span class="brand-dot" style="background:#d32f2f"></span> Anil
       </div>
-      <div class="brand-pill" style="border-color:#1565c0" onclick="filterBrand('Supreme')">
-        <span class="brand-dot" style="background:#1565c0"></span> Supreme Crackers
+      <div class="brand-pill" style="border-color:#1565c0;cursor:default">
+        <span class="brand-dot" style="background:#1565c0"></span> Standard
       </div>
-      <div class="brand-pill" style="border-color:#2e7d32" onclick="filterBrand('Vadivel')">
-        <span class="brand-dot" style="background:#2e7d32"></span> Vadivel Pyrotechs
+      <div class="brand-pill" style="border-color:#6a1b9a;cursor:default">
+        <span class="brand-dot" style="background:#6a1b9a"></span> Mori
       </div>
-      <div class="brand-pill" style="border-color:#6a1b9a" onclick="filterBrand('Mori')">
-        <span class="brand-dot" style="background:#6a1b9a"></span> Mori Fireworks
+      <div class="brand-pill" style="border-color:#f57c00;cursor:default">
+        <span class="brand-dot" style="background:#f57c00"></span> Sunshine
       </div>
-      <div class="brand-pill active" onclick="filterBrand(null)">
-        🎆 All Brands
+      <div class="brand-pill" style="border-color:#2e7d32;cursor:default">
+        <span class="brand-dot" style="background:#2e7d32"></span> Ayyanar
+      </div>
+      <div class="brand-pill" style="border-color:#00838f;cursor:default">
+        <span class="brand-dot" style="background:#00838f"></span> Raju Khanna
+      </div>
+      <div class="brand-pill" style="border-color:#5d4037;cursor:default">
+        <span class="brand-dot" style="background:#5d4037"></span> Classic
       </div>
     </div>
   </div>
@@ -1505,19 +1533,13 @@ footer {
   <aside class="sidebar">
     <div class="sidebar-title">☰ All Departments</div>
     <ul class="cat-list" id="catList"></ul>
-    <div class="brand-filter">
-      <div class="brand-filter-title">Filter by Brand</div>
-      <label class="brand-check"><input type="checkbox" id="ck-anil" onchange="applyFilters()"> <span class="brand-dot" style="background:#d32f2f"></span> Anil</label>
-      <label class="brand-check"><input type="checkbox" id="ck-supreme" onchange="applyFilters()"> <span class="brand-dot" style="background:#1565c0"></span> Supreme</label>
-      <label class="brand-check"><input type="checkbox" id="ck-vadivel" onchange="applyFilters()"> <span class="brand-dot" style="background:#2e7d32"></span> Vadivel</label>
-      <label class="brand-check"><input type="checkbox" id="ck-mori" onchange="applyFilters()"> <span class="brand-dot" style="background:#6a1b9a"></span> Mori</label>
-    </div>
   </aside>
 
   <!-- MAIN -->
   <main class="shop-main">
     <div class="shop-toolbar">
       <div class="result-count" id="resultCount">Showing <strong>0</strong> results</div>
+      <input type="search" class="search-input" id="searchInput" placeholder="🔍 Search crackers…" oninput="applyFilters()">
       <select class="sort-select" id="sortSelect" onchange="applyFilters()">
         <option value="default">Default sorting</option>
         <option value="price-asc">Price: Low to High</option>
@@ -1554,14 +1576,14 @@ footer {
       <div class="trust-sub">Wholesale rates available</div>
     </div>
     <div class="trust-item">
-      <div class="trust-icon">🚚</div>
-      <div class="trust-label">Free Delivery</div>
-      <div class="trust-sub">On orders above ₹1000</div>
+      <div class="trust-icon">🏪</div>
+      <div class="trust-label">Quick Pickup</div>
+      <div class="trust-sub">Order online, collect ready-packed</div>
     </div>
     <div class="trust-item">
       <div class="trust-icon">⭐</div>
-      <div class="trust-label">25+ Years</div>
-      <div class="trust-sub">Trusted since 1998</div>
+      <div class="trust-label">20 Years</div>
+      <div class="trust-sub">Trusted since 2006</div>
     </div>
   </div>
 </div>
@@ -1586,7 +1608,7 @@ footer {
         <div class="ci">📍</div>
         <div>
           <h4>Location</h4>
-          <p>Diagonal Business Centre,<br>Near Ganesh Mandir, Ayush Garden,<br>Raje Shivaji Nagar, Chikhali,<br>Pimpri-Chinchwad, Maharashtra 411019</p>
+          <p>Shop No. 44, Diagonal Business Centre,<br>Sector 16, Near Ganesh Mandir, Ayush Garden,<br>Raje Shivaji Nagar, Chikhali,<br>Pimpri-Chinchwad, Maharashtra 411019</p>
         </div>
       </div>
       <div class="contact-row">
@@ -1636,7 +1658,7 @@ footer {
 <!-- FOOTER -->
 <footer>
   <div class="footer-brand">Shri Gurudevdatta Fataka Traders</div>
-  <p class="footer-note">🪔 Lighting up celebrations since 1998 · PESO Licensed & Approved · Maharashtra, India<br>
+  <p class="footer-note">🪔 Lighting up celebrations since 2006 · PESO Licensed & Approved · Maharashtra, India<br>
   Please burst crackers responsibly within permitted hours. Help keep our environment clean.</p>
 </footer>
 
@@ -1657,12 +1679,32 @@ footer {
         <input type="tel" id="f-phone" placeholder="+91 XXXXX XXXXX" autocomplete="tel">
       </div>
       <div class="fg">
-        <label>Delivery Address <span class="req">*</span></label>
-        <textarea id="f-address" rows="3" placeholder="House/Flat No., Street, Area, City" autocomplete="street-address"></textarea>
+        <label>How do you want your order? <span class="req">*</span></label>
+        <div class="order-type">
+          <label class="ot-opt"><input type="radio" name="otype" value="pickup" checked onchange="setOrderType()"> 🏪 Pickup from shop</label>
+          <label class="ot-opt"><input type="radio" name="otype" value="delivery" onchange="setOrderType()"> 🚚 Home delivery</label>
+        </div>
       </div>
-      <div class="fg">
-        <label>Pincode <span class="req">*</span></label>
-        <input type="text" id="f-pin" placeholder="411001" maxlength="6" inputmode="numeric">
+      <div id="pickupFields">
+        <div class="fg">
+          <label>Pickup Day <span class="req">*</span></label>
+          <select id="f-day" onchange="fillPickupSlots()"></select>
+        </div>
+        <div class="fg">
+          <label>Pickup Time <span class="req">*</span></label>
+          <select id="f-slot"></select>
+        </div>
+        <p class="pay-note">We pack your order before you arrive, so there is no waiting at the counter. Pay at the shop by cash or UPI.</p>
+      </div>
+      <div id="deliveryFields" hidden>
+        <div class="fg">
+          <label>Delivery Address <span class="req">*</span></label>
+          <textarea id="f-address" rows="3" placeholder="House/Flat No., Street, Area, City" autocomplete="street-address"></textarea>
+        </div>
+        <div class="fg">
+          <label>Pincode <span class="req">*</span></label>
+          <input type="text" id="f-pin" placeholder="411019" maxlength="6" inputmode="numeric">
+        </div>
       </div>
       <div class="order-summary-box">
         <h4>🛒 Your Order</h4>
@@ -1687,128 +1729,121 @@ footer {
     <h2>Order Placed!</h2>
     <p class="suc-sub">Your order has been sent to<br><strong>Shri Gurudevdatta Fataka Traders</strong></p>
     <div class="order-num-badge" id="sucOrderNum">GD-XXXXX</div>
-    <p class="suc-note">Please save this order number. We will contact you soon to confirm delivery details.</p>
+    <p class="suc-note" id="sucNote"></p>
     <button class="btn-continue" onclick="closeSuccess()">🛒 Continue Shopping</button>
   </div>
 </div>
 
-<!-- ADMIN FAB -->
-<button class="admin-fab" id="adminFab" onclick="openAdmin()">📊 Orders</button>
-
-<!-- ADMIN PANEL -->
-<div class="admin-panel" id="adminPanel">
-  <div class="admin-hd">
-    <h2>📊 Orders Dashboard — Shri Gurudevdatta Fataka Traders</h2>
-    <div class="admin-hd-r">
-      <button class="admin-export" id="adminExport" onclick="exportCSV()">⬇️ Export Excel/CSV</button>
-      <button class="admin-close" onclick="closeAdmin()">✕</button>
-    </div>
-  </div>
-  <div class="admin-body">
-    <div class="admin-note">
-      ℹ️ <strong>How it works:</strong> Orders placed by customers via WhatsApp are saved here automatically when they use this page while signed in to claude.ai. The WhatsApp message you receive always contains the full order details. Export as CSV to open in Excel or Google Sheets.
-    </div>
-    <div class="admin-stats">
-      <div class="admin-stat"><div class="astat-num" id="aStatOrders">—</div><div class="astat-lbl">Total Orders</div></div>
-      <div class="admin-stat"><div class="astat-num" id="aStatRevenue">—</div><div class="astat-lbl">Total Revenue</div></div>
-      <div class="admin-stat"><div class="astat-num" id="aStatToday">—</div><div class="astat-lbl">Today's Orders</div></div>
-    </div>
-    <div class="admin-tbl-wrap">
-      <table class="admin-tbl">
-        <thead>
-          <tr>
-            <th>Order #</th>
-            <th>Date & Time</th>
-            <th>Customer</th>
-            <th>Phone</th>
-            <th>Address</th>
-            <th>Items</th>
-            <th>Total</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody id="adminTbody">
-          <tr><td colspan="8"><div class="admin-empty"><span class="ae">📋</span>Loading orders…</div></td></tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-</div>
 
 <script>
 /* ── DATA ─────────────────────────────────────────── */
-const BRANDS = {
-  Anil:    { color: '#d32f2f', grad: 'linear-gradient(160deg,#b71c1c,#d32f2f,#ef5350)' },
-  Supreme: { color: '#1565c0', grad: 'linear-gradient(160deg,#0d47a1,#1565c0,#1976d2)' },
-  Vadivel: { color: '#2e7d32', grad: 'linear-gradient(160deg,#1b5e20,#2e7d32,#388e3c)' },
-  Mori:    { color: '#6a1b9a', grad: 'linear-gradient(160deg,#4a148c,#6a1b9a,#7b1fa2)' },
-};
-
+// Prices from the 2026 retail price list.
+// Each option is [label, price] or [label, price, minQty]. An empty label means the
+// price list gives several prices without naming them, so the customer picks by price.
 const CATEGORIES = [
-  { id:'all',           label:'All Products' },
-  { id:'singlesound',   label:'Single Sound Crackers' },
-  { id:'multisound',    label:'Multi Sound Crackers' },
-  { id:'sparklers',     label:'Sparklers' },
-  { id:'chakkars',      label:'Chakkars' },
-  { id:'flowerpots',    label:'Flower Pots' },
-  { id:'twinklingstars',label:'Twinkling Stars' },
-  { id:'pencil',        label:'Pencil Crackers' },
-  { id:'rockets',       label:'Rockets' },
-  { id:'atombomb',      label:'Atom Bomb' },
-  { id:'loosecrackers', label:'Loose Crackers' },
-  { id:'giftboxes',     label:'Gift Boxes' },
-  { id:'miniskyfunction',label:'Mini Sky Function' },
-  { id:'7shots',        label:'7 Shots' },
-  { id:'10to20shots',   label:'Fancy 10–20 Shots' },
-  { id:'25plusshots',   label:'Fancy 25+ Shots' },
+  { id:'all',        label:'All Products',            icon:'🎆', grad:'linear-gradient(160deg,#13133a,#2a2a6e,#3d3d9e)' },
+  { id:'combo',      label:'Family Pack',             icon:'🎁', grad:'linear-gradient(160deg,#b71c1c,#d32f2f,#ef5350)' },
+  { id:'sparklers',  label:'Sparklers',               icon:'✨', grad:'linear-gradient(160deg,#e65100,#f57c00,#ffb74d)' },
+  { id:'chakkar',    label:'Ground Chakkar',          icon:'🌀', grad:'linear-gradient(160deg,#4a148c,#6a1b9a,#8e24aa)' },
+  { id:'flowerpots', label:'Flower Pots',             icon:'🌸', grad:'linear-gradient(160deg,#ad1457,#c2185b,#ec407a)' },
+  { id:'mudpots',    label:'Mud Pots',                icon:'🏺', grad:'linear-gradient(160deg,#5d4037,#795548,#a1887f)' },
+  { id:'fancy',      label:'Children Fancy Items',    icon:'🦋', grad:'linear-gradient(160deg,#00695c,#00897b,#4db6ac)' },
+  { id:'rockets',    label:'Rockets',                 icon:'🚀', grad:'linear-gradient(160deg,#0d47a1,#1565c0,#42a5f5)' },
+  { id:'sound',      label:'Sound Crackers',          icon:'💥', grad:'linear-gradient(160deg,#bf360c,#d84315,#ff7043)' },
+  { id:'garlands',   label:'Garlands / Ladi',         icon:'🧨', grad:'linear-gradient(160deg,#880e4f,#b71c1c,#e53935)' },
+  { id:'shots',      label:'Fancy Multicolour Shots', icon:'🎇', grad:'linear-gradient(160deg,#1a237e,#283593,#5c6bc0)' },
 ];
 
 const PRODUCTS = [
-  { id:1,  name:'Baby Twinkling Star',       company:'Anil',    cat:'sparklers',      orig:114,  price:57,  icon:'✨', rating:4.5, reviews:12 },
-  { id:2,  name:'10cm Colour Sparklers',     company:'Anil',    cat:'sparklers',      orig:68,   price:34,  icon:'🌟', rating:4,   reviews:8  },
-  { id:3,  name:'Electric Sparklers Deluxe', company:'Supreme', cat:'sparklers',      orig:60,   price:30,  icon:'⚡', rating:3.5, reviews:0  },
-  { id:4,  name:'Red Sparklers 10cm',        company:'Vadivel', cat:'sparklers',      orig:74,   price:37,  icon:'🎆', rating:4,   reviews:5  },
-  { id:5,  name:'Fancy Sparkler Assorted',   company:'Mori',    cat:'sparklers',      orig:90,   price:45,  icon:'🌠', rating:4,   reviews:10 },
-  { id:6,  name:'Ground Chakra (5 pcs)',     company:'Mori',    cat:'chakkars',       orig:90,   price:45,  icon:'🌀', rating:4.5, reviews:18 },
-  { id:7,  name:'Super Chakra Deluxe',       company:'Supreme', cat:'chakkars',       orig:130,  price:65,  icon:'💫', rating:4,   reviews:7  },
-  { id:8,  name:'Flower Pot Small',          company:'Anil',    cat:'flowerpots',     orig:130,  price:65,  icon:'🌸', rating:4,   reviews:22 },
-  { id:9,  name:'Flower Pot Jumbo',          company:'Supreme', cat:'flowerpots',     orig:240,  price:120, icon:'🌺', rating:4.5, reviews:14 },
-  { id:10, name:'Anaar Fancy XL',            company:'Vadivel', cat:'flowerpots',     orig:200,  price:100, icon:'🎇', rating:5,   reviews:20 },
-  { id:11, name:'10 KA Dhum',               company:'Vadivel', cat:'multisound',     orig:820,  price:410, icon:'💥', rating:4,   reviews:6  },
-  { id:12, name:'Ladi 1000 Wala',            company:'Anil',    cat:'multisound',     orig:300,  price:150, icon:'🧨', rating:4.5, reviews:35 },
-  { id:13, name:'Single Sound Ladi 100',     company:'Anil',    cat:'singlesound',    orig:65,   price:32,  icon:'🔊', rating:4,   reviews:40 },
-  { id:14, name:'Rocket Box (10 pcs)',        company:'Anil',    cat:'rockets',        orig:170,  price:85,  icon:'🚀', rating:4.5, reviews:31 },
-  { id:15, name:'Sky Rocket Super',          company:'Mori',    cat:'rockets',        orig:220,  price:110, icon:'🛸', rating:4,   reviews:13 },
-  { id:16, name:'Atom Bomb (Pack of 10)',    company:'Vadivel', cat:'atombomb',       orig:110,  price:55,  icon:'💣', rating:3.5, reviews:0  },
-  { id:17, name:'Pencil Cracker Box',        company:'Anil',    cat:'pencil',         orig:96,   price:48,  icon:'✏️', rating:4,   reviews:11 },
-  { id:18, name:'Twinkling Stars Fancy 5pcs',company:'Supreme', cat:'twinklingstars', orig:200,  price:100, icon:'⭐', rating:4.5, reviews:16 },
-  { id:19, name:'Loose Crackers Assorted',   company:'Mori',    cat:'loosecrackers',  orig:190,  price:95,  icon:'🎉', rating:4,   reviews:25 },
-  { id:20, name:'Deluxe Festival Gift Box',  company:'Supreme', cat:'giftboxes',      orig:1199, price:599, icon:'🎁', rating:4.5, reviews:47 },
-  { id:21, name:'Family Combo Gift Pack',    company:'Anil',    cat:'giftboxes',      orig:799,  price:399, icon:'🎀', rating:5,   reviews:28 },
-  { id:22, name:'Mini Sky Function',         company:'Supreme', cat:'miniskyfunction',orig:350,  price:175, icon:'🌠', rating:4,   reviews:7  },
-  { id:23, name:'Sky Shot 7 Shells',         company:'Mori',    cat:'7shots',         orig:420,  price:210, icon:'🎆', rating:5,   reviews:9  },
-  { id:24, name:'Fancy 15 Shots Multi-Color',company:'Mori',    cat:'10to20shots',    orig:560,  price:280, icon:'🎇', rating:4.5, reviews:19 },
-  { id:25, name:'Color Rain 20 Shots',       company:'Vadivel', cat:'10to20shots',    orig:700,  price:350, icon:'🌈', rating:4,   reviews:8  },
-  { id:26, name:'Grand Finale 30 Shots',     company:'Supreme', cat:'25plusshots',    orig:1400, price:700, icon:'🏆', rating:5,   reviews:33 },
-  { id:27, name:'Blister Pack 10cm',         company:'Mori',    cat:'singlesound',    orig:88,   price:44,  icon:'🔔', rating:4,   reviews:0  },
+  { id:1,  cat:'combo',      name:'Anil Family Pack (36 items)',        opts:[['',1000]] },
+  // Sparklers: 10 cm minimum 5 packets, 15 cm minimum 2 packets
+  { id:2,  cat:'sparklers',  name:'7 cm Plain Sparklers (10×1)',        opts:[['',100]] },
+  { id:3,  cat:'sparklers',  name:'10 cm / 12 cm Plain Sparklers',      opts:[['10 cm',20,5],['12 cm',30]] },
+  { id:4,  cat:'sparklers',  name:'10 cm Green / Mix Colour Sparklers', opts:[['Green',25,5],['Mix Colour',30,5]] },
+  { id:5,  cat:'sparklers',  name:'15 cm / 30 cm Plain Sparklers',      opts:[['15 cm',50,2],['30 cm',60]] },
+  { id:6,  cat:'sparklers',  name:'15 cm Mix Colour Sparklers',         opts:[['',75,2]] },
+  { id:7,  cat:'sparklers',  name:'50 cm Plain Sparklers',              opts:[['',150]] },
+  { id:8,  cat:'chakkar',    name:'Big Chakkar (25×1)',                 opts:[['',100]] },
+  { id:9,  cat:'chakkar',    name:'Big Chakkar (10×1)',                 opts:[['',45]] },
+  { id:10, cat:'chakkar',    name:'Special / Ashoka Chakkar',           opts:[['',120],['',150],['',180]] },
+  { id:11, cat:'chakkar',    name:'Deluxe Chakkar',                     opts:[['',170],['',200],['',250]] },
+  { id:12, cat:'chakkar',    name:'Spinner (Mix / Club / Dlx / Combo)', opts:[['',250]] },
+  { id:13, cat:'chakkar',    name:'Whistling Wheel',                    opts:[['',200]] },
+  { id:14, cat:'flowerpots', name:'Small Pots',                         opts:[['',60]] },
+  { id:15, cat:'flowerpots', name:'Big Pots',                           opts:[['',100]] },
+  { id:16, cat:'flowerpots', name:'Special Pots',                       opts:[['',125],['',225],['',250]] },
+  { id:17, cat:'flowerpots', name:'Ashoka Pots',                        opts:[['',150],['',200],['',260]] },
+  { id:18, cat:'flowerpots', name:'Colour Cone / Dlx (5×1)',            opts:[['',350]] },
+  { id:19, cat:'flowerpots', name:'Colour Koti / Best',                 opts:[['',200],['',350],['',450],['',600]] },
+  { id:20, cat:'mudpots',    name:'Tim Tim',                            opts:[['',250]] },
+  { id:21, cat:'mudpots',    name:'Ashrafi',                            opts:[['',400]] },
+  { id:22, cat:'mudpots',    name:'Dlx Elite',                          opts:[['',175]] },
+  { id:23, cat:'fancy',      name:'Throw Bomb / Aapti Bar (Pop Pop)',   unit:'box', opts:[['',120],['',150],['',400]] },
+  { id:24, cat:'fancy',      name:'Ring Caps / Bidi Bomb',              opts:[['',15],['',20]] },
+  { id:25, cat:'fancy',      name:'Nano Pots',                          opts:[['',75]] },
+  { id:26, cat:'fancy',      name:'Kitkat',                             opts:[['',35],['',45]] },
+  { id:27, cat:'fancy',      name:'Helicopter / Drone',                 opts:[['Helicopter',125],['Drone',150]] },
+  { id:28, cat:'fancy',      name:'Butterfly',                          opts:[['',100],['',125]] },
+  { id:29, cat:'fancy',      name:'Cold Pyro',                          opts:[['',80],['',110],['',150],['',200]] },
+  { id:30, cat:'fancy',      name:'Ganga Jamuna / Photo Flash',         opts:[['',100]] },
+  { id:31, cat:'fancy',      name:'Penta Sky',                          opts:[['',225],['',250]] },
+  { id:32, cat:'fancy',      name:'7 Shot Spiderman (3 pcs)',           opts:[['',125]] },
+  { id:33, cat:'fancy',      name:'Fire Eggs / Pyro Gun',               opts:[['Fire Eggs',150],['Pyro Gun',200]] },
+  { id:34, cat:'fancy',      name:'Trixxx',                             opts:[['',200]] },
+  { id:35, cat:'fancy',      name:'Mojito',                             opts:[['',450]] },
+  { id:36, cat:'rockets',    name:'Rocket Bomb',                        opts:[['',100]] },
+  { id:37, cat:'rockets',    name:'Two Sound Rocket',                   opts:[['',150]] },
+  { id:38, cat:'rockets',    name:'Whistling Rockets',                  opts:[['',200],['',250]] },
+  { id:39, cat:'sound',      name:'2.75" Chimni / Bird Crackers',       opts:[['',12],['',15]] },
+  { id:40, cat:'sound',      name:'3.5" Narteki Crackers',              opts:[['',20],['',25]] },
+  { id:41, cat:'sound',      name:'4" Narteki / Deluxe Crackers',       opts:[['Narteki',40],['Deluxe',45]] },
+  { id:42, cat:'sound',      name:'Double / Triple Bar (2 / 3 Sound)',  opts:[['Double',50],['Triple',60]] },
+  { id:43, cat:'sound',      name:'Deluxe Gold / Jumbo',                opts:[['',50],['',60],['',80]] },
+  { id:44, cat:'sound',      name:'Bullet / Sholy Bomb',                opts:[['Bullet',40],['Sholy',50]] },
+  { id:45, cat:'sound',      name:'Saddam Bomb (Nylon) / Gajani Bomb',  opts:[['Saddam (Nylon)',80],['Gajani',150]] },
+  { id:46, cat:'sound',      name:'Cutter / Classic',                   opts:[['',200]] },
+  { id:47, cat:'garlands',   name:'Red Bijili (50 / 100 pcs)',          opts:[['',30],['',50],['',70]] },
+  { id:48, cat:'garlands',   name:'28 Wala Medium',                     opts:[['',20],['',25]] },
+  { id:49, cat:'garlands',   name:'28 Wala Giant',                      opts:[['',30],['',35]] },
+  { id:50, cat:'garlands',   name:'20 / 24 Wala Deluxe',                opts:[['20 Wala',50],['24 Wala',60]] },
+  { id:51, cat:'garlands',   name:'Lavangi Mala (Motta Tukda)',         opts:[['',200]] },
+  { id:52, cat:'garlands',   name:'1000 Wala (1K)',                     opts:[['',200],['',250],['',350],['',400]] },
+  { id:53, cat:'garlands',   name:'2000 Wala (2K)',                     opts:[['',400],['',500],['',750]] },
+  { id:54, cat:'garlands',   name:'5000 Wala (5K)',                     opts:[['',1000],['',1200],['',1500],['',1700]] },
+  { id:55, cat:'garlands',   name:'10000 Wala (10K)',                   opts:[['',2200],['',2400],['',2500],['',3200]] },
+  { id:56, cat:'shots',      name:'12 Shot',                            unit:'box', opts:[['',200],['',300],['',350],['',400]] },
+  { id:57, cat:'shots',      name:'15 Shot',                            opts:[['',400]] },
+  { id:58, cat:'shots',      name:'25 Shot',                            opts:[['',350],['',450],['',500]] },
+  { id:59, cat:'shots',      name:'50 Shot',                            opts:[['',850],['',950]] },
+  { id:60, cat:'shots',      name:'30 Shot / 60 Shot',                  opts:[['30 Shot',650],['60 Shot',1000]] },
+  { id:61, cat:'shots',      name:'100 Shot / 120 Shot',                unit:'piece', opts:[['',1400],['',1800],['',2200]] },
+  { id:62, cat:'shots',      name:'240 Shot',                           unit:'piece', opts:[['',3000],['',3900],['',4400]] },
+  { id:63, cat:'shots',      name:'2" Pipe / 2" Pipe (3 pcs)',          opts:[['',60],['',75],['',350]] },
+  { id:64, cat:'shots',      name:'2" Pipe Crackling (3 pcs)',          opts:[['',500],['',600]] },
+  { id:65, cat:'shots',      name:'3" / 3.5" Pipe (2 pcs)',             opts:[['',300],['',650],['',700],['',800]] },
+  { id:66, cat:'shots',      name:'4" Pipe (2 pcs)',                    opts:[['',600],['',850],['',1000]] },
+  { id:67, cat:'shots',      name:'Rang Game',                          opts:[['',1200]] },
 ];
+
+const CAT_BY_ID = Object.fromEntries(CATEGORIES.map(c => [c.id, c]));
 
 /* ── STATE ─────────────────────────────────────────── */
 let activeCat = 'all';
-let activeBrand = null;
-let cart = [];
+let cart = []; // { key, id, cat, name, unit, price, min, qty }
 
 /* ── HELPERS ───────────────────────────────────────── */
 function fmt(n) { return '₹' + n.toFixed(2); }
 
-function stars(rating) {
-  let s = '';
-  for (let i = 1; i <= 5; i++) {
-    if (i <= Math.floor(rating)) s += '★';
-    else if (i - 0.5 <= rating) s += '½';
-    else s += '☆';
-  }
-  return s;
+function minPrice(p) { return Math.min(...p.opts.map(o => o[1])); }
+
+function optLabel(o) { return o[0] ? `${o[0]} — ₹${o[1]}` : `₹${o[1]}`; }
+
+function cartKey(p, i) { return p.id + '-' + i; }
+
+function cartName(p, i) {
+  const o = p.opts[i];
+  if (o[0]) return `${p.name} (${o[0]})`;
+  return p.opts.length > 1 ? `${p.name} (₹${o[1]} variety)` : p.name;
 }
 
 /* ── CATEGORIES ────────────────────────────────────── */
@@ -1837,27 +1872,17 @@ function applyFilters() {
 
   if (activeCat !== 'all') items = items.filter(p => p.cat === activeCat);
 
-  const checked = ['Anil','Supreme','Vadivel','Mori'].filter(b =>
-    document.getElementById('ck-' + b.toLowerCase()).checked
+  const q = document.getElementById('searchInput').value.trim().toLowerCase();
+  if (q) items = items.filter(p =>
+    p.name.toLowerCase().includes(q) || CAT_BY_ID[p.cat].label.toLowerCase().includes(q)
   );
-  if (activeBrand) items = items.filter(p => p.company === activeBrand);
-  else if (checked.length) items = items.filter(p => checked.includes(p.company));
 
   const sort = document.getElementById('sortSelect').value;
-  if (sort === 'price-asc')  items.sort((a,b) => a.price - b.price);
-  if (sort === 'price-desc') items.sort((a,b) => b.price - a.price);
+  if (sort === 'price-asc')  items.sort((a,b) => minPrice(a) - minPrice(b));
+  if (sort === 'price-desc') items.sort((a,b) => minPrice(b) - minPrice(a));
   if (sort === 'name')       items.sort((a,b) => a.name.localeCompare(b.name));
 
   renderProducts(items);
-}
-
-function filterBrand(brand) {
-  activeBrand = brand;
-  document.querySelectorAll('.brand-pill').forEach(p => p.classList.remove('active'));
-  if (!brand) {
-    document.querySelectorAll('.brand-pill').forEach(p => { if (p.textContent.includes('All')) p.classList.add('active'); });
-  }
-  applyFilters();
 }
 
 /* ── RENDER ────────────────────────────────────────── */
@@ -1873,97 +1898,87 @@ function renderProducts(items) {
   }
 
   items.forEach(p => {
-    const brand = BRANDS[p.company];
-    const disc = Math.round((1 - p.price / p.orig) * 100);
-    const inCart = cart.find(c => c.id === p.id);
+    const cat = CAT_BY_ID[p.cat];
+    const unit = p.unit || 'packet';
+    let sel = 0;
 
     const card = document.createElement('div');
     card.className = 'product-card reveal-card';
     card.innerHTML = `
-      <div class="prod-img" style="background:${brand.grad}">
-        <div class="prod-brand-label" style="background:rgba(0,0,0,0.3)">${p.company} Fireworks</div>
-        <div class="prod-icon">${p.icon}</div>
-        <div class="prod-packaging">
-          <div class="prod-pkg-name">${p.name}</div>
-          <div class="prod-pkg-tag">${p.company} · Premium</div>
-        </div>
-        <button class="wishlist-btn" data-id="${p.id}" title="Add to wishlist">♡</button>
-      </div>
       <div class="prod-info">
-        <div class="prod-company" style="color:${brand.color}">${p.company}</div>
+        <div class="prod-company" style="color:var(--org)">${cat.label}</div>
         <div class="prod-title">${p.name}</div>
-        <div class="prod-stars">
-          <span class="stars">${stars(p.rating)}</span>
-          <span class="review-count">(${p.reviews})</span>
-        </div>
+        ${p.opts.length > 1 ? `<select class="opt-select" aria-label="Choose variety">
+          ${p.opts.map((o, i) => `<option value="${i}">${optLabel(o)}</option>`).join('')}
+        </select>` : ''}
         <div class="prod-price">
-          <span class="price-orig">${fmt(p.orig)}</span>
-          <span class="price-sale">${fmt(p.price)}</span>
+          <span class="price-sale"></span>
+          <span class="price-unit">/ ${unit}</span>
         </div>
+        <div class="opt-note"></div>
         <div class="card-atc-row">
-          <div class="card-qty-ctrl" id="qc-${p.id}">
-            <button class="card-qty-btn card-qty-minus" data-id="${p.id}">−</button>
-            <span class="card-qty-num" id="qn-${p.id}">${inCart ? inCart.qty : 0}</span>
-            <button class="card-qty-btn card-qty-plus" data-id="${p.id}">+</button>
+          <div class="card-qty-ctrl">
+            <button class="card-qty-btn card-qty-minus">−</button>
+            <span class="card-qty-num">0</span>
+            <button class="card-qty-btn card-qty-plus">+</button>
           </div>
-          <button class="add-to-cart${inCart ? ' added' : ''}" data-id="${p.id}">
-            ${inCart ? '✓ In Cart' : '🛒 Add'}
-          </button>
+          <button class="add-to-cart">🛒 Add</button>
         </div>
       </div>`;
 
-    card.querySelector('.wishlist-btn').addEventListener('click', function() {
-      this.classList.toggle('liked');
-      this.textContent = this.classList.contains('liked') ? '♥' : '♡';
-    });
+    const qtyEl = card.querySelector('.card-qty-num');
+    const addBtn = card.querySelector('.add-to-cart');
 
-    card.querySelector('.add-to-cart').addEventListener('click', function() {
-      addToCart(p, 1);
-      this.classList.add('added');
-      this.textContent = '✓ In Cart';
-      const inC = cart.find(c => c.id === p.id);
-      document.getElementById('qn-' + p.id).textContent = inC ? inC.qty : 1;
-    });
+    // Card shows the cart state of the currently selected variety
+    card.refresh = () => {
+      const o = p.opts[sel];
+      card.querySelector('.price-sale').textContent = '₹' + o[1];
+      card.querySelector('.opt-note').textContent = o[2] ? `Minimum ${o[2]} ${unit}s` : '';
+      const inC = cart.find(c => c.key === cartKey(p, sel));
+      qtyEl.textContent = inC ? inC.qty : 0;
+      addBtn.classList.toggle('added', !!inC);
+      addBtn.textContent = inC ? '✓ In Cart' : '🛒 Add';
+    };
 
-    card.querySelector('.card-qty-plus').addEventListener('click', () => {
-      addToCart(p, 1);
-      const inC = cart.find(c => c.id === p.id);
-      document.getElementById('qn-' + p.id).textContent = inC ? inC.qty : 0;
-      const btn = card.querySelector('.add-to-cart');
-      btn.classList.add('added'); btn.textContent = '✓ In Cart';
-    });
+    const optSelect = card.querySelector('.opt-select');
+    if (optSelect) optSelect.addEventListener('change', () => { sel = +optSelect.value; card.refresh(); });
 
-    card.querySelector('.card-qty-minus').addEventListener('click', () => {
-      removeFromCart(p.id);
-      const inC = cart.find(c => c.id === p.id);
-      document.getElementById('qn-' + p.id).textContent = inC ? inC.qty : 0;
-      if (!inC) { const btn = card.querySelector('.add-to-cart'); btn.classList.remove('added'); btn.textContent = '🛒 Add'; }
-    });
+    addBtn.addEventListener('click', () => addToCart(p, sel));
+    card.querySelector('.card-qty-plus').addEventListener('click', () => addToCart(p, sel));
+    card.querySelector('.card-qty-minus').addEventListener('click', () => changeQty(cartKey(p, sel), -1));
 
+    card.refresh();
     grid.appendChild(card);
   });
   setTimeout(initScrollReveal, 50);
 }
 
 /* ── CART ──────────────────────────────────────────── */
-function addToCart(product, delta = 1) {
-  const existing = cart.find(c => c.id === product.id);
-  if (existing) existing.qty += delta;
-  else cart.push({ ...product, qty: delta });
+function addToCart(p, i) {
+  const key = cartKey(p, i);
+  const existing = cart.find(c => c.key === key);
+  if (existing) existing.qty++;
+  else {
+    const o = p.opts[i];
+    const min = o[2] || 1;
+    cart.push({ key, id: p.id, cat: p.cat, name: cartName(p, i), unit: p.unit || 'packet', price: o[1], min, qty: min });
+  }
   updateCartUI();
 }
 
-function removeFromCart(id) {
-  const existing = cart.find(c => c.id === id);
-  if (!existing) return;
-  if (existing.qty > 1) existing.qty--;
-  else cart = cart.filter(c => c.id !== id);
+// Dropping below an item's minimum quantity removes it from the cart
+function changeQty(key, delta) {
+  const item = cart.find(c => c.key === key);
+  if (!item) return;
+  item.qty += delta;
+  if (item.qty < item.min) cart = cart.filter(c => c !== item);
   updateCartUI();
 }
 
 function updateCartUI() {
   const total = cart.reduce((s,c) => s + c.qty, 0);
   document.getElementById('cartCount').textContent = total;
+  document.querySelectorAll('.product-card').forEach(card => card.refresh && card.refresh());
 
   const itemsEl = document.getElementById('cartItems');
   const totalEl = document.getElementById('cartTotal');
@@ -1986,30 +2001,24 @@ function updateCartUI() {
     const lineTotal = item.price * item.qty;
     sum += lineTotal;
     breakdownRows.push(`<div class="cart-breakdown-row"><span>${item.name} ×${item.qty}</span><span>${fmt(lineTotal)}</span></div>`);
-    const brand = BRANDS[item.company];
+    const cat = CAT_BY_ID[item.cat];
     const div = document.createElement('div');
     div.className = 'cart-item';
     div.innerHTML = `
-      <div class="cart-item-icon" style="background:${brand.grad}">${item.icon}</div>
+      <div class="cart-item-icon" style="background:${cat.grad}">${cat.icon}</div>
       <div style="flex:1;min-width:0">
         <div class="cart-item-name">${item.name}</div>
-        <div class="cart-item-company">${item.company}</div>
-        <div class="cart-item-price">${fmt(item.price)}</div>
+        <div class="cart-item-company">${cat.label}${item.min > 1 ? ` · min ${item.min}` : ''}</div>
+        <div class="cart-item-price">${fmt(item.price)} / ${item.unit}</div>
         <div class="cart-item-qty">
-          <button class="qty-btn" data-id="${item.id}" data-op="minus">−</button>
+          <button class="qty-btn" data-op="minus">−</button>
           <span class="qty-val">${item.qty}</span>
-          <button class="qty-btn" data-id="${item.id}" data-op="plus">+</button>
+          <button class="qty-btn" data-op="plus">+</button>
         </div>
       </div>`;
 
     div.querySelectorAll('.qty-btn').forEach(btn => {
-      btn.addEventListener('click', () => {
-        const cartItem = cart.find(c => c.id === item.id);
-        if (!cartItem) return;
-        if (btn.dataset.op === 'plus') cartItem.qty++;
-        else { cartItem.qty--; if (cartItem.qty <= 0) cart.splice(cart.indexOf(cartItem), 1); }
-        updateCartUI();
-      });
+      btn.addEventListener('click', () => changeQty(item.key, btn.dataset.op === 'plus' ? 1 : -1));
     });
 
     itemsEl.appendChild(div);
@@ -2148,21 +2157,68 @@ applyFilters();
 setTimeout(initScrollReveal, 100);
 
 /* ── GOOGLE SHEETS CONFIG ──────────────────────────── */
-// Paste your Google Apps Script Web App URL here after deploying:
+// Google Apps Script Web App URL that saves each order as a row in the orders sheet.
+// The sheet link itself is deliberately not on this page: open it from your own bookmark.
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyfa-G6_WkLolIrRCE2Q3Oc53CAPfWaqOizWoiA7BnFEX1-k3frNkw9flhN1b4O_eLT/exec';
-// Paste your Google Sheet URL here so the admin button opens it:
-const SHEET_URL  = 'https://docs.google.com/spreadsheets/d/1Vn9Qi0rC85OJeKwgsT9PLmLNHzvxTP1hzJ3PWH7UjHI/edit?gid=0#gid=0';
-// Change this PIN to whatever you want (owner-only access):
-const ADMIN_PIN  = '1234';
 
-let adminUnlocked = false;
-let allOrders = [];
+/* ── PICKUP SLOTS ──────────────────────────────────── */
+// Last day customers can choose for pickup (YYYY-MM-DD), and slot hours (24h clock):
+// first slot starts at PICKUP_HOURS[0], last slot ends at PICKUP_HOURS[1].
+const PICKUP_LAST_DAY = '2026-11-10';
+const PICKUP_HOURS = [9, 22];
 
-function initAdmin() {
-  // Show admin FAB for anyone — PIN gate protects the sheet link
-  document.getElementById('adminFab').classList.add('visible');
+function hourLabel(h) {
+  const h12 = h % 12 || 12;
+  return h12 + (h < 12 ? ' AM' : ' PM');
 }
-initAdmin();
+
+// Slots that can still be booked on the given day (today: only slots starting after the current hour)
+function slotsFor(day) {
+  const now = new Date();
+  const isToday = day.toDateString() === now.toDateString();
+  const hours = [];
+  for (let h = PICKUP_HOURS[0]; h < PICKUP_HOURS[1]; h++) {
+    if (!isToday || h > now.getHours()) hours.push(h);
+  }
+  return hours;
+}
+
+function fillPickupDays() {
+  const daySel = document.getElementById('f-day');
+  daySel.innerHTML = '';
+  const last = new Date(PICKUP_LAST_DAY + 'T23:59:59');
+  const today = new Date();
+  for (let d = new Date(today.getFullYear(), today.getMonth(), today.getDate()); d <= last; d.setDate(d.getDate() + 1)) {
+    if (!slotsFor(d).length) continue;
+    const label = (d.toDateString() === today.toDateString() ? 'Today, ' : d.toLocaleDateString('en-IN', { weekday:'short' }) + ', ')
+      + d.toLocaleDateString('en-IN', { day:'numeric', month:'short' });
+    daySel.add(new Option(label, d.toISOString()));
+  }
+  fillPickupSlots();
+}
+
+function fillPickupSlots() {
+  const daySel = document.getElementById('f-day');
+  const slotSel = document.getElementById('f-slot');
+  slotSel.innerHTML = '';
+  if (!daySel.value) {
+    slotSel.add(new Option('Online pickup booking is closed. Please call us.', ''));
+    return;
+  }
+  slotsFor(new Date(daySel.value)).forEach(h => {
+    slotSel.add(new Option(`${hourLabel(h)} – ${hourLabel(h + 1)}`, h));
+  });
+}
+
+function orderType() {
+  return document.querySelector('input[name="otype"]:checked').value;
+}
+
+function setOrderType() {
+  const pickup = orderType() === 'pickup';
+  document.getElementById('pickupFields').hidden = !pickup;
+  document.getElementById('deliveryFields').hidden = pickup;
+}
 
 /* ── ORDER MODAL ───────────────────────────────────── */
 function openOrderModal() {
@@ -2180,6 +2236,8 @@ function openOrderModal() {
     itemsEl.appendChild(row);
   });
   document.getElementById('osMiniTotal').textContent = fmt(sum);
+  fillPickupDays();
+  setOrderType();
   document.getElementById('orderModal').classList.add('show');
   document.getElementById('f-name').focus();
 }
@@ -2188,14 +2246,11 @@ function closeOrderModal() {
   document.getElementById('orderModal').classList.remove('show');
 }
 
-function genOrderId() {
-  try {
-    const next = parseInt(localStorage.getItem('gd_order_counter') || '0') + 1;
-    localStorage.setItem('gd_order_counter', next);
-    return String(next);
-  } catch(e) {
-    return String(Math.floor(100000 + Math.random() * 900000));
-  }
+// Day+month, time and two random digits, e.g. 2710-173042. Unique enough to tell orders
+// apart at the counter, unlike a per-browser counter that restarts at 1 for every customer.
+function genOrderId(now) {
+  const p = n => String(n).padStart(2, '0');
+  return `${p(now.getDate())}${p(now.getMonth() + 1)}-${p(now.getHours())}${p(now.getMinutes())}${p(Math.floor(Math.random() * 100))}`;
 }
 
 async function placeOrder() {
@@ -2203,13 +2258,18 @@ async function placeOrder() {
   const phone   = document.getElementById('f-phone').value.trim();
   const address = document.getElementById('f-address').value.trim();
   const pin     = document.getElementById('f-pin').value.trim();
+  const pickup  = orderType() === 'pickup';
+  const daySel  = document.getElementById('f-day');
+  const slotSel = document.getElementById('f-slot');
 
   // validate
+  const checks = [['f-name', name], ['f-phone', phone.replace(/\D/g, '').length >= 10]];
+  if (pickup) checks.push(['f-slot', slotSel.value]);
+  else checks.push(['f-address', address], ['f-pin', /^\d{6}$/.test(pin)]);
   let valid = true;
-  [['f-name', name], ['f-phone', phone], ['f-address', address], ['f-pin', pin]].forEach(([id, val]) => {
-    const el = document.getElementById(id);
-    el.classList.toggle('err', !val);
-    if (!val) valid = false;
+  ['f-name','f-phone','f-address','f-pin','f-slot'].forEach(id => document.getElementById(id).classList.remove('err'));
+  checks.forEach(([id, ok]) => {
+    if (!ok) { document.getElementById(id).classList.add('err'); valid = false; }
   });
   if (!valid) return;
 
@@ -2217,48 +2277,54 @@ async function placeOrder() {
   btn.disabled = true;
   btn.textContent = 'Sending…';
 
-  const orderId = genOrderId();
   const now = new Date();
+  const orderId = genOrderId(now);
   const dateStr = now.toLocaleDateString('en-IN', { day:'2-digit', month:'short', year:'numeric' });
   const timeStr = now.toLocaleTimeString('en-IN', { hour:'2-digit', minute:'2-digit' });
+  const slotText = pickup ? `${daySel.selectedOptions[0].text}, ${slotSel.selectedOptions[0].text}` : '';
 
   let sum = 0;
   const itemLines = cart.map(item => {
     const line = item.price * item.qty;
     sum += line;
-    return `• ${item.name} (${item.company}) × ${item.qty} — ${fmt(line)}`;
+    return `• ${item.name} × ${item.qty} — ${fmt(line)}`;
   });
 
-  // build WhatsApp message
+  // build WhatsApp message (no emojis: they arrive broken on some phones)
   const msg = [
     `*NEW ORDER — Shri Gurudevdatta Fataka Traders*`,
     ``,
     `*Order #${orderId}*`,
-    `📅 ${dateStr} at ${timeStr}`,
+    `${dateStr} at ${timeStr}`,
     ``,
     `*Customer Details:*`,
     `Name: ${name}`,
     `Phone: ${phone}`,
-    `Address: ${address}`,
-    `Pincode: ${pin}`,
+    ...(pickup
+      ? [`*PICKUP from shop:* ${slotText}`]
+      : [`*HOME DELIVERY*`, `Address: ${address}`, `Pincode: ${pin}`]),
     ``,
     `*Items Ordered:*`,
     ...itemLines,
     ``,
     `*Total Amount: ${fmt(sum)}*`,
     ``,
-    `Note: Please confirm this order with the customer.`,
+    pickup ? `Payment at shop (cash / UPI). Please keep this order packed and ready.` : `Note: Please confirm this order with the customer.`,
   ].join('\n');
 
-  // save to Google Sheets (fire-and-forget — order still goes via WhatsApp even if this fails)
+  // save to Google Sheets (fire-and-forget — order still goes via WhatsApp even if this fails).
+  // Pickup orders put the slot in the address column so the existing sheet layout still works.
   if (SCRIPT_URL && !SCRIPT_URL.startsWith('YOUR_')) {
     // text/plain avoids CORS preflight — Apps Script receives it fine via e.postData.contents
     fetch(SCRIPT_URL, {
       method: 'POST',
       headers: { 'Content-Type': 'text/plain' },
       body: JSON.stringify({
-        orderId, name, phone, address, pincode: pin,
-        items: cart.map(i => ({ name: i.name, company: i.company, qty: i.qty, price: i.price })),
+        orderId, name, phone,
+        address: pickup ? `PICKUP: ${slotText}` : address,
+        pincode: pickup ? '' : pin,
+        orderType: pickup ? 'Pickup' : 'Delivery', pickupSlot: slotText,
+        items: cart.map(i => ({ name: i.name, company: CAT_BY_ID[i.cat].label, qty: i.qty, price: i.price })),
         total: sum, status: 'Pending',
         createdAt: now.toISOString(), dateStr, timeStr,
       }),
@@ -2272,19 +2338,21 @@ async function placeOrder() {
   // show success
   closeOrderModal();
   document.getElementById('sucOrderNum').textContent = orderId;
+  document.getElementById('sucNote').textContent = pickup
+    ? `Your order will be packed and ready for pickup on ${slotText}. Show this order number at the shop and pay by cash or UPI.`
+    : 'Please save this order number. We will contact you soon to confirm delivery details.';
   document.getElementById('successOverlay').classList.add('show');
 
-  // clear cart
+  // clear cart (product cards refresh from updateCartUI)
   cart = [];
   updateCartUI();
   closeCart();
-  // reset all product card states
-  document.querySelectorAll('.card-qty-num').forEach(el => el.textContent = '0');
-  document.querySelectorAll('.add-to-cart').forEach(el => { el.classList.remove('added'); el.textContent = '🛒 Add'; });
 
   btn.disabled = false;
-  btn.innerHTML = `<svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg> Send Order on WhatsApp`;
+  btn.innerHTML = BTN_PLACE_HTML;
 }
+
+const BTN_PLACE_HTML = document.getElementById('btnPlaceOrder').innerHTML;
 
 function closeSuccess() {
   document.getElementById('successOverlay').classList.remove('show');
@@ -2294,40 +2362,13 @@ function closeSuccess() {
     el.value = '';
     el.classList.remove('err');
   });
+  document.querySelector('input[name="otype"][value="pickup"]').checked = true;
 }
-
-/* ── ADMIN PANEL ───────────────────────────────────── */
-function openAdmin() {
-  if (!adminUnlocked) {
-    const pin = prompt('Enter admin PIN:');
-    if (pin !== ADMIN_PIN) { alert('Incorrect PIN.'); return; }
-    adminUnlocked = true;
-  }
-  if (SHEET_URL && !SHEET_URL.startsWith('YOUR_')) {
-    window.open(SHEET_URL, '_blank', 'noopener');
-  } else {
-    alert('Google Sheet URL not configured yet.\nOpen fataka-traders.html and paste your SHEET_URL.');
-  }
-}
-
-function closeAdmin() {
-  document.getElementById('adminPanel').classList.remove('open');
-}
-
-function loadAdminOrders() {}
-
-function renderAdminOrders() {}
-
-function esc(s) {
-  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
-}
-
-function exportCSV() {}
 
 /* ── COUNTDOWN TIMER ───────────────────────────────── */
 (function() {
-  // Diwali 2026: October 20, 2026 at 6 PM IST
-  const TARGET = new Date('2026-10-20T18:00:00+05:30').getTime();
+  // Diwali 2026 (Lakshmi Puja): November 8, 2026 at 6 PM IST
+  const TARGET = new Date('2026-11-08T18:00:00+05:30').getTime();
   function pad(n) { return String(n).padStart(2, '0'); }
   function tick() {
     const diff = TARGET - Date.now();
