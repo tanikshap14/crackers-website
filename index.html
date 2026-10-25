@@ -15,7 +15,7 @@
 <meta property="og:image" content="https://tanikshap14.github.io/crackers-website/images/og-image.jpg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Poppins:wght@300;400;500;600;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Poppins:wght@300;400;500;600;700&family=Mukta:wght@400;500;600;700;800&display=swap">
 
 <style>
 /* ── RESET & TOKENS ─────────────────────────────────── */
@@ -85,15 +85,31 @@ header {
   gap: 0.6rem;
 }
 .logo-img { width: 48px; height: 48px; border-radius: 50%; flex-shrink: 0; }
-.hero-logo {
-  position: relative;
-  width: clamp(140px, 32vw, 200px);
-  height: auto;
-  margin: 0 auto 1rem;
-  filter: drop-shadow(0 0 22px rgba(255, 180, 0, 0.35));
-}
 .footer-logo { display: block; width: 56px; height: 56px; margin: 0 auto 0.5rem; }
 .suc-logo { width: 84px; height: 84px; margin: 0 auto 0.8rem; }
+.header-right { display: flex; align-items: center; gap: 0.5rem; }
+.lang-toggle {
+  display: flex;
+  border: 1.5px solid rgba(255,215,0,0.55);
+  border-radius: 50px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+.lang-toggle button {
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.75);
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.74rem;
+  font-weight: 700;
+  padding: 0.4rem 0.65rem;
+  min-height: 36px;
+  cursor: pointer;
+}
+.lang-toggle button.active { background: var(--gold); color: var(--dk); }
+/* Marathi: Mukta draws true Devanagari digits (Poppins shows them like English digits),
+   and letter spacing would split up Devanagari letters */
+html[lang="mr"] body, html[lang="mr"] body * { font-family: 'Mukta', sans-serif !important; letter-spacing: normal !important; }
 .logo small {
   display: block;
   font-size: 0.6rem;
@@ -1022,9 +1038,6 @@ footer {
   .contact-inner { grid-template-columns: 1fr; gap: 2rem; }
   .contact-section { padding: 2rem 1rem; }
 
-  /* FABs: shift left a bit so they don't overlap */
-  .wa-fab { bottom: 5rem; right: 1rem; font-size: 0.8rem; padding: 0.55rem 0.9rem 0.55rem 0.7rem; }
-
   /* Order modal: full screen */
   .order-modal-box {
     width: 100%;
@@ -1097,45 +1110,6 @@ footer {
   font-weight: 900;
   margin-bottom: 1.2rem;
   font-family: 'Cinzel', serif;
-}
-
-/* ── WHATSAPP BUTTON ─────────────────────────────────── */
-.wa-fab {
-  position: fixed;
-  bottom: 1.5rem;
-  right: 1.5rem;
-  z-index: 300;
-  background: #25D366;
-  color: white;
-  text-decoration: none;
-  border-radius: 50px;
-  padding: 0.7rem 1.2rem 0.7rem 0.9rem;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  font-family: 'Poppins', sans-serif;
-  font-size: 0.82rem;
-  font-weight: 700;
-  box-shadow: 0 4px 20px rgba(37,211,102,0.45);
-  transition: transform 0.2s, box-shadow 0.2s;
-}
-.wa-fab:hover {
-  transform: translateY(-2px) scale(1.04);
-  box-shadow: 0 6px 28px rgba(37,211,102,0.55);
-}
-.wa-fab svg { width: 22px; height: 22px; flex-shrink: 0; }
-.wa-pulse {
-  position: absolute;
-  inset: -4px;
-  border-radius: 50px;
-  background: #25D366;
-  opacity: 0.25;
-  animation: wa-pulse 2s ease-out infinite;
-}
-@keyframes wa-pulse {
-  0% { transform: scale(1); opacity: 0.25; }
-  70% { transform: scale(1.18); opacity: 0; }
-  100% { transform: scale(1.18); opacity: 0; }
 }
 
 /* ── FLOATING SPARKLES ───────────────────────────────── */
@@ -1409,6 +1383,81 @@ footer {
   .video-section { padding: 1.5rem 1rem; }
   .video-wrap { border-radius: 6px; }
 }
+/* ── PHONES ──────────────────────────────────────────── */
+/* Kept last so it overrides the base rules above, some of which come after the older mobile block. */
+@media (max-width: 760px) {
+  body { -webkit-text-size-adjust: 100%; }
+
+  .topbar { font-size: 0.68rem; letter-spacing: 0.02em; padding: 0.35rem 0.75rem; }
+  .topbar-extra { display: none; }
+
+  header { padding: 0.5rem 0.75rem; padding-left: max(0.75rem, env(safe-area-inset-left)); padding-right: max(0.75rem, env(safe-area-inset-right)); }
+  .logo { min-width: 0; }
+  .logo span { overflow: hidden; text-overflow: ellipsis; }
+  .cart-btn { flex-shrink: 0; min-height: 40px; }
+
+  /* Countdown: always one line */
+  .countdown-boxes { flex-wrap: nowrap; gap: 0.3rem; }
+  .cd-num { font-size: clamp(1.15rem, 6vw, 1.6rem); padding: 0.45rem 0; min-width: 0; width: clamp(48px, 15vw, 64px); }
+  .cd-sep { font-size: 1.1rem; }
+  .cd-label { font-size: 0.55rem; letter-spacing: 0.08em; }
+
+  /* Product cards: quantity row on top, full-width Add below */
+  .prod-title { font-size: 0.85rem; }
+  .card-atc-row { flex-direction: column; align-items: stretch; gap: 0.45rem; }
+  .card-qty-ctrl { justify-content: space-between; }
+  .card-qty-btn { width: 36px; height: 36px; font-size: 1.15rem; }
+  .card-qty-num { flex: 1; font-size: 0.95rem; }
+  .card-atc-row .add-to-cart { min-height: 38px; font-size: 0.8rem; }
+  .opt-select { min-height: 38px; font-size: 16px; }
+  .product-card:hover { transform: none; box-shadow: none; }
+
+  /* Search and sort side by side, full width */
+  .shop-toolbar .result-count { width: 100%; }
+  .search-input { flex: 1 1 0; min-width: 0; max-width: none; min-height: 40px; }
+  .sort-select { flex: 0 0 auto; max-width: 46%; min-height: 40px; }
+
+  /* 16px text in every field stops iPhones zooming in when it is tapped */
+  .search-input, .sort-select, .fg input, .fg textarea, .fg select { font-size: 16px; }
+
+  /* Cart drawer */
+  .qty-btn { width: 34px; height: 34px; }
+  .cart-close, .modal-x { min-width: 44px; min-height: 44px; }
+  .cart-footer { padding-bottom: max(1rem, env(safe-area-inset-bottom)); }
+  .checkout-btn { min-height: 48px; }
+
+  /* Order form as a bottom sheet; the Send button stays visible while scrolling */
+  .modal-overlay { padding: 0; align-items: flex-end; }
+  .modal { max-width: 100%; border-radius: 16px 16px 0 0; max-height: 94dvh; display: flex; flex-direction: column; }
+  .modal-body { overflow-y: auto; flex: 1; }
+  .modal-ft { position: sticky; bottom: 0; background: white; padding-bottom: max(1rem, env(safe-area-inset-bottom)); }
+  .btn-cancel, .btn-place { min-height: 48px; }
+
+  .success-overlay { padding: 1rem; }
+  .success-card { padding: 2rem 1.2rem; }
+}
+
+/* Phones up to ~iPhone Pro Max: show only the cart icon and count, to fit the language switch */
+@media (max-width: 440px) {
+  .cart-word { display: none; }
+  .header-right { gap: 0.4rem; }
+  .logo { white-space: normal; line-height: 1.15; font-size: 0.74rem; }
+  .logo span { overflow: visible; min-width: 0; }
+  .logo small { white-space: normal; letter-spacing: 0.06em; margin-top: 2px; }
+  .lang-toggle button { font-size: 0.7rem; padding: 0.35rem 0.5rem; }
+}
+
+/* Small phones */
+@media (max-width: 340px) {
+  .logo { font-size: 0.7rem; }
+  .logo-img { width: 34px; height: 34px; }
+  .cart-btn { padding: 0.4rem 0.55rem; }
+}
+
+/* Very narrow screens (Galaxy Fold cover screen and similar) */
+@media (max-width: 300px) {
+  .products-grid { grid-template-columns: 1fr; }
+}
 </style>
 
 <!-- CART OVERLAY -->
@@ -1417,56 +1466,48 @@ footer {
 <!-- CART DRAWER -->
 <div class="cart-drawer" id="cartDrawer">
   <div class="cart-header">
-    🛒 My Cart
+    <span data-i18n="myCart">🛒 My Cart</span>
     <button class="cart-close" id="cartClose">✕</button>
   </div>
   <div class="cart-items" id="cartItems">
-    <div class="cart-empty">Your cart is empty.<br>Start adding crackers! 🎇</div>
   </div>
   <div class="cart-footer">
     <div class="cart-breakdown" id="cartBreakdown"></div>
     <div class="cart-total">
-      <span>Total</span>
+      <span data-i18n="total">Total</span>
       <span id="cartTotal">₹0.00</span>
     </div>
-    <button class="checkout-btn" onclick="openOrderModal()">
-      📲 Place Order
-    </button>
+    <button class="checkout-btn" onclick="openOrderModal()" data-i18n="placeOrder">📲 Place Order</button>
   </div>
 </div>
 
 <!-- SPARKLE LAYER -->
 <div class="sparkle-layer" id="sparkleLayer"></div>
 
-<!-- WHATSAPP FAB -->
-<a class="wa-fab" href="https://wa.me/919922493694?text=Hello%2C%20I%20want%20to%20order%20crackers%20from%20Shri%20Gurudev%20Datta%20Fataka%20Traders" target="_blank" rel="noopener" aria-label="Order on WhatsApp">
-  <div class="wa-pulse"></div>
-  <svg viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
-    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-  </svg>
-  Order on WhatsApp
-</a>
-
 <!-- TOP BAR -->
-<div class="topbar">
-  🎇 <strong>Skip the queue:</strong> Order online, pick up ready-packed at the shop &nbsp;·&nbsp; 📞 +91 99224 93694
+<div class="topbar" data-i18n="topbar">
+  🎇 <strong>Skip the queue:</strong> Order online, pick up ready-packed<span class="topbar-extra"> at the shop &nbsp;·&nbsp; 📞 +91 99224 93694</span>
 </div>
 
 <!-- HEADER -->
 <header>
   <div class="logo">
     <img class="logo-img" src="images/logo-112.webp" alt="" width="48" height="48">
-    <span>Shri Gurudev Datta
+    <span data-i18n="logo">Shri Gurudev Datta
     <small>Fataka Traders · Est. 2006</small></span>
   </div>
   <nav class="header-nav">
-    <a href="#shop">Shop</a>
-    <a href="#brands">Brands</a>
-    <a href="#contact">Contact</a>
+    <a href="#shop" data-i18n="navShop">Shop</a>
+    <a href="#brands" data-i18n="navBrands">Brands</a>
+    <a href="#contact" data-i18n="navContact">Contact</a>
   </nav>
   <div class="header-right">
+    <div class="lang-toggle" role="group" aria-label="Language / भाषा">
+      <button type="button" data-lang="en" class="active" onclick="applyLang('en')">EN</button>
+      <button type="button" data-lang="mr" onclick="applyLang('mr')">मराठी</button>
+    </div>
     <button class="cart-btn" id="cartToggle">
-      🛒 Cart
+      🛒 <span class="cart-word" data-i18n="cart">Cart</span>
       <div class="cart-count" id="cartCount">0</div>
     </button>
   </div>
@@ -1475,39 +1516,38 @@ footer {
 <!-- HERO -->
 <div class="hero">
   <canvas id="fw-canvas"></canvas>
-  <img class="hero-logo" src="images/logo-400.webp" alt="Shri Gurudev Datta Fataka Traders logo" width="200" height="200">
-  <p class="hero-tag">✦ Celebrating Every Festival Since 2006 ✦</p>
-  <h1>Shri Gurudev Datta<br>Fataka Traders</h1>
-  <p>Anil, Standard, Mori, Sunshine, Ayyanar, Raju Khanna & Classic crackers. Order online and pick up your packed order without waiting in line.</p>
+  <p class="hero-tag" data-i18n="heroTag">✦ Celebrating Every Festival Since 2006 ✦</p>
+  <h1 data-i18n="heroTitle">Shri Gurudev Datta<br>Fataka Traders</h1>
+  <p data-i18n="heroDesc">Anil, Standard, Mori, Sunshine, Ayyanar, Raju Khanna & Classic crackers. Order online and pick up your packed order without waiting in line.</p>
   <div class="hero-badges">
-    <span class="hero-badge">🛡️ PESO Licensed</span>
-    <span class="hero-badge">🎇 Diwali 2026 Collection</span>
+    <span class="hero-badge" data-i18n="badgeLicence">🛡️ Licensed Diwali Seller</span>
+    <span class="hero-badge" data-i18n="badgeCollection">🎇 Diwali 2026 Collection</span>
 
-    <span class="hero-badge">⭐ Trusted Since 2006</span>
+    <span class="hero-badge" data-i18n="badgeTrusted">⭐ Trusted Since 2006</span>
   </div>
 
   <!-- COUNTDOWN -->
   <div class="countdown-wrap">
-    <div class="countdown-top-label">🪔 Diwali 2026 Countdown</div>
+    <div class="countdown-top-label" data-i18n="countdown">🪔 Diwali 2026 Countdown</div>
     <div class="countdown-boxes">
       <div class="cd-unit">
         <div class="cd-num" id="cd-d">--</div>
-        <div class="cd-label">Days</div>
+        <div class="cd-label" data-i18n="cdDays">Days</div>
       </div>
       <div class="cd-sep">:</div>
       <div class="cd-unit">
         <div class="cd-num" id="cd-h">--</div>
-        <div class="cd-label">Hours</div>
+        <div class="cd-label" data-i18n="cdHours">Hours</div>
       </div>
       <div class="cd-sep">:</div>
       <div class="cd-unit">
         <div class="cd-num" id="cd-m">--</div>
-        <div class="cd-label">Mins</div>
+        <div class="cd-label" data-i18n="cdMins">Mins</div>
       </div>
       <div class="cd-sep">:</div>
       <div class="cd-unit">
         <div class="cd-num" id="cd-s">--</div>
-        <div class="cd-label">Secs</div>
+        <div class="cd-label" data-i18n="cdSecs">Secs</div>
       </div>
     </div>
   </div>
@@ -1528,28 +1568,28 @@ footer {
 <!-- BRANDS STRIP -->
 <div class="brands-section" id="brands">
   <div class="brands-inner">
-    <div class="brands-title">Brands We Stock</div>
+    <div class="brands-title" data-i18n="brandsTitle">Brands We Stock</div>
     <div class="brands-row">
       <div class="brand-pill" style="border-color:#d32f2f;cursor:default">
-        <span class="brand-dot" style="background:#d32f2f"></span> Anil
+        <span class="brand-dot" style="background:#d32f2f"></span> <span data-i18n="brandAnil">Anil</span>
       </div>
       <div class="brand-pill" style="border-color:#1565c0;cursor:default">
-        <span class="brand-dot" style="background:#1565c0"></span> Standard
+        <span class="brand-dot" style="background:#1565c0"></span> <span data-i18n="brandStandard">Standard</span>
       </div>
       <div class="brand-pill" style="border-color:#6a1b9a;cursor:default">
-        <span class="brand-dot" style="background:#6a1b9a"></span> Mori
+        <span class="brand-dot" style="background:#6a1b9a"></span> <span data-i18n="brandMori">Mori</span>
       </div>
       <div class="brand-pill" style="border-color:#f57c00;cursor:default">
-        <span class="brand-dot" style="background:#f57c00"></span> Sunshine
+        <span class="brand-dot" style="background:#f57c00"></span> <span data-i18n="brandSunshine">Sunshine</span>
       </div>
       <div class="brand-pill" style="border-color:#2e7d32;cursor:default">
-        <span class="brand-dot" style="background:#2e7d32"></span> Ayyanar
+        <span class="brand-dot" style="background:#2e7d32"></span> <span data-i18n="brandAyyanar">Ayyanar</span>
       </div>
       <div class="brand-pill" style="border-color:#00838f;cursor:default">
-        <span class="brand-dot" style="background:#00838f"></span> Raju Khanna
+        <span class="brand-dot" style="background:#00838f"></span> <span data-i18n="brandRajuKhanna">Raju Khanna</span>
       </div>
       <div class="brand-pill" style="border-color:#5d4037;cursor:default">
-        <span class="brand-dot" style="background:#5d4037"></span> Classic
+        <span class="brand-dot" style="background:#5d4037"></span> <span data-i18n="brandClassic">Classic</span>
       </div>
     </div>
   </div>
@@ -1559,7 +1599,7 @@ footer {
 <div class="shop-wrap" id="shop">
   <!-- SIDEBAR -->
   <aside class="sidebar">
-    <div class="sidebar-title">☰ All Departments</div>
+    <div class="sidebar-title" data-i18n="allDepts">☰ All Departments</div>
     <ul class="cat-list" id="catList"></ul>
   </aside>
 
@@ -1567,12 +1607,12 @@ footer {
   <main class="shop-main">
     <div class="shop-toolbar">
       <div class="result-count" id="resultCount">Showing <strong>0</strong> results</div>
-      <input type="search" class="search-input" id="searchInput" placeholder="🔍 Search crackers…" oninput="applyFilters()">
+      <input type="search" class="search-input" id="searchInput" placeholder="🔍 Search" data-i18n-ph="searchPh" oninput="applyFilters()">
       <select class="sort-select" id="sortSelect" onchange="applyFilters()">
-        <option value="default">Default sorting</option>
-        <option value="price-asc">Price: Low to High</option>
-        <option value="price-desc">Price: High to Low</option>
-        <option value="name">Name A–Z</option>
+        <option value="default" data-i18n="sortBy">Sort by</option>
+        <option value="price-asc" data-i18n="sortLow">Price: Low to High</option>
+        <option value="price-desc" data-i18n="sortHigh">Price: High to Low</option>
+        <option value="name" data-i18n="sortName">Name A–Z</option>
       </select>
     </div>
     <div class="products-grid" id="productsGrid"></div>
@@ -1595,23 +1635,23 @@ footer {
   <div class="trust-inner">
     <div class="trust-item">
       <div class="trust-icon">🛡️</div>
-      <div class="trust-label">PESO Approved</div>
-      <div class="trust-sub">All products licensed</div>
+      <div class="trust-label" data-i18n="trustLicence">Licensed Seller</div>
+      <div class="trust-sub" data-i18n="trustLicenceSub">Diwali crackers selling licence</div>
     </div>
     <div class="trust-item">
       <div class="trust-icon">💰</div>
-      <div class="trust-label">Best Prices</div>
-      <div class="trust-sub">Wholesale rates available</div>
+      <div class="trust-label" data-i18n="trustPrices">Best Prices</div>
+      <div class="trust-sub" data-i18n="trustPricesSub">Wholesale rates available</div>
     </div>
     <div class="trust-item">
       <div class="trust-icon">🏪</div>
-      <div class="trust-label">Quick Pickup</div>
-      <div class="trust-sub">Order online, collect ready-packed</div>
+      <div class="trust-label" data-i18n="trustPickup">Quick Pickup</div>
+      <div class="trust-sub" data-i18n="trustPickupSub">Order online, collect ready-packed</div>
     </div>
     <div class="trust-item">
       <div class="trust-icon">⭐</div>
-      <div class="trust-label">20 Years</div>
-      <div class="trust-sub">Trusted since 2006</div>
+      <div class="trust-label" data-i18n="trustYears">20 Years</div>
+      <div class="trust-sub" data-i18n="trustYearsSub">Trusted since 2006</div>
     </div>
   </div>
 </div>
@@ -1631,25 +1671,25 @@ footer {
 <div class="contact-section" id="contact">
   <div class="contact-inner">
     <div>
-      <div class="contact-head">Visit Our Stall</div>
+      <div class="contact-head" data-i18n="visit">Visit Our Stall</div>
       <div class="contact-row">
         <div class="ci">📍</div>
         <div>
-          <h4>Location</h4>
-          <p>Shop No. 44, Diagonal Business Centre,<br>Sector 16, Near Ganesh Mandir, Ayush Garden,<br>Raje Shivaji Nagar, Chikhali,<br>Pimpri-Chinchwad, Maharashtra 411019</p>
+          <h4 data-i18n="location">Location</h4>
+          <p data-i18n="address">Shop No. 44, Diagonal Business Centre,<br>Sector 16, Near Ganesh Mandir, Ayush Garden,<br>Raje Shivaji Nagar, Chikhali,<br>Pimpri-Chinchwad, Maharashtra 411019</p>
         </div>
       </div>
       <div class="contact-row">
         <div class="ci">👤</div>
         <div>
-          <h4>Proprietor</h4>
-          <p>Ravindra Patil</p>
+          <h4 data-i18n="proprietor">Proprietor</h4>
+          <p data-i18n="ownerName">Ravindra Patil</p>
         </div>
       </div>
       <div class="contact-row">
         <div class="ci">📞</div>
         <div>
-          <h4>Call / WhatsApp</h4>
+          <h4 data-i18n="callWa">Call / WhatsApp</h4>
           <a href="tel:+919922493694">+91 99224 93694</a><br>
           <a href="tel:+919922423694">+91 99224 23694</a>
         </div>
@@ -1657,11 +1697,11 @@ footer {
       <div class="contact-row">
         <div class="ci">🕐</div>
         <div>
-          <h4>Store Hours</h4>
+          <h4 data-i18n="hours">Store Hours</h4>
           <div class="hours-table">
-            <div class="hours-row"><span class="day">Mon – Fri</span><span class="time">9:00 AM – 9:00 PM</span></div>
-            <div class="hours-row"><span class="day">Sat – Sun</span><span class="time">8:00 AM – 10:00 PM</span></div>
-            <div class="hours-row"><span class="day">Diwali Season</span><span class="time">7:00 AM – 11:00 PM</span></div>
+            <div class="hours-row" data-i18n="hoursWeek"><span class="day">Mon – Fri</span><span class="time">9:00 AM – 9:00 PM</span></div>
+            <div class="hours-row" data-i18n="hoursWeekend"><span class="day">Sat – Sun</span><span class="time">8:00 AM – 10:00 PM</span></div>
+            <div class="hours-row" data-i18n="hoursDiwali"><span class="day">Diwali Season</span><span class="time">7:00 AM – 11:00 PM</span></div>
           </div>
         </div>
       </div>
@@ -1675,9 +1715,7 @@ footer {
         referrerpolicy="no-referrer-when-downgrade">
       </iframe>
       <div class="map-overlay">
-        <a class="map-open-btn" href="https://maps.app.goo.gl/qHFZCW5rWbVzyZei7" target="_blank" rel="noopener">
-          🗺️ Open in Google Maps
-        </a>
+        <a class="map-open-btn" href="https://maps.app.goo.gl/qHFZCW5rWbVzyZei7" target="_blank" rel="noopener" data-i18n="openMaps">🗺️ Open in Google Maps</a>
       </div>
     </div>
   </div>
@@ -1686,8 +1724,8 @@ footer {
 <!-- FOOTER -->
 <footer>
   <img class="footer-logo" src="images/logo-112.webp" alt="" width="56" height="56" loading="lazy">
-  <div class="footer-brand">Shri Gurudev Datta Fataka Traders</div>
-  <p class="footer-note">🪔 Lighting up celebrations since 2006 · PESO Licensed & Approved · Maharashtra, India<br>
+  <div class="footer-brand" data-i18n="shopName">Shri Gurudev Datta Fataka Traders</div>
+  <p class="footer-note" data-i18n="footerNote">🪔 Lighting up celebrations since 2006 · Licensed Diwali cracker seller · Maharashtra, India<br>
   Please burst crackers responsibly within permitted hours. Help keep our environment clean.</p>
 </footer>
 
@@ -1695,57 +1733,58 @@ footer {
 <div class="modal-overlay" id="orderModal">
   <div class="modal">
     <div class="modal-hd">
-      📋 Complete Your Order
+      <span data-i18n="completeOrder">📋 Complete Your Order</span>
       <button class="modal-x" onclick="closeOrderModal()">✕</button>
     </div>
     <div class="modal-body">
       <div class="fg">
-        <label>Full Name <span class="req">*</span></label>
-        <input type="text" id="f-name" placeholder="e.g. Ramesh Kumar" autocomplete="name">
+        <label data-i18n="fullName">Full Name <span class="req">*</span></label>
+        <input type="text" id="f-name" placeholder="e.g. Ramesh Kumar" data-i18n-ph="namePh" autocomplete="name">
       </div>
       <div class="fg">
-        <label>Phone Number <span class="req">*</span></label>
+        <label data-i18n="phone">Phone Number <span class="req">*</span></label>
         <input type="tel" id="f-phone" placeholder="+91 XXXXX XXXXX" autocomplete="tel">
       </div>
       <div class="fg">
-        <label>How do you want your order? <span class="req">*</span></label>
+        <label data-i18n="howOrder">How do you want your order? <span class="req">*</span></label>
         <div class="order-type">
-          <label class="ot-opt"><input type="radio" name="otype" value="pickup" checked onchange="setOrderType()"> 🏪 Pickup from shop</label>
-          <label class="ot-opt"><input type="radio" name="otype" value="delivery" onchange="setOrderType()"> 🚚 Home delivery</label>
+          <label class="ot-opt"><input type="radio" name="otype" value="pickup" checked onchange="setOrderType()"> <span data-i18n="optPickup">🏪 Pickup from shop</span></label>
+          <label class="ot-opt"><input type="radio" name="otype" value="delivery" onchange="setOrderType()"> <span data-i18n="optDelivery">🚚 Home delivery</span></label>
         </div>
       </div>
       <div id="pickupFields">
         <div class="fg">
-          <label>Pickup Day <span class="req">*</span></label>
+          <label data-i18n="pickupDay">Pickup Day <span class="req">*</span></label>
           <select id="f-day" onchange="fillPickupSlots()"></select>
         </div>
         <div class="fg">
-          <label>Pickup Time <span class="req">*</span></label>
+          <label data-i18n="pickupTime">Pickup Time <span class="req">*</span></label>
           <select id="f-slot"></select>
         </div>
-        <p class="pay-note">We pack your order before you arrive, so there is no waiting at the counter. Pay at the shop by cash or UPI.</p>
+        <p class="pay-note" data-i18n="pickupNote">We pack your order before you arrive, so there is no waiting at the counter. Pay at the shop by cash or UPI.</p>
       </div>
       <div id="deliveryFields" hidden>
         <div class="fg">
-          <label>Delivery Address <span class="req">*</span></label>
-          <textarea id="f-address" rows="3" placeholder="House/Flat No., Street, Area, City" autocomplete="street-address"></textarea>
+          <label data-i18n="address2">Delivery Address <span class="req">*</span></label>
+          <textarea id="f-address" rows="3" placeholder="House/Flat No., Street, Area, City" data-i18n-ph="addressPh" autocomplete="street-address"></textarea>
         </div>
         <div class="fg">
-          <label>Pincode <span class="req">*</span></label>
+          <label data-i18n="pincode">Pincode <span class="req">*</span></label>
           <input type="text" id="f-pin" placeholder="411019" maxlength="6" inputmode="numeric">
         </div>
+        <p class="pay-note" data-i18n="porterNote"><strong>Delivery by Porter.</strong> Porter delivery charges are to be paid by the customer, directly to the Porter driver at delivery.</p>
       </div>
       <div class="order-summary-box">
-        <h4>🛒 Your Order</h4>
+        <h4 data-i18n="yourOrder">🛒 Your Order</h4>
         <div id="osMiniItems"></div>
-        <div class="osm-total"><span>Total</span><span id="osMiniTotal">₹0.00</span></div>
+        <div class="osm-total"><span data-i18n="total">Total</span><span id="osMiniTotal">₹0.00</span></div>
       </div>
     </div>
     <div class="modal-ft">
-      <button class="btn-cancel" onclick="closeOrderModal()">Cancel</button>
+      <button class="btn-cancel" onclick="closeOrderModal()" data-i18n="cancel">Cancel</button>
       <button class="btn-place" id="btnPlaceOrder" onclick="placeOrder()">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-        Send Order on WhatsApp
+        <span id="btnPlaceLabel" data-i18n="sendWa">Send Order on WhatsApp</span>
       </button>
     </div>
   </div>
@@ -1755,11 +1794,11 @@ footer {
 <div class="success-overlay" id="successOverlay">
   <div class="success-card">
     <img class="suc-emoji suc-logo" src="images/logo-400.webp" alt="" width="84" height="84">
-    <h2>Order Placed!</h2>
-    <p class="suc-sub">Your order has been sent to<br><strong>Shri Gurudev Datta Fataka Traders</strong></p>
+    <h2 data-i18n="orderPlaced">Order Placed!</h2>
+    <p class="suc-sub" data-i18n="sentTo">Your order has been sent to<br><strong>Shri Gurudev Datta Fataka Traders</strong></p>
     <div class="order-num-badge" id="sucOrderNum">GD-XXXXX</div>
     <p class="suc-note" id="sucNote"></p>
-    <button class="btn-continue" onclick="closeSuccess()">🛒 Continue Shopping</button>
+    <button class="btn-continue" onclick="closeSuccess()" data-i18n="continue">🛒 Continue Shopping</button>
   </div>
 </div>
 
@@ -1770,110 +1809,251 @@ footer {
 // Each option is [label, price] or [label, price, minQty]. An empty label means the
 // price list gives several prices without naming them, so the customer picks by price.
 const CATEGORIES = [
-  { id:'all',        label:'All Products',            icon:'🎆', grad:'linear-gradient(160deg,#13133a,#2a2a6e,#3d3d9e)' },
-  { id:'combo',      label:'Family Pack',             icon:'🎁', grad:'linear-gradient(160deg,#b71c1c,#d32f2f,#ef5350)' },
-  { id:'sparklers',  label:'Sparklers',               icon:'✨', grad:'linear-gradient(160deg,#e65100,#f57c00,#ffb74d)' },
-  { id:'chakkar',    label:'Ground Chakkar',          icon:'🌀', grad:'linear-gradient(160deg,#4a148c,#6a1b9a,#8e24aa)' },
-  { id:'flowerpots', label:'Flower Pots',             icon:'🌸', grad:'linear-gradient(160deg,#ad1457,#c2185b,#ec407a)' },
-  { id:'mudpots',    label:'Mud Pots',                icon:'🏺', grad:'linear-gradient(160deg,#5d4037,#795548,#a1887f)' },
-  { id:'fancy',      label:'Children Fancy Items',    icon:'🦋', grad:'linear-gradient(160deg,#00695c,#00897b,#4db6ac)' },
-  { id:'rockets',    label:'Rockets',                 icon:'🚀', grad:'linear-gradient(160deg,#0d47a1,#1565c0,#42a5f5)' },
-  { id:'sound',      label:'Sound Crackers',          icon:'💥', grad:'linear-gradient(160deg,#bf360c,#d84315,#ff7043)' },
-  { id:'garlands',   label:'Garlands / Ladi',         icon:'🧨', grad:'linear-gradient(160deg,#880e4f,#b71c1c,#e53935)' },
-  { id:'shots',      label:'Fancy Multicolour Shots', icon:'🎇', grad:'linear-gradient(160deg,#1a237e,#283593,#5c6bc0)' },
+  { id:'all',        label:'All Products', mr:'सर्व उत्पादने',            icon:'🎆', grad:'linear-gradient(160deg,#13133a,#2a2a6e,#3d3d9e)' },
+  { id:'combo',      label:'Family Pack', mr:'फॅमिली पॅक',             icon:'🎁', grad:'linear-gradient(160deg,#b71c1c,#d32f2f,#ef5350)' },
+  { id:'sparklers',  label:'Sparklers', mr:'फुलबाजी',               icon:'✨', grad:'linear-gradient(160deg,#e65100,#f57c00,#ffb74d)' },
+  { id:'chakkar',    label:'Ground Chakkar', mr:'भुईचक्र',          icon:'🌀', grad:'linear-gradient(160deg,#4a148c,#6a1b9a,#8e24aa)' },
+  { id:'flowerpots', label:'Flower Pots', mr:'पाऊस',             icon:'🌸', grad:'linear-gradient(160deg,#ad1457,#c2185b,#ec407a)' },
+  { id:'mudpots',    label:'Mud Pots', mr:'मातीचे पाऊस',                icon:'🏺', grad:'linear-gradient(160deg,#5d4037,#795548,#a1887f)' },
+  { id:'fancy',      label:'Children Fancy Items', mr:'लहान मुलांचे फॅन्सी आयटम',    icon:'🦋', grad:'linear-gradient(160deg,#00695c,#00897b,#4db6ac)' },
+  { id:'rockets',    label:'Rockets', mr:'रॉकेट',                 icon:'🚀', grad:'linear-gradient(160deg,#0d47a1,#1565c0,#42a5f5)' },
+  { id:'sound',      label:'Sound Crackers', mr:'लक्ष्मी / चिमणी फटाके',          icon:'💥', grad:'linear-gradient(160deg,#bf360c,#d84315,#ff7043)' },
+  { id:'garlands',   label:'Garlands / Ladi', mr:'माळा / लड',         icon:'🧨', grad:'linear-gradient(160deg,#880e4f,#b71c1c,#e53935)' },
+  { id:'shots',      label:'Fancy Multicolour Shots', mr:'फॅन्सी मल्टीकलर शॉट्स', icon:'🎇', grad:'linear-gradient(160deg,#1a237e,#283593,#5c6bc0)' },
 ];
 
 const PRODUCTS = [
-  { id:1,  cat:'combo',      name:'Anil Family Pack (36 items)',        opts:[['',1000]] },
-  // Sparklers: 10 cm minimum 5 packets, 15 cm minimum 2 packets
-  { id:2,  cat:'sparklers',  name:'7 cm Plain Sparklers (10×1)',        opts:[['',100]] },
-  { id:3,  cat:'sparklers',  name:'10 cm / 12 cm Plain Sparklers',      opts:[['10 cm',20,5],['12 cm',30]] },
-  { id:4,  cat:'sparklers',  name:'10 cm Green / Mix Colour Sparklers', opts:[['Green',25,5],['Mix Colour',30,5]] },
-  { id:5,  cat:'sparklers',  name:'15 cm / 30 cm Plain Sparklers',      opts:[['15 cm',50,2],['30 cm',60]] },
-  { id:6,  cat:'sparklers',  name:'15 cm Mix Colour Sparklers',         opts:[['',75,2]] },
-  { id:7,  cat:'sparklers',  name:'50 cm Plain Sparklers',              opts:[['',150]] },
-  { id:8,  cat:'chakkar',    name:'Big Chakkar (25×1)',                 opts:[['',100]] },
-  { id:9,  cat:'chakkar',    name:'Big Chakkar (10×1)',                 opts:[['',45]] },
-  { id:10, cat:'chakkar',    name:'Special / Ashoka Chakkar',           opts:[['',120],['',150],['',180]] },
-  { id:11, cat:'chakkar',    name:'Deluxe Chakkar',                     opts:[['',170],['',200],['',250]] },
-  { id:12, cat:'chakkar',    name:'Spinner (Mix / Club / Dlx / Combo)', opts:[['',250]] },
-  { id:13, cat:'chakkar',    name:'Whistling Wheel',                    opts:[['',200]] },
-  { id:14, cat:'flowerpots', name:'Small Pots',                         opts:[['',60]] },
-  { id:15, cat:'flowerpots', name:'Big Pots',                           opts:[['',100]] },
-  { id:16, cat:'flowerpots', name:'Special Pots',                       opts:[['',125],['',225],['',250]] },
-  { id:17, cat:'flowerpots', name:'Ashoka Pots',                        opts:[['',150],['',200],['',260]] },
-  { id:18, cat:'flowerpots', name:'Colour Cone / Dlx (5×1)',            opts:[['',350]] },
-  { id:19, cat:'flowerpots', name:'Colour Koti / Best',                 opts:[['',200],['',350],['',450],['',600]] },
-  { id:20, cat:'mudpots',    name:'Tim Tim',                            opts:[['',250]] },
-  { id:21, cat:'mudpots',    name:'Ashrafi',                            opts:[['',400]] },
-  { id:22, cat:'mudpots',    name:'Dlx Elite',                          opts:[['',175]] },
-  { id:23, cat:'fancy',      name:'Throw Bomb / Aapti Bar (Pop Pop)',   unit:'box', opts:[['',120],['',150],['',400]] },
-  { id:24, cat:'fancy',      name:'Ring Caps / Bidi Bomb',              opts:[['',15],['',20]] },
-  { id:25, cat:'fancy',      name:'Nano Pots',                          opts:[['',75]] },
-  { id:26, cat:'fancy',      name:'Kitkat',                             opts:[['',35],['',45]] },
-  { id:27, cat:'fancy',      name:'Helicopter / Drone',                 opts:[['Helicopter',125],['Drone',150]] },
-  { id:28, cat:'fancy',      name:'Butterfly',                          opts:[['',100],['',125]] },
-  { id:29, cat:'fancy',      name:'Cold Pyro',                          opts:[['',80],['',110],['',150],['',200]] },
-  { id:30, cat:'fancy',      name:'Ganga Jamuna / Photo Flash',         opts:[['',100]] },
-  { id:31, cat:'fancy',      name:'Penta Sky',                          opts:[['',225],['',250]] },
-  { id:32, cat:'fancy',      name:'7 Shot Spiderman (3 pcs)',           opts:[['',125]] },
-  { id:33, cat:'fancy',      name:'Fire Eggs / Pyro Gun',               opts:[['Fire Eggs',150],['Pyro Gun',200]] },
-  { id:34, cat:'fancy',      name:'Trixxx',                             opts:[['',200]] },
-  { id:35, cat:'fancy',      name:'Mojito',                             opts:[['',450]] },
-  { id:36, cat:'rockets',    name:'Rocket Bomb',                        opts:[['',100]] },
-  { id:37, cat:'rockets',    name:'Two Sound Rocket',                   opts:[['',150]] },
-  { id:38, cat:'rockets',    name:'Whistling Rockets',                  opts:[['',200],['',250]] },
-  { id:39, cat:'sound',      name:'2.75" Chimni / Bird Crackers',       opts:[['',12],['',15]] },
-  { id:40, cat:'sound',      name:'3.5" Narteki Crackers',              opts:[['',20],['',25]] },
-  { id:41, cat:'sound',      name:'4" Narteki / Deluxe Crackers',       opts:[['Narteki',40],['Deluxe',45]] },
-  { id:42, cat:'sound',      name:'Double / Triple Bar (2 / 3 Sound)',  opts:[['Double',50],['Triple',60]] },
-  { id:43, cat:'sound',      name:'Deluxe Gold / Jumbo',                opts:[['',50],['',60],['',80]] },
-  { id:44, cat:'sound',      name:'Bullet / Sholy Bomb',                opts:[['Bullet',40],['Sholy',50]] },
-  { id:45, cat:'sound',      name:'Saddam Bomb (Nylon) / Gajani Bomb',  opts:[['Saddam (Nylon)',80],['Gajani',150]] },
-  { id:46, cat:'sound',      name:'Cutter / Classic',                   opts:[['',200]] },
-  { id:47, cat:'garlands',   name:'Red Bijili (50 / 100 pcs)',          opts:[['',30],['',50],['',70]] },
-  { id:48, cat:'garlands',   name:'28 Wala Medium',                     opts:[['',20],['',25]] },
-  { id:49, cat:'garlands',   name:'28 Wala Giant',                      opts:[['',30],['',35]] },
-  { id:50, cat:'garlands',   name:'20 / 24 Wala Deluxe',                opts:[['20 Wala',50],['24 Wala',60]] },
-  { id:51, cat:'garlands',   name:'Lavangi Mala (Motta Tukda)',         opts:[['',200]] },
-  { id:52, cat:'garlands',   name:'1000 Wala (1K)',                     opts:[['',200],['',250],['',350],['',400]] },
-  { id:53, cat:'garlands',   name:'2000 Wala (2K)',                     opts:[['',400],['',500],['',750]] },
-  { id:54, cat:'garlands',   name:'5000 Wala (5K)',                     opts:[['',1000],['',1200],['',1500],['',1700]] },
-  { id:55, cat:'garlands',   name:'10000 Wala (10K)',                   opts:[['',2200],['',2400],['',2500],['',3200]] },
-  { id:56, cat:'shots',      name:'12 Shot',                            unit:'box', opts:[['',200],['',300],['',350],['',400]] },
-  { id:57, cat:'shots',      name:'15 Shot',                            opts:[['',400]] },
-  { id:58, cat:'shots',      name:'25 Shot',                            opts:[['',350],['',450],['',500]] },
-  { id:59, cat:'shots',      name:'50 Shot',                            opts:[['',850],['',950]] },
-  { id:60, cat:'shots',      name:'30 Shot / 60 Shot',                  opts:[['30 Shot',650],['60 Shot',1000]] },
-  { id:61, cat:'shots',      name:'100 Shot / 120 Shot',                unit:'piece', opts:[['',1400],['',1800],['',2200]] },
-  { id:62, cat:'shots',      name:'240 Shot',                           unit:'piece', opts:[['',3000],['',3900],['',4400]] },
-  { id:63, cat:'shots',      name:'2" Pipe / 2" Pipe (3 pcs)',          opts:[['',60],['',75],['',350]] },
-  { id:64, cat:'shots',      name:'2" Pipe Crackling (3 pcs)',          opts:[['',500],['',600]] },
-  { id:65, cat:'shots',      name:'3" / 3.5" Pipe (2 pcs)',             opts:[['',300],['',650],['',700],['',800]] },
-  { id:66, cat:'shots',      name:'4" Pipe (2 pcs)',                    opts:[['',600],['',850],['',1000]] },
-  { id:67, cat:'shots',      name:'Rang Game',                          opts:[['',1200]] },
+  { id:1,  cat:'combo',      name:'Anil Family Pack (36 items)', mr:'अनिल फॅमिली पॅक (36 आयटम)',        opts:[['',1000]] },
+  // Sparklers: 10 cm and 12 cm minimum 5 packets, 15 cm and 30 cm minimum 2 packets
+  { id:2,  cat:'sparklers',  name:'7 cm Plain Sparklers (10×1)', mr:'7 सेमी प्लेन फुलबाजी (10×1)',        opts:[['',100]] },
+  { id:3,  cat:'sparklers',  name:'10 cm Plain Sparklers', mr:'10 सेमी प्लेन फुलबाजी',              opts:[['',20,5]] },
+  { id:68, cat:'sparklers',  name:'12 cm Plain Sparklers', mr:'12 सेमी प्लेन फुलबाजी',              opts:[['',30,5]] },
+  { id:4,  cat:'sparklers',  name:'10 cm Green Sparklers', mr:'10 सेमी ग्रीन फुलबाजी',              opts:[['',25,5]] },
+  { id:69, cat:'sparklers',  name:'10 cm Mix Colour Sparklers', mr:'10 सेमी मिक्स कलर फुलबाजी',         opts:[['',30,5]] },
+  { id:5,  cat:'sparklers',  name:'15 cm Plain Sparklers', mr:'15 सेमी प्लेन फुलबाजी',              opts:[['',50,2]] },
+  { id:70, cat:'sparklers',  name:'30 cm Plain Sparklers', mr:'30 सेमी प्लेन फुलबाजी',              opts:[['',60,2]] },
+  { id:6,  cat:'sparklers',  name:'15 cm Mix Colour Sparklers', mr:'15 सेमी मिक्स कलर फुलबाजी',         opts:[['',75,2]] },
+  { id:7,  cat:'sparklers',  name:'50 cm Plain Sparklers', mr:'50 सेमी प्लेन फुलबाजी',              opts:[['',150]] },
+  { id:8,  cat:'chakkar',    name:'Big Chakkar (25×1)', mr:'बिग भुईचक्र (25×1)',                 opts:[['',100]] },
+  { id:9,  cat:'chakkar',    name:'Big Chakkar (10×1)', mr:'बिग भुईचक्र (10×1)',                 opts:[['',45]] },
+  { id:10, cat:'chakkar',    name:'Special / Ashoka Chakkar', mr:'स्पेशल / अशोका भुईचक्र',           opts:[['',120],['',150],['',180]] },
+  { id:11, cat:'chakkar',    name:'Deluxe Chakkar', mr:'डिलक्स चक्र',                     opts:[['',170],['',200],['',250]] },
+  { id:12, cat:'chakkar',    name:'Spinner (Mix / Club / Dlx / Combo)', mr:'स्पिनर (मिक्स / क्लब / डिलक्स / कॉम्बो)', opts:[['',250]] },
+  { id:13, cat:'chakkar',    name:'Whistling Wheel', mr:'व्हिसलिंग व्हील',                    opts:[['',200]] },
+  { id:14, cat:'flowerpots', name:'Small Pots', mr:'स्मॉल पाऊस',                         opts:[['',60]] },
+  { id:15, cat:'flowerpots', name:'Big Pots', mr:'बिग पाऊस',                           opts:[['',100]] },
+  { id:16, cat:'flowerpots', name:'Special Pots', mr:'स्पेशल पाऊस',                       opts:[['',125],['',225],['',250]] },
+  { id:17, cat:'flowerpots', name:'Ashoka Pots', mr:'अशोका पाऊस',                        opts:[['',150],['',200],['',260]] },
+  { id:18, cat:'flowerpots', name:'Colour Cone / Dlx (5×1)', mr:'कलर कोन / डिलक्स (5×1)',            opts:[['',350]] },
+  { id:19, cat:'flowerpots', name:'Colour Koti / Best', mr:'कलर कोटी / बेस्ट',                 opts:[['',200],['',350],['',450],['',600]] },
+  { id:20, cat:'mudpots',    name:'Tim Tim', mr:'टिम टिम',                            opts:[['',250]] },
+  { id:21, cat:'mudpots',    name:'Ashrafi', mr:'अश्रफी',                            opts:[['',400]] },
+  { id:22, cat:'mudpots',    name:'Dlx Elite', mr:'डिलक्स एलिट',                          opts:[['',175]] },
+  { id:23, cat:'fancy',      name:'Throw Bomb / Aapti Bar (Pop Pop)', mr:'थ्रो बॉम्ब / आपटी बार (पॉप पॉप)',   unit:'box', opts:[['',120],['',150],['',400]] },
+  { id:24, cat:'fancy',      name:'Ring Caps / Bidi Bomb', mr:'रिंग कॅप्स / बिडी बॉम्ब',              opts:[['',15],['',20]] },
+  { id:25, cat:'fancy',      name:'Nano Pots', mr:'नॅनो पाऊस',                          opts:[['',75]] },
+  { id:26, cat:'fancy',      name:'Kitkat', mr:'किटकॅट',                             opts:[['',35],['',45]] },
+  { id:27, cat:'fancy',      name:'Helicopter / Drone', mr:'हेलिकॉप्टर / ड्रोन',                 opts:[['Helicopter',125],['Drone',150]] },
+  { id:28, cat:'fancy',      name:'Butterfly', mr:'बटरफ्लाय',                          opts:[['',100],['',125]] },
+  { id:29, cat:'fancy',      name:'Cold Pyro', mr:'कोल्ड पायरो',                          opts:[['',80],['',110],['',150],['',200]] },
+  { id:30, cat:'fancy',      name:'Ganga Jamuna / Photo Flash', mr:'गंगा जमुना / फोटो फ्लॅश',         opts:[['',100]] },
+  { id:31, cat:'fancy',      name:'Penta Sky', mr:'पेंटा स्काय',                          opts:[['',225],['',250]] },
+  { id:32, cat:'fancy',      name:'7 Shot Spiderman (3 pcs)', mr:'7 शॉट स्पायडरमॅन (3 नग)',           opts:[['',125]] },
+  { id:33, cat:'fancy',      name:'Fire Eggs / Pyro Gun', mr:'फायर एग्स / पायरो गन',               opts:[['Fire Eggs',150],['Pyro Gun',200]] },
+  { id:34, cat:'fancy',      name:'Trixxx', mr:'ट्रिक्स',                             opts:[['',200]] },
+  { id:35, cat:'fancy',      name:'Mojito', mr:'मोजिटो',                             opts:[['',450]] },
+  { id:36, cat:'rockets',    name:'Rocket Bomb', mr:'बॉम्ब रॉकेट',                        opts:[['',100]] },
+  { id:37, cat:'rockets',    name:'Two Sound Rocket', mr:'टू साउंड रॉकेट',                   opts:[['',150]] },
+  { id:38, cat:'rockets',    name:'Whistling Rockets', mr:'व्हिसलिंग रॉकेट',                  opts:[['',200],['',250]] },
+  { id:39, cat:'sound',      name:'2.75" Chimni / Bird Crackers', mr:'2.75" चिमणी फटाका',       opts:[['',12],['',15]] },
+  { id:40, cat:'sound',      name:'3.5" Narteki Crackers', mr:'3.5" नर्तकी फटाका',              opts:[['',20],['',25]] },
+  { id:41, cat:'sound',      name:'4" Narteki / Deluxe Crackers', mr:'4" नर्तकी / डिलक्स फटाका',       opts:[['Narteki',40],['Deluxe',45]] },
+  { id:42, cat:'sound',      name:'Double / Triple Bar (2 / 3 Sound)', mr:'डबल / ट्रिपल बार (2 / 3 आवाज)',  opts:[['Double',50],['Triple',60]] },
+  { id:43, cat:'sound',      name:'Deluxe Gold / Jumbo', mr:'डिलक्स गोल्ड / जंबो',                opts:[['',50],['',60],['',80]] },
+  { id:44, cat:'sound',      name:'Bullet / Sholy Bomb', mr:'बुलेट / शोले बॉम्ब',                opts:[['Bullet',40],['Sholy',50]] },
+  { id:45, cat:'sound',      name:'Saddam Bomb (Nylon) / Gajani Bomb', mr:'सद्दाम बॉम्ब (नायलॉन) / गजनी बॉम्ब',  opts:[['Saddam (Nylon)',80],['Gajani',150]] },
+  { id:46, cat:'sound',      name:'Cutter / Classic', mr:'कटर / क्लासिक',                   opts:[['',200]] },
+  { id:47, cat:'garlands',   name:'Red Bijili (50 / 100 pcs)', mr:'लाल बिजली (50 / 100 नग)',          opts:[['',30],['',50],['',70]] },
+  { id:48, cat:'garlands',   name:'28 Wala Medium', mr:'28 वाला मिडियम',                     opts:[['',20],['',25]] },
+  { id:49, cat:'garlands',   name:'28 Wala Giant', mr:'28 वाला जायंट',                      opts:[['',30],['',35]] },
+  { id:50, cat:'garlands',   name:'20 / 24 Wala Deluxe', mr:'20 / 24 वाला डिलक्स',                opts:[['20 Wala',50],['24 Wala',60]] },
+  { id:51, cat:'garlands',   name:'Lavangi Mala (Motta Tukda)', mr:'लवंगी माळा (मोठा तुकडा)',         opts:[['',200]] },
+  { id:52, cat:'garlands',   name:'1000 Wala (1K)', mr:'1000 वाला माळ (1K)',                     opts:[['',200],['',250],['',350],['',400]] },
+  { id:53, cat:'garlands',   name:'2000 Wala (2K)', mr:'2000 वाला माळ (2K)',                     opts:[['',400],['',500],['',750]] },
+  { id:54, cat:'garlands',   name:'5000 Wala (5K)', mr:'5000 वाला माळ (5K)',                     opts:[['',1000],['',1200],['',1500],['',1700]] },
+  { id:55, cat:'garlands',   name:'10000 Wala (10K)', mr:'10000 वाला माळ (10K)',                   opts:[['',2200],['',2400],['',2500],['',3200]] },
+  { id:56, cat:'shots',      name:'12 Shot', mr:'12 शॉट',                            unit:'box', opts:[['',200],['',300],['',350],['',400]] },
+  { id:57, cat:'shots',      name:'15 Shot', mr:'15 शॉट',                            opts:[['',400]] },
+  { id:58, cat:'shots',      name:'25 Shot', mr:'25 शॉट',                            opts:[['',350],['',450],['',500]] },
+  { id:59, cat:'shots',      name:'50 Shot', mr:'50 शॉट',                            opts:[['',850],['',950]] },
+  { id:60, cat:'shots',      name:'30 Shot / 60 Shot', mr:'30 शॉट / 60 शॉट',                  opts:[['30 Shot',650],['60 Shot',1000]] },
+  { id:61, cat:'shots',      name:'100 Shot / 120 Shot', mr:'100 शॉट / 120 शॉट',                unit:'piece', opts:[['',1400],['',1800],['',2200]] },
+  { id:62, cat:'shots',      name:'240 Shot', mr:'240 शॉट',                           unit:'piece', opts:[['',3000],['',3900],['',4400]] },
+  { id:63, cat:'shots',      name:'2" Pipe / 2" Pipe (3 pcs)', mr:'2" पाईप / 2" पाईप (3 नग)',          opts:[['',60],['',75],['',350]] },
+  { id:64, cat:'shots',      name:'2" Pipe Crackling (3 pcs)', mr:'2" पाईप क्रॅकलिंग (3 नग)',          opts:[['',500],['',600]] },
+  { id:65, cat:'shots',      name:'3" / 3.5" Pipe (2 pcs)', mr:'3" / 3.5" पाईप (2 नग)',             opts:[['',300],['',650],['',700],['',800]] },
+  { id:66, cat:'shots',      name:'4" Pipe (2 pcs)', mr:'4" पाईप (2 नग)',                    opts:[['',600],['',850],['',1000]] },
+  { id:67, cat:'shots',      name:'Rang Game', mr:'रंग गेम',                          opts:[['',1200]] },
 ];
 
 const CAT_BY_ID = Object.fromEntries(CATEGORIES.map(c => [c.id, c]));
+const PRODUCT_BY_ID = Object.fromEntries(PRODUCTS.map(p => [p.id, p]));
+
+/* ── LANGUAGE ──────────────────────────────────────── */
+// The page can be shown in English or Marathi. Orders sent to the shop (WhatsApp, sheet)
+// always stay in English. Product and category Marathi names live in PRODUCTS / CATEGORIES (mr).
+let lang = 'en';
+let renderCountdown = () => {}; // set by the countdown timer below
+try { if (localStorage.getItem('gd_lang') === 'mr') lang = 'mr'; } catch (e) {}
+
+const UNITS = {
+  packet: { en: 'packet', enPl: 'packets', mr: 'पॅकेट' },
+  box:    { en: 'box',    enPl: 'boxes',   mr: 'बॉक्स' },
+  piece:  { en: 'piece',  enPl: 'pieces',  mr: 'नग' },
+};
+
+// Marathi for the named varieties in product options
+const OPT_MR = {
+  'Helicopter': 'हेलिकॉप्टर', 'Drone': 'ड्रोन', 'Fire Eggs': 'फायर एग्स', 'Pyro Gun': 'पायरो गन',
+  'Narteki': 'नर्तकी', 'Deluxe': 'डिलक्स', 'Double': 'डबल', 'Triple': 'ट्रिपल', 'Bullet': 'बुलेट',
+  'Sholy': 'शोले', 'Saddam (Nylon)': 'सद्दाम (नायलॉन)', 'Gajani': 'गजनी', '20 Wala': '20 वाला',
+  '24 Wala': '24 वाला', '30 Shot': '30 शॉट', '60 Shot': '60 शॉट',
+};
+
+// Text built in code
+const T = {
+  en: {
+    add: '🛒 Add', inCart: '✓ In Cart', chooseVariety: 'Choose variety',
+    min: (n, u) => `Minimum ${n} ${u}`, minShort: n => ` · min ${n}`, variety: p => `₹${p} variety`,
+    showing: (n, all) => `Showing <strong>${n}</strong> of <strong>${all}</strong> results`,
+    noResults: 'No products found.<br>Try a different filter.',
+    cartEmpty: 'Your cart is empty.<br>Start adding crackers! 🎇',
+    today: 'Today', closed: 'Online pickup booking is closed. Please call us.', sending: 'Sending…',
+    sucPickup: slot => `Your order will be packed and ready for pickup on ${slot}. Show this order number at the shop and pay by cash or UPI.`,
+    sucDelivery: 'Please save this order number. We will contact you soon to confirm delivery. Delivery is by Porter, and Porter charges are paid by you to the driver.',
+  },
+  mr: {
+    add: '🛒 जोडा', inCart: '✓ कार्टमध्ये', chooseVariety: 'प्रकार निवडा',
+    min: (n, u) => `किमान ${dg(n, 'mr')} ${u}`, minShort: n => ` · किमान ${dg(n, 'mr')}`, variety: p => `₹${dg(p, 'mr')} प्रकार`,
+    showing: (n, all) => `<strong>${dg(all, 'mr')}</strong> पैकी <strong>${dg(n, 'mr')}</strong> उत्पादने`,
+    noResults: 'कोणतेही उत्पादन सापडले नाही.<br>दुसरा पर्याय निवडून पहा.',
+    cartEmpty: 'तुमचे कार्ट रिकामे आहे.<br>फटाके निवडा! 🎇',
+    today: 'आज', closed: 'ऑनलाइन पिकअप बुकिंग बंद आहे. कृपया आम्हाला कॉल करा.', sending: 'पाठवत आहे…',
+    sucPickup: slot => `तुमची ऑर्डर ${slot} या वेळेत पिकअपसाठी पॅक करून तयार असेल. दुकानात हा ऑर्डर नंबर दाखवा आणि रोख किंवा UPI ने पैसे द्या.`,
+    sucDelivery: 'हा ऑर्डर नंबर जपून ठेवा. डिलिव्हरी कन्फर्म करण्यासाठी आम्ही लवकरच संपर्क करू. डिलिव्हरी पोर्टरद्वारे होईल, आणि पोर्टरचे शुल्क तुम्ही ड्रायव्हरला द्यायचे आहे.',
+  },
+};
+
+function t(key, ...args) {
+  const v = T[lang][key] ?? T.en[key];
+  return typeof v === 'function' ? v(...args) : v;
+}
+
+// Marathi for page text marked with data-i18n / data-i18n-ph (English is read from the page)
+const PAGE_MR = {
+  topbar: '🎇 <strong>रांग टाळा:</strong> ऑनलाइन ऑर्डर करा, तयार पॅक घेऊन जा<span class="topbar-extra"> &nbsp;·&nbsp; 📞 +91 99224 93694</span>',
+  logo: 'श्री गुरुदेव दत्त<small>फटाका ट्रेडर्स · स्थापना २००६</small>',
+  navShop: 'उत्पादने', navBrands: 'ब्रँड्स', navContact: 'संपर्क', cart: 'कार्ट',
+  heroTag: '✦ २००६ पासून प्रत्येक सण उत्साहात ✦',
+  heroTitle: 'श्री गुरुदेव दत्त<br>फटाका ट्रेडर्स',
+  heroDesc: 'अनिल, स्टँडर्ड, मोरी, सनशाईन, आय्यनार, राजू खन्ना आणि क्लासिक फटाके. ऑनलाइन ऑर्डर करा आणि रांगेत न थांबता तुमची पॅक केलेली ऑर्डर घेऊन जा.',
+  badgeLicence: '🛡️ परवानाधारक दिवाळी विक्रेता', badgeCollection: '🎇 दिवाळी २०२६ कलेक्शन', badgeTrusted: '⭐ २००६ पासून विश्वासार्ह',
+  countdown: '🪔 दिवाळी २०२६ काउंटडाउन', cdDays: 'दिवस', cdHours: 'तास', cdMins: 'मिनिटे', cdSecs: 'सेकंद',
+  brandsTitle: 'आमच्याकडील ब्रँड्स',
+  brandAnil: 'अनिल', brandStandard: 'स्टँडर्ड', brandMori: 'मोरी', brandSunshine: 'सनशाईन',
+  brandAyyanar: 'आय्यनार', brandRajuKhanna: 'राजू खन्ना', brandClassic: 'क्लासिक',
+  allDepts: '☰ सर्व विभाग', searchPh: '🔍 शोधा',
+  sortBy: 'क्रमवारी', sortLow: 'किंमत: कमी ते जास्त', sortHigh: 'किंमत: जास्त ते कमी', sortName: 'नावानुसार',
+  trustLicence: 'परवानाधारक विक्रेता', trustLicenceSub: 'दिवाळी फटाके विक्री परवाना',
+  trustPrices: 'उत्तम किंमती', trustPricesSub: 'घाऊक दर उपलब्ध',
+  trustPickup: 'झटपट पिकअप', trustPickupSub: 'ऑनलाइन ऑर्डर करा, तयार पॅक घ्या',
+  trustYears: '२० वर्षे', trustYearsSub: '२००६ पासून विश्वासार्ह',
+  visit: 'आमच्या दुकानाला भेट द्या', location: 'पत्ता', proprietor: 'मालक', callWa: 'कॉल / व्हॉट्सॲप', hours: 'दुकानाची वेळ',
+  address: 'शॉप नं. ४४, डायगोनल बिझनेस सेंटर,<br>सेक्टर १६, गणेश मंदिराजवळ, आयुष गार्डन,<br>राजे शिवाजीनगर, चिखली,<br>पिंपरी-चिंचवड, महाराष्ट्र ४११०१९',
+  ownerName: 'रवींद्र पाटील',
+  hoursWeek: '<span class="day">सोम – शुक्र</span><span class="time">सकाळी ९ – रात्री ९</span>',
+  hoursWeekend: '<span class="day">शनि – रवि</span><span class="time">सकाळी ८ – रात्री १०</span>',
+  hoursDiwali: '<span class="day">दिवाळी हंगाम</span><span class="time">सकाळी ७ – रात्री ११</span>',
+  openMaps: '🗺️ Google Maps मध्ये उघडा',
+  shopName: 'श्री गुरुदेव दत्त फटाका ट्रेडर्स',
+  footerNote: '🪔 २००६ पासून सण उजळवत आहोत · परवानाधारक दिवाळी फटाका विक्रेता · महाराष्ट्र, भारत<br>कृपया परवानगी असलेल्या वेळेतच जबाबदारीने फटाके फोडा. पर्यावरण स्वच्छ ठेवण्यास मदत करा.',
+  myCart: '🛒 माझे कार्ट', total: 'एकूण', placeOrder: '📲 ऑर्डर करा',
+  completeOrder: '📋 तुमची ऑर्डर पूर्ण करा',
+  fullName: 'पूर्ण नाव <span class="req">*</span>', namePh: 'उदा. रमेश कुमार',
+  phone: 'मोबाईल नंबर <span class="req">*</span>',
+  howOrder: 'ऑर्डर कशी हवी आहे? <span class="req">*</span>',
+  optPickup: '🏪 दुकानातून पिकअप', optDelivery: '🚚 होम डिलिव्हरी',
+  pickupDay: 'पिकअप दिवस <span class="req">*</span>', pickupTime: 'पिकअप वेळ <span class="req">*</span>',
+  pickupNote: 'तुम्ही येण्यापूर्वी आम्ही तुमची ऑर्डर पॅक करून ठेवतो, त्यामुळे काउंटरवर थांबावे लागत नाही. दुकानात रोख किंवा UPI ने पैसे द्या.',
+  address2: 'डिलिव्हरी पत्ता <span class="req">*</span>', addressPh: 'घर/फ्लॅट नं., रस्ता, परिसर, शहर',
+  pincode: 'पिनकोड <span class="req">*</span>',
+  porterNote: '<strong>पोर्टरद्वारे डिलिव्हरी.</strong> पोर्टर डिलिव्हरीचे शुल्क ग्राहकाने डिलिव्हरीच्या वेळी थेट पोर्टर ड्रायव्हरला द्यायचे आहे.',
+  yourOrder: '🛒 तुमची ऑर्डर', cancel: 'रद्द करा', sendWa: 'व्हॉट्सॲपवर ऑर्डर पाठवा',
+  orderPlaced: 'ऑर्डर पाठवली!',
+  sentTo: 'तुमची ऑर्डर पाठवली आहे<br><strong>श्री गुरुदेव दत्त फटाका ट्रेडर्स</strong>',
+  continue: '🛒 खरेदी सुरू ठेवा',
+};
+const PAGE_EN = {};
+
+function translateEl(el) {
+  const k = el.dataset.i18n;
+  el.innerHTML = lang === 'mr' ? (PAGE_MR[k] ?? PAGE_EN[k]) : PAGE_EN[k];
+}
+
+// Read the English text from the page once, then show the saved language
+function initLang() {
+  document.querySelectorAll('[data-i18n]').forEach(el => { PAGE_EN[el.dataset.i18n] ??= el.innerHTML; });
+  document.querySelectorAll('[data-i18n-ph]').forEach(el => { PAGE_EN[el.dataset.i18nPh] ??= el.placeholder; });
+  if (lang === 'mr') applyLang('mr');
+}
+
+function applyLang(next) {
+  lang = next;
+  try { localStorage.setItem('gd_lang', lang); } catch (e) {}
+  document.documentElement.lang = lang;
+  document.querySelectorAll('[data-i18n]').forEach(translateEl);
+  document.querySelectorAll('[data-i18n-ph]').forEach(el => {
+    const k = el.dataset.i18nPh;
+    el.placeholder = lang === 'mr' ? (PAGE_MR[k] ?? PAGE_EN[k]) : PAGE_EN[k];
+  });
+  document.querySelectorAll('.lang-toggle button').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
+  document.querySelectorAll('.cat-btn').forEach(b => {
+    b.querySelector('.cat-label').textContent = catLabel(CAT_BY_ID[b.dataset.cat]);
+    const c = b.querySelector('.cat-count'); c.textContent = dg(c.dataset.n);
+  });
+  applyFilters();
+  updateCartUI();
+  renderCountdown();
+  if (document.getElementById('orderModal').classList.contains('show')) refreshOrderModal();
+}
+
+// Marathi shows Devanagari digits (₹१०००). Phone numbers, pincode and order number stay as typed.
+function dg(x, l = lang) { return l === 'mr' ? String(x).replace(/\d/g, d => '०१२३४५६७८९'[d]) : String(x); }
+
+function pName(p, l = lang) { return l === 'mr' && p.mr ? dg(p.mr, l) : p.name; }
+function catLabel(c, l = lang) { return l === 'mr' && c.mr ? c.mr : c.label; }
+function unitLabel(u, n = 1) { const x = UNITS[u]; return lang === 'mr' ? x.mr : (n > 1 ? x.enPl : x.en); }
+function optText(o, l = lang) { return l === 'mr' ? (OPT_MR[o[0]] || o[0]) : o[0]; }
+
+// Name of a cart line in the given language (orders to the shop use 'en')
+function itemName(item, l = lang) {
+  const p = PRODUCT_BY_ID[item.id], o = p.opts[item.opt];
+  if (o[0]) return `${pName(p, l)} (${optText(o, l)})`;
+  return p.opts.length > 1 ? `${pName(p, l)} (${T[l].variety(o[1])})` : pName(p, l);
+}
 
 /* ── STATE ─────────────────────────────────────────── */
 let activeCat = 'all';
-let cart = []; // { key, id, cat, name, unit, price, min, qty }
+let cart = []; // { key, id, opt, cat, unit, price, min, qty }
 
 /* ── HELPERS ───────────────────────────────────────── */
-function fmt(n) { return '₹' + n.toFixed(2); }
+function fmt(n, l = lang) { return '₹' + dg(n.toFixed(2), l); }
 
 function minPrice(p) { return Math.min(...p.opts.map(o => o[1])); }
 
-function optLabel(o) { return o[0] ? `${o[0]} — ₹${o[1]}` : `₹${o[1]}`; }
+function optLabel(o) { return o[0] ? `${optText(o)} — ₹${dg(o[1])}` : `₹${dg(o[1])}`; }
 
 function cartKey(p, i) { return p.id + '-' + i; }
-
-function cartName(p, i) {
-  const o = p.opts[i];
-  if (o[0]) return `${p.name} (${o[0]})`;
-  return p.opts.length > 1 ? `${p.name} (₹${o[1]} variety)` : p.name;
-}
 
 /* ── CATEGORIES ────────────────────────────────────── */
 function buildCategories() {
@@ -1884,7 +2064,7 @@ function buildCategories() {
     const li = document.createElement('li');
     li.className = 'cat-item';
     li.innerHTML = `<button class="cat-btn${cat.id === 'all' ? ' active' : ''}" data-cat="${cat.id}">
-      ${cat.label} <span class="cat-count">${count}</span>
+      <span class="cat-label">${catLabel(cat)}</span> <span class="cat-count" data-n="${count}">${dg(count)}</span>
     </button>`;
     li.querySelector('button').addEventListener('click', () => {
       activeCat = cat.id;
@@ -1901,15 +2081,16 @@ function applyFilters() {
 
   if (activeCat !== 'all') items = items.filter(p => p.cat === activeCat);
 
-  const q = document.getElementById('searchInput').value.trim().toLowerCase();
-  if (q) items = items.filter(p =>
-    p.name.toLowerCase().includes(q) || CAT_BY_ID[p.cat].label.toLowerCase().includes(q)
-  );
+  const q = document.getElementById('searchInput').value.trim().toLowerCase().replace(/[०-९]/g, d => '०१२३४५६७८९'.indexOf(d));
+  if (q) items = items.filter(p => {
+    const c = CAT_BY_ID[p.cat];
+    return [p.name, p.mr, c.label, c.mr].some(x => x && x.toLowerCase().includes(q));
+  });
 
   const sort = document.getElementById('sortSelect').value;
   if (sort === 'price-asc')  items.sort((a,b) => minPrice(a) - minPrice(b));
   if (sort === 'price-desc') items.sort((a,b) => minPrice(b) - minPrice(a));
-  if (sort === 'name')       items.sort((a,b) => a.name.localeCompare(b.name));
+  if (sort === 'name')       items.sort((a,b) => pName(a).localeCompare(pName(b), lang));
 
   renderProducts(items);
 }
@@ -1918,11 +2099,11 @@ function applyFilters() {
 function renderProducts(items) {
   const grid = document.getElementById('productsGrid');
   const count = document.getElementById('resultCount');
-  count.innerHTML = `Showing <strong>${items.length}</strong> of <strong>${PRODUCTS.length}</strong> results`;
+  count.innerHTML = t('showing', items.length, PRODUCTS.length);
   grid.innerHTML = '';
 
   if (!items.length) {
-    grid.innerHTML = `<div class="no-results"><span class="emoji">🔍</span>No products found.<br>Try a different filter.</div>`;
+    grid.innerHTML = `<div class="no-results"><span class="emoji">🔍</span>${t('noResults')}</div>`;
     return;
   }
 
@@ -1935,14 +2116,14 @@ function renderProducts(items) {
     card.className = 'product-card reveal-card';
     card.innerHTML = `
       <div class="prod-info">
-        <div class="prod-company" style="color:var(--org)">${cat.label}</div>
-        <div class="prod-title">${p.name}</div>
-        ${p.opts.length > 1 ? `<select class="opt-select" aria-label="Choose variety">
+        <div class="prod-company" style="color:var(--org)">${catLabel(cat)}</div>
+        <div class="prod-title">${pName(p)}</div>
+        ${p.opts.length > 1 ? `<select class="opt-select" aria-label="${t('chooseVariety')}">
           ${p.opts.map((o, i) => `<option value="${i}">${optLabel(o)}</option>`).join('')}
         </select>` : ''}
         <div class="prod-price">
           <span class="price-sale"></span>
-          <span class="price-unit">/ ${unit}</span>
+          <span class="price-unit">/ ${unitLabel(unit)}</span>
         </div>
         <div class="opt-note"></div>
         <div class="card-atc-row">
@@ -1951,7 +2132,7 @@ function renderProducts(items) {
             <span class="card-qty-num">0</span>
             <button class="card-qty-btn card-qty-plus">+</button>
           </div>
-          <button class="add-to-cart">🛒 Add</button>
+          <button class="add-to-cart">${t('add')}</button>
         </div>
       </div>`;
 
@@ -1961,12 +2142,12 @@ function renderProducts(items) {
     // Card shows the cart state of the currently selected variety
     card.refresh = () => {
       const o = p.opts[sel];
-      card.querySelector('.price-sale').textContent = '₹' + o[1];
-      card.querySelector('.opt-note').textContent = o[2] ? `Minimum ${o[2]} ${unit}s` : '';
+      card.querySelector('.price-sale').textContent = '₹' + dg(o[1]);
+      card.querySelector('.opt-note').textContent = o[2] ? t('min', o[2], unitLabel(unit, o[2])) : '';
       const inC = cart.find(c => c.key === cartKey(p, sel));
-      qtyEl.textContent = inC ? inC.qty : 0;
+      qtyEl.textContent = dg(inC ? inC.qty : 0);
       addBtn.classList.toggle('added', !!inC);
-      addBtn.textContent = inC ? '✓ In Cart' : '🛒 Add';
+      addBtn.textContent = inC ? t('inCart') : t('add');
     };
 
     const optSelect = card.querySelector('.opt-select');
@@ -1990,7 +2171,7 @@ function addToCart(p, i) {
   else {
     const o = p.opts[i];
     const min = o[2] || 1;
-    cart.push({ key, id: p.id, cat: p.cat, name: cartName(p, i), unit: p.unit || 'packet', price: o[1], min, qty: min });
+    cart.push({ key, id: p.id, opt: i, cat: p.cat, unit: p.unit || 'packet', price: o[1], min, qty: min });
   }
   updateCartUI();
 }
@@ -2006,7 +2187,7 @@ function changeQty(key, delta) {
 
 function updateCartUI() {
   const total = cart.reduce((s,c) => s + c.qty, 0);
-  document.getElementById('cartCount').textContent = total;
+  document.getElementById('cartCount').textContent = dg(total);
   document.querySelectorAll('.product-card').forEach(card => card.refresh && card.refresh());
 
   const itemsEl = document.getElementById('cartItems');
@@ -2015,7 +2196,7 @@ function updateCartUI() {
   const breakdownEl = document.getElementById('cartBreakdown');
 
   if (!cart.length) {
-    itemsEl.innerHTML = `<div class="cart-empty">Your cart is empty.<br>Start adding crackers! 🎇</div>`;
+    itemsEl.innerHTML = `<div class="cart-empty">${t('cartEmpty')}</div>`;
     totalEl.textContent = '₹0.00';
     breakdownEl.innerHTML = '';
     breakdownEl.hidden = true;
@@ -2029,19 +2210,19 @@ function updateCartUI() {
   cart.forEach(item => {
     const lineTotal = item.price * item.qty;
     sum += lineTotal;
-    breakdownRows.push(`<div class="cart-breakdown-row"><span>${item.name} ×${item.qty}</span><span>${fmt(lineTotal)}</span></div>`);
+    breakdownRows.push(`<div class="cart-breakdown-row"><span>${itemName(item)} ×${dg(item.qty)}</span><span>${fmt(lineTotal)}</span></div>`);
     const cat = CAT_BY_ID[item.cat];
     const div = document.createElement('div');
     div.className = 'cart-item';
     div.innerHTML = `
       <div class="cart-item-icon" style="background:${cat.grad}">${cat.icon}</div>
       <div style="flex:1;min-width:0">
-        <div class="cart-item-name">${item.name}</div>
-        <div class="cart-item-company">${cat.label}${item.min > 1 ? ` · min ${item.min}` : ''}</div>
-        <div class="cart-item-price">${fmt(item.price)} / ${item.unit}</div>
+        <div class="cart-item-name">${itemName(item)}</div>
+        <div class="cart-item-company">${catLabel(cat)}${item.min > 1 ? t('minShort', item.min) : ''}</div>
+        <div class="cart-item-price">${fmt(item.price)} / ${unitLabel(item.unit)}</div>
         <div class="cart-item-qty">
           <button class="qty-btn" data-op="minus">−</button>
-          <span class="qty-val">${item.qty}</span>
+          <span class="qty-val">${dg(item.qty)}</span>
           <button class="qty-btn" data-op="plus">+</button>
         </div>
       </div>`;
@@ -2183,6 +2364,8 @@ document.addEventListener('mousemove', (e) => {
 /* ── INIT ──────────────────────────────────────────── */
 buildCategories();
 applyFilters();
+updateCartUI();
+initLang();
 setTimeout(initScrollReveal, 100);
 
 /* ── GOOGLE SHEETS CONFIG ──────────────────────────── */
@@ -2196,9 +2379,25 @@ const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyfa-G6_WkLolIrRCE2Q
 const PICKUP_LAST_DAY = '2026-11-10';
 const PICKUP_HOURS = [9, 22];
 
-function hourLabel(h) {
+function hourLabel(h, l = lang) {
   const h12 = h % 12 || 12;
+  if (l === 'mr') return `${h < 12 ? 'सकाळी' : h < 16 ? 'दुपारी' : h < 19 ? 'संध्याकाळी' : 'रात्री'} ${dg(h12, 'mr')}`;
   return h12 + (h < 12 ? ' AM' : ' PM');
+}
+
+function dayLabel(d, l = lang) {
+  const loc = l === 'mr' ? 'mr-IN-u-nu-latn' : 'en-IN';
+  const today = d.toDateString() === new Date().toDateString();
+  return dg((today ? T[l].today : d.toLocaleDateString(loc, { weekday: 'short' })) + ', '
+    + d.toLocaleDateString(loc, { day: 'numeric', month: 'short' }), l);
+}
+
+function slotLabel(h, l = lang) { return `${hourLabel(h, l)} – ${hourLabel(h + 1, l)}`; }
+
+// Chosen pickup day and time as text, e.g. "Tue, 27 Oct, 5 PM – 6 PM"
+function slotText(l = lang) {
+  const day = document.getElementById('f-day').value, h = document.getElementById('f-slot').value;
+  return day && h !== '' ? `${dayLabel(new Date(day), l)}, ${slotLabel(+h, l)}` : '';
 }
 
 // Slots that can still be booked on the given day (today: only slots starting after the current hour)
@@ -2212,31 +2411,32 @@ function slotsFor(day) {
   return hours;
 }
 
+// Refills the day list (keeping the current choice when it is still available)
 function fillPickupDays() {
   const daySel = document.getElementById('f-day');
+  const prev = daySel.value;
   daySel.innerHTML = '';
   const last = new Date(PICKUP_LAST_DAY + 'T23:59:59');
   const today = new Date();
   for (let d = new Date(today.getFullYear(), today.getMonth(), today.getDate()); d <= last; d.setDate(d.getDate() + 1)) {
     if (!slotsFor(d).length) continue;
-    const label = (d.toDateString() === today.toDateString() ? 'Today, ' : d.toLocaleDateString('en-IN', { weekday:'short' }) + ', ')
-      + d.toLocaleDateString('en-IN', { day:'numeric', month:'short' });
-    daySel.add(new Option(label, d.toISOString()));
+    daySel.add(new Option(dayLabel(d), d.toISOString()));
   }
+  if ([...daySel.options].some(o => o.value === prev)) daySel.value = prev;
   fillPickupSlots();
 }
 
 function fillPickupSlots() {
   const daySel = document.getElementById('f-day');
   const slotSel = document.getElementById('f-slot');
+  const prev = slotSel.value;
   slotSel.innerHTML = '';
   if (!daySel.value) {
-    slotSel.add(new Option('Online pickup booking is closed. Please call us.', ''));
+    slotSel.add(new Option(t('closed'), ''));
     return;
   }
-  slotsFor(new Date(daySel.value)).forEach(h => {
-    slotSel.add(new Option(`${hourLabel(h)} – ${hourLabel(h + 1)}`, h));
-  });
+  slotsFor(new Date(daySel.value)).forEach(h => slotSel.add(new Option(slotLabel(h), h)));
+  if ([...slotSel.options].some(o => o.value === prev)) slotSel.value = prev;
 }
 
 function orderType() {
@@ -2252,7 +2452,14 @@ function setOrderType() {
 /* ── ORDER MODAL ───────────────────────────────────── */
 function openOrderModal() {
   if (!cart.length) return;
-  // populate summary
+  refreshOrderModal();
+  setOrderType();
+  document.getElementById('orderModal').classList.add('show');
+  document.getElementById('f-name').focus();
+}
+
+// Order summary and pickup choices (also re-run when the language changes)
+function refreshOrderModal() {
   const itemsEl = document.getElementById('osMiniItems');
   let sum = 0;
   itemsEl.innerHTML = '';
@@ -2261,14 +2468,11 @@ function openOrderModal() {
     sum += line;
     const row = document.createElement('div');
     row.className = 'osm-row';
-    row.innerHTML = `<span>${item.name} × ${item.qty}</span><span>${fmt(line)}</span>`;
+    row.innerHTML = `<span>${itemName(item)} × ${dg(item.qty)}</span><span>${fmt(line)}</span>`;
     itemsEl.appendChild(row);
   });
   document.getElementById('osMiniTotal').textContent = fmt(sum);
   fillPickupDays();
-  setOrderType();
-  document.getElementById('orderModal').classList.add('show');
-  document.getElementById('f-name').focus();
 }
 
 function closeOrderModal() {
@@ -2288,7 +2492,6 @@ async function placeOrder() {
   const address = document.getElementById('f-address').value.trim();
   const pin     = document.getElementById('f-pin').value.trim();
   const pickup  = orderType() === 'pickup';
-  const daySel  = document.getElementById('f-day');
   const slotSel = document.getElementById('f-slot');
 
   // validate
@@ -2303,20 +2506,22 @@ async function placeOrder() {
   if (!valid) return;
 
   const btn = document.getElementById('btnPlaceOrder');
+  const btnLabel = document.getElementById('btnPlaceLabel');
   btn.disabled = true;
-  btn.textContent = 'Sending…';
+  btnLabel.textContent = t('sending');
 
   const now = new Date();
   const orderId = genOrderId(now);
   const dateStr = now.toLocaleDateString('en-IN', { day:'2-digit', month:'short', year:'numeric' });
   const timeStr = now.toLocaleTimeString('en-IN', { hour:'2-digit', minute:'2-digit' });
-  const slotText = pickup ? `${daySel.selectedOptions[0].text}, ${slotSel.selectedOptions[0].text}` : '';
+  const slotEn = pickup ? slotText('en') : '';
+  const slotShown = pickup ? slotText() : '';
 
   let sum = 0;
   const itemLines = cart.map(item => {
     const line = item.price * item.qty;
     sum += line;
-    return `• ${item.name} × ${item.qty} — ${fmt(line)}`;
+    return `• ${itemName(item, 'en')} × ${item.qty} — ${fmt(line, 'en')}`;
   });
 
   // build WhatsApp message (no emojis: they arrive broken on some phones)
@@ -2330,13 +2535,13 @@ async function placeOrder() {
     `Name: ${name}`,
     `Phone: ${phone}`,
     ...(pickup
-      ? [`*PICKUP from shop:* ${slotText}`]
-      : [`*HOME DELIVERY*`, `Address: ${address}`, `Pincode: ${pin}`]),
+      ? [`*PICKUP from shop:* ${slotEn}`]
+      : [`*HOME DELIVERY (Porter)*`, `Address: ${address}`, `Pincode: ${pin}`, `Porter charges to be paid by customer.`]),
     ``,
     `*Items Ordered:*`,
     ...itemLines,
     ``,
-    `*Total Amount: ${fmt(sum)}*`,
+    `*Total Amount: ${fmt(sum, 'en')}*`,
     ``,
     pickup ? `Payment at shop (cash / UPI). Please keep this order packed and ready.` : `Note: Please confirm this order with the customer.`,
   ].join('\n');
@@ -2350,10 +2555,10 @@ async function placeOrder() {
       headers: { 'Content-Type': 'text/plain' },
       body: JSON.stringify({
         orderId, name, phone,
-        address: pickup ? `PICKUP: ${slotText}` : address,
+        address: pickup ? `PICKUP: ${slotEn}` : address,
         pincode: pickup ? '' : pin,
-        orderType: pickup ? 'Pickup' : 'Delivery', pickupSlot: slotText,
-        items: cart.map(i => ({ name: i.name, company: CAT_BY_ID[i.cat].label, qty: i.qty, price: i.price })),
+        orderType: pickup ? 'Pickup' : 'Delivery', pickupSlot: slotEn,
+        items: cart.map(i => ({ name: itemName(i, 'en'), company: CAT_BY_ID[i.cat].label, qty: i.qty, price: i.price })),
         total: sum, status: 'Pending',
         createdAt: now.toISOString(), dateStr, timeStr,
       }),
@@ -2367,9 +2572,7 @@ async function placeOrder() {
   // show success
   closeOrderModal();
   document.getElementById('sucOrderNum').textContent = orderId;
-  document.getElementById('sucNote').textContent = pickup
-    ? `Your order will be packed and ready for pickup on ${slotText}. Show this order number at the shop and pay by cash or UPI.`
-    : 'Please save this order number. We will contact you soon to confirm delivery details.';
+  document.getElementById('sucNote').textContent = pickup ? t('sucPickup', slotShown) : t('sucDelivery');
   document.getElementById('successOverlay').classList.add('show');
 
   // clear cart (product cards refresh from updateCartUI)
@@ -2378,10 +2581,8 @@ async function placeOrder() {
   closeCart();
 
   btn.disabled = false;
-  btn.innerHTML = BTN_PLACE_HTML;
+  translateEl(btnLabel);
 }
-
-const BTN_PLACE_HTML = document.getElementById('btnPlaceOrder').innerHTML;
 
 function closeSuccess() {
   document.getElementById('successOverlay').classList.remove('show');
@@ -2402,21 +2603,22 @@ function closeSuccess() {
   function tick() {
     const diff = TARGET - Date.now();
     if (diff <= 0) {
-      document.getElementById('cd-d').textContent = '00';
-      document.getElementById('cd-h').textContent = '00';
-      document.getElementById('cd-m').textContent = '00';
-      document.getElementById('cd-s').textContent = '00';
+      document.getElementById('cd-d').textContent = dg('00');
+      document.getElementById('cd-h').textContent = dg('00');
+      document.getElementById('cd-m').textContent = dg('00');
+      document.getElementById('cd-s').textContent = dg('00');
       return;
     }
     const d = Math.floor(diff / 864e5);
     const h = Math.floor((diff % 864e5) / 36e5);
     const m = Math.floor((diff % 36e5) / 6e4);
     const s = Math.floor((diff % 6e4) / 1e3);
-    document.getElementById('cd-d').textContent = pad(d);
-    document.getElementById('cd-h').textContent = pad(h);
-    document.getElementById('cd-m').textContent = pad(m);
-    document.getElementById('cd-s').textContent = pad(s);
+    document.getElementById('cd-d').textContent = dg(pad(d));
+    document.getElementById('cd-h').textContent = dg(pad(h));
+    document.getElementById('cd-m').textContent = dg(pad(m));
+    document.getElementById('cd-s').textContent = dg(pad(s));
   }
+  renderCountdown = tick;
   tick();
   setInterval(tick, 1000);
 })();
