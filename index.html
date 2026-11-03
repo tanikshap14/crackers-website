@@ -858,11 +858,12 @@ footer {
   z-index: 500;
   box-shadow: -4px 0 24px rgba(0,0,0,0.2);
   transform: translateX(100%);
-  transition: transform 0.3s;
+  visibility: hidden; /* also takes the closed drawer out of the tab order where `inert` is unsupported */
+  transition: transform 0.3s, visibility 0s 0.3s;
   display: flex;
   flex-direction: column;
 }
-.cart-drawer.open { transform: none; }
+.cart-drawer.open { transform: none; visibility: visible; transition-delay: 0s; }
 .cart-header {
   background: var(--dk);
   color: var(--gold);
@@ -882,6 +883,17 @@ footer {
 }
 .cart-items { flex: 1 1 0; min-height: 120px; overflow-y: auto; overscroll-behavior: contain; -webkit-overflow-scrolling: touch; padding: 1rem; }
 body.cart-open { overflow: hidden; }
+.toast {
+  position: fixed; left: 50%; bottom: max(1rem, env(safe-area-inset-bottom));
+  transform: translate(-50%, 150%);
+  z-index: 900; width: max-content; max-width: calc(100vw - 2rem); box-sizing: border-box;
+  display: flex; align-items: center; gap: 0.9rem;
+  background: var(--dk); color: #fff; font-size: 0.82rem;
+  padding: 0.65rem 0.9rem; border-radius: 8px; box-shadow: 0 6px 24px rgba(0,0,0,0.35);
+  opacity: 0; pointer-events: none; transition: transform 0.25s, opacity 0.25s;
+}
+.toast.show { transform: translate(-50%, 0); opacity: 1; pointer-events: auto; }
+.toast button { background: none; border: none; color: var(--gold); font: inherit; font-weight: 700; cursor: pointer; padding: 0.2rem 0.3rem; }
 .cart-empty { text-align: center; color: var(--muted); padding: 2rem; font-size: 0.9rem; }
 .cart-item {
   display: flex; gap: 0.8rem; align-items: center;
@@ -1269,45 +1281,6 @@ body.cart-open { overflow: hidden; }
 /* ── ADMIN PANEL ─────────────────────────────────────── */
 .status-pill { display: inline-block; padding: 0.12rem 0.5rem; border-radius: 20px; font-size: 0.68rem; font-weight: 700; background: #e8f5e9; color: #2e7d32; }
 
-/* ── VIDEO SECTION ───────────────────────────────────── */
-.video-section {
-  background: var(--dk2);
-  padding: 2.5rem 1.5rem;
-  text-align: center;
-}
-.video-label {
-  font-size: 0.72rem;
-  text-transform: uppercase;
-  letter-spacing: 0.18em;
-  color: var(--org);
-  font-weight: 700;
-  margin-bottom: 1.2rem;
-}
-.video-wrap {
-  position: relative;
-  max-width: 800px;
-  margin: 0 auto;
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 8px 40px rgba(0,0,0,0.5);
-  border: 2px solid rgba(255,215,0,0.2);
-  aspect-ratio: 16/9;
-  background: #000;
-}
-.video-wrap iframe {
-  width: 100%; height: 100%;
-  border: none; display: block;
-}
-.video-placeholder {
-  width: 100%; height: 100%;
-  display: flex; flex-direction: column;
-  align-items: center; justify-content: center;
-  gap: 0.8rem; color: rgba(255,255,255,0.4);
-  font-size: 0.85rem;
-}
-.video-placeholder .vp-icon { font-size: 3rem; }
-.video-placeholder a { color: var(--gold); font-size: 0.8rem; }
-
 /* ── SCROLL REVEAL ANIMATIONS ────────────────────────── */
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(24px); }
@@ -1374,10 +1347,6 @@ body.cart-open { overflow: hidden; }
   text-transform: uppercase; margin-top: 2px;
 }
 
-@media (max-width: 760px) {
-  .video-section { padding: 1.5rem 1rem; }
-  .video-wrap { border-radius: 6px; }
-}
 /* ── PHONES ──────────────────────────────────────────── */
 /* Kept last so it overrides the base rules above, some of which come after the older mobile block. */
 @media (max-width: 760px) {
@@ -1474,6 +1443,8 @@ body.cart-open { overflow: hidden; }
     <button class="checkout-btn" onclick="openOrderModal()" data-i18n="placeOrder">📲 Place Order</button>
   </div>
 </div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <!-- SPARKLE LAYER -->
 <div class="sparkle-layer" id="sparkleLayer"></div>
@@ -1601,7 +1572,7 @@ body.cart-open { overflow: hidden; }
   <main class="shop-main">
     <div class="shop-toolbar">
       <div class="result-count" id="resultCount">Showing <strong>0</strong> results</div>
-      <input type="search" class="search-input" id="searchInput" placeholder="🔍 Search" data-i18n-ph="searchPh" oninput="applyFilters()">
+      <input type="search" class="search-input" id="searchInput" placeholder="🔍 Search" data-i18n-ph="searchPh" oninput="debouncedFilters()">
       <select class="sort-select" id="sortSelect" onchange="applyFilters()">
         <option value="default" data-i18n="sortBy">Sort by</option>
         <option value="price-asc" data-i18n="sortLow">Price: Low to High</option>
@@ -1924,6 +1895,7 @@ const T = {
     noResults: 'No products found.<br>Try a different filter.',
     cartEmpty: 'Your cart is empty.<br>Start adding crackers! 🎇',
     qtyDec: 'Decrease quantity', qtyInc: 'Increase quantity', closeCart: 'Close cart',
+    removed: n => `${n} removed`, undo: 'Undo',
     waRetry: 'WhatsApp did not open? Tap here to send your order',
     today: 'Today', closed: 'Online pickup booking is closed. Please call us.', sending: 'Sending…',
     sucPickup: slot => `Your order will be packed and ready for pickup on ${slot}. Show this order number at the shop and pay by cash or UPI.`,
@@ -1936,6 +1908,7 @@ const T = {
     noResults: 'कोणतेही उत्पादन सापडले नाही.<br>दुसरा पर्याय निवडून पहा.',
     cartEmpty: 'तुमचे कार्ट रिकामे आहे.<br>फटाके निवडा! 🎇',
     qtyDec: 'संख्या कमी करा', qtyInc: 'संख्या वाढवा', closeCart: 'कार्ट बंद करा',
+    removed: n => `${n} काढले`, undo: 'पूर्ववत करा',
     waRetry: 'व्हॉट्सॲप उघडले नाही? ऑर्डर पाठवण्यासाठी येथे टॅप करा',
     today: 'आज', closed: 'ऑनलाइन पिकअप बुकिंग बंद आहे. कृपया आम्हाला कॉल करा.', sending: 'पाठवत आहे…',
     sucPickup: slot => `तुमची ऑर्डर ${slot} या वेळेत पिकअपसाठी पॅक करून तयार असेल. दुकानात हा ऑर्डर नंबर दाखवा आणि रोख किंवा UPI ने पैसे द्या.`,
@@ -2024,6 +1997,7 @@ function applyLang(next) {
   updateCartUI();
   renderCountdown();
   if (document.getElementById('orderModal').classList.contains('show')) refreshOrderModal();
+  renderSuccess();
 }
 
 // Marathi shows Devanagari digits (₹१०००). Phone numbers, pincode and order number stay as typed.
@@ -2043,12 +2017,30 @@ function itemName(item, l = lang) {
 
 /* ── STATE ─────────────────────────────────────────── */
 let activeCat = 'all';
-let cart = []; // { key, id, opt, cat, unit, price, min, qty }
+const CART_KEY = 'gd_cart';
+// The cart survives a reload. Only product, variety and quantity are stored; prices and minimums
+// are read from the catalogue again so an outdated price can never come back from storage.
+function loadCart() {
+  try {
+    return JSON.parse(localStorage.getItem(CART_KEY) || '[]').flatMap(c => {
+      const p = PRODUCT_BY_ID[c.id], o = p && p.opts[c.opt];
+      if (!o || !(c.qty >= (o[2] || 1))) return [];
+      return [{ key: cartKey(p, c.opt), id: p.id, opt: c.opt, cat: p.cat, unit: p.unit || 'packet', price: o[1], min: o[2] || 1, qty: Math.floor(c.qty) }];
+    });
+  } catch (e) { return []; }
+}
+function saveCart() {
+  try { localStorage.setItem(CART_KEY, JSON.stringify(cart.map(({ id, opt, qty }) => ({ id, opt, qty })))); } catch (e) {}
+}
+
+let cart = loadCart(); // { key, id, opt, cat, unit, price, min, qty }
+let lastSuccess = null; // what the success screen shows, so it can be translated while open
 
 /* ── HELPERS ───────────────────────────────────────── */
 function fmt(n, l = lang) { return '₹' + dg(n.toFixed(2), l); }
 
 function minPrice(p) { return Math.min(...p.opts.map(o => o[1])); }
+function maxPrice(p) { return Math.max(...p.opts.map(o => o[1])); }
 
 function optLabel(o) { return o[0] ? `${optText(o)} — ₹${dg(o[1])}` : `₹${dg(o[1])}`; }
 
@@ -2075,6 +2067,13 @@ function buildCategories() {
 }
 
 /* ── FILTERS ───────────────────────────────────────── */
+// Typing in the search box re-renders every card, so wait for a short pause between keystrokes
+let filterTimer;
+function debouncedFilters() {
+  clearTimeout(filterTimer);
+  filterTimer = setTimeout(applyFilters, 150);
+}
+
 function applyFilters() {
   let items = [...PRODUCTS];
 
@@ -2088,7 +2087,7 @@ function applyFilters() {
 
   const sort = document.getElementById('sortSelect').value;
   if (sort === 'price-asc')  items.sort((a,b) => minPrice(a) - minPrice(b));
-  if (sort === 'price-desc') items.sort((a,b) => minPrice(b) - minPrice(a));
+  if (sort === 'price-desc') items.sort((a,b) => maxPrice(b) - maxPrice(a)); // by the dearest variety, mirroring low-to-high's cheapest
   if (sort === 'name')       items.sort((a,b) => pName(a).localeCompare(pName(b), lang));
 
   renderProducts(items);
@@ -2175,16 +2174,44 @@ function addToCart(p, i) {
   updateCartUI();
 }
 
-// Dropping below an item's minimum quantity removes it from the cart
+// Dropping below an item's minimum quantity removes it from the cart (with an Undo)
 function changeQty(key, delta) {
   const item = cart.find(c => c.key === key);
   if (!item) return;
   item.qty += delta;
-  if (item.qty < item.min) cart = cart.filter(c => c !== item);
+  if (item.qty < item.min) {
+    const index = cart.indexOf(item);
+    cart = cart.filter(c => c !== item);
+    showUndo({ ...item, qty: item.min }, index);
+  }
   updateCartUI();
 }
 
+let toastTimer, undoItem;
+function hideToast() {
+  clearTimeout(toastTimer);
+  undoItem = null;
+  document.getElementById('toast').classList.remove('show');
+}
+function showUndo(item, index) {
+  undoItem = { item, index };
+  const el = document.getElementById('toast');
+  el.innerHTML = `<span>${t('removed', itemName(item))}</span><button type="button">${t('undo')}</button>`;
+  el.querySelector('button').onclick = () => {
+    const u = undoItem;
+    hideToast();
+    if (u && !cart.some(c => c.key === u.item.key)) {
+      cart.splice(Math.min(u.index, cart.length), 0, u.item);
+      updateCartUI();
+    }
+  };
+  el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(hideToast, 5000);
+}
+
 function updateCartUI() {
+  saveCart();
   const total = cart.reduce((s,c) => s + c.qty, 0);
   document.getElementById('cartCount').textContent = dg(total);
   document.getElementById('cartClose').setAttribute('aria-label', t('closeCart'));
@@ -2331,36 +2358,6 @@ document.getElementById('overlay').addEventListener('click', closeCart);
   setTimeout(()=>burst(W*0.7,H*0.25),1000);
 })();
 
-/* ── VIDEO CONFIG ──────────────────────────────────── */
-// Paste your YouTube video ID here (the part after ?v= in the URL)
-// e.g. for https://youtube.com/watch?v=dQw4w9WgXcQ → VIDEO_ID = 'dQw4w9WgXcQ'
-const VIDEO_ID = '';
-
-function initVideo() {
-  if (!VIDEO_ID) return; // show placeholder until VIDEO_ID is set
-  const wrap = document.getElementById('videoWrap');
-  wrap.innerHTML = `<iframe
-    src="https://www.youtube.com/embed/${VIDEO_ID}?rel=0&modestbranding=1"
-    title="Shri Gurudev Datta Fataka Traders" frameborder="0"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-    allowfullscreen></iframe>`;
-}
-initVideo();
-
-function promptVideo(e) {
-  e.preventDefault();
-  const url = prompt('Paste your YouTube video URL:');
-  if (!url) return;
-  const match = url.match(/(?:v=|youtu\.be\/)([A-Za-z0-9_-]{11})/);
-  if (!match) { alert('Could not find video ID. Make sure it\'s a youtube.com or youtu.be link.'); return; }
-  const id = match[1];
-  document.getElementById('videoWrap').innerHTML = `<iframe
-    src="https://www.youtube.com/embed/${id}?rel=0&modestbranding=1"
-    title="Fataka Traders" frameborder="0"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-    allowfullscreen></iframe>`;
-}
-
 /* ── SCROLL REVEAL ─────────────────────────────────── */
 // One shared observer: each re-render drops the old (now detached) cards and watches only the new ones
 let revealObs;
@@ -2411,11 +2408,22 @@ setTimeout(initScrollReveal, 100);
 // The sheet link itself is deliberately not on this page: open it from your own bookmark.
 const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyfa-G6_WkLolIrRCE2Q3Oc53CAPfWaqOizWoiA7BnFEX1-k3frNkw9flhN1b4O_eLT/exec';
 
+/* ── SEASON SETTINGS (update these each year) ─────── */
+const DIWALI_AT = '2026-11-08T18:00:00+05:30'; // Lakshmi Puja: the countdown target (hidden once it passes)
+const PICKUP_LAST_DAY = '2026-11-11';          // last day customers can choose for pickup (YYYY-MM-DD)
+const DIWALI_HOURS_UNTIL = '2026-11-11';       // up to this day the shop keeps its longer Diwali hours
+// Shop hours as [opens, closes] on the 24h clock; pickup slots are only offered inside them
+const DIWALI_HOURS = [7, 23], WEEKDAY_HOURS = [9, 21], WEEKEND_HOURS = [8, 22];
+const WA_MAX_URL = 6000; // longest wa.me link to open before long orders are shortened
+
+// Hours the shop is open on a day (YYYY-MM-DD)
+function pickupHours(day) {
+  if (day <= DIWALI_HOURS_UNTIL) return DIWALI_HOURS;
+  const dow = new Date(day + 'T00:00:00Z').getUTCDay();
+  return dow === 0 || dow === 6 ? WEEKEND_HOURS : WEEKDAY_HOURS;
+}
+
 /* ── PICKUP SLOTS ──────────────────────────────────── */
-// Last day customers can choose for pickup (YYYY-MM-DD), and slot hours (24h clock):
-// first slot starts at PICKUP_HOURS[0], last slot ends at PICKUP_HOURS[1].
-const PICKUP_LAST_DAY = '2026-11-10';
-const PICKUP_HOURS = [9, 22];
 
 function hourLabel(h, l = lang) {
   const h12 = h % 12 || 12;
@@ -2443,8 +2451,7 @@ function dayLabel(day, l = lang) {
 function slotLabel(h, l = lang) { return `${hourLabel(h, l)} – ${hourLabel(h + 1, l)}`; }
 
 // Chosen pickup day and time as text, e.g. "Tue, 27 Oct, 5 PM – 6 PM"
-function slotText(l = lang) {
-  const day = document.getElementById('f-day').value, h = document.getElementById('f-slot').value;
+function slotText(l = lang, day = document.getElementById('f-day').value, h = document.getElementById('f-slot').value) {
   return day && h !== '' ? `${dayLabel(day, l)}, ${slotLabel(+h, l)}` : '';
 }
 
@@ -2453,7 +2460,8 @@ function slotsFor(day) {
   const now = istNow();
   const isToday = day === now.day;
   const hours = [];
-  for (let h = PICKUP_HOURS[0]; h < PICKUP_HOURS[1]; h++) {
+  const [opens, closes] = pickupHours(day);
+  for (let h = opens; h < closes; h++) {
     if (!isToday || h > now.hour) hours.push(h);
   }
   return hours;
@@ -2543,6 +2551,13 @@ function genOrderId(now) {
 // Spreadsheets run cell text that starts with = + - @ as a formula; a leading apostrophe stops that
 function safeCell(s) { return /^[=+\-@\t\r]/.test(s) ? "'" + s : s; }
 
+// Indian mobile number: 10 digits starting 6-9, optionally written with +91, 91 or a leading 0
+function validPhone(v) {
+  if (/[^\d\s+()-]/.test(v)) return false;
+  const d = v.replace(/\D/g, '').replace(/^(?:91|0)(?=\d{10}$)/, '');
+  return /^[6-9]\d{9}$/.test(d);
+}
+
 function placeOrder() {
   const name    = document.getElementById('f-name').value.trim();
   const phone   = document.getElementById('f-phone').value.trim();
@@ -2552,7 +2567,7 @@ function placeOrder() {
   const slotSel = document.getElementById('f-slot');
 
   // validate
-  const checks = [['f-name', name], ['f-phone', phone.replace(/\D/g, '').length >= 10]];
+  const checks = [['f-name', name], ['f-phone', validPhone(phone)]];
   if (pickup) checks.push(['f-slot', slotSel.value]);
   else checks.push(['f-address', address], ['f-pin', /^\d{6}$/.test(pin)]);
   let valid = true;
@@ -2577,17 +2592,17 @@ function submitOrder({ name, phone, address, pin, pickup }) {
   const dateStr = now.toLocaleDateString('en-IN', { timeZone: 'Asia/Kolkata', day:'2-digit', month:'short', year:'numeric' });
   const timeStr = now.toLocaleTimeString('en-IN', { timeZone: 'Asia/Kolkata', hour:'2-digit', minute:'2-digit' });
   const slotEn = pickup ? slotText('en') : '';
-  const slotShown = pickup ? slotText() : '';
+  const slotDay = document.getElementById('f-day').value, slotHour = document.getElementById('f-slot').value;
 
   let sum = 0;
-  const itemLines = cart.map(item => {
+  const lines = cart.map(item => {
     const line = item.price * item.qty;
     sum += line;
-    return `• ${itemName(item, 'en')} × ${item.qty} — ${fmt(line, 'en')}`;
+    return { full: `• ${itemName(item, 'en')} × ${item.qty} — ${fmt(line, 'en')}`, short: `${itemName(item, 'en')} x${item.qty}` };
   });
 
   // build WhatsApp message (no emojis: they arrive broken on some phones)
-  const msg = [
+  const buildMsg = itemLines => [
     `*NEW ORDER — Shri Gurudev Datta Fataka Traders*`,
     ``,
     `*Order #${orderId}*`,
@@ -2628,17 +2643,26 @@ function submitOrder({ name, phone, address, pin, pickup }) {
   }
 
   // open WhatsApp. If the browser blocks the popup the success screen still has a link to it
-  const waUrl = `https://wa.me/919922493694?text=${encodeURIComponent(msg)}`;
+  // Very long carts can exceed what wa.me accepts in a link: first drop the per-line prices
+  // (the total stays), then cut the list and point to the saved order
+  const waUrlFor = itemLines => `https://wa.me/919922493694?text=${encodeURIComponent(buildMsg(itemLines))}`;
+  let waUrl = waUrlFor(lines.map(l => l.full));
+  if (waUrl.length > WA_MAX_URL) {
+    const shortUrl = n => waUrlFor([...lines.slice(0, n).map(l => l.short),
+      ...(n < lines.length ? [`...and ${lines.length - n} more items (full list saved under order #${orderId})`] : [])]);
+    let n = lines.length;
+    waUrl = shortUrl(n);
+    while (waUrl.length > WA_MAX_URL && n > 1) waUrl = shortUrl(--n);
+  }
   const waWin = window.open(waUrl, '_blank');
   if (waWin) waWin.opener = null;
 
   // show success
   closeOrderModal();
-  const waLink = document.getElementById('sucWaLink');
-  waLink.href = waUrl;
-  waLink.textContent = t('waRetry');
+  document.getElementById('sucWaLink').href = waUrl;
   document.getElementById('sucOrderNum').textContent = orderId;
-  document.getElementById('sucNote').textContent = pickup ? t('sucPickup', slotShown) : t('sucDelivery');
+  lastSuccess = { pickup, slotDay, slotHour };
+  renderSuccess();
   document.getElementById('successOverlay').classList.add('show');
 
   // clear cart (product cards refresh from updateCartUI)
@@ -2647,7 +2671,16 @@ function submitOrder({ name, phone, address, pin, pickup }) {
   closeCart();
 }
 
+// Text on the success screen; re-run when the language changes while it is open
+function renderSuccess() {
+  if (!lastSuccess) return;
+  const { pickup, slotDay, slotHour } = lastSuccess;
+  document.getElementById('sucNote').textContent = pickup ? t('sucPickup', slotText(lang, slotDay, slotHour)) : t('sucDelivery');
+  document.getElementById('sucWaLink').textContent = t('waRetry');
+}
+
 function closeSuccess() {
+  lastSuccess = null;
   document.getElementById('successOverlay').classList.remove('show');
   // reset form
   ['f-name','f-phone','f-address','f-pin'].forEach(id => {
@@ -2660,16 +2693,15 @@ function closeSuccess() {
 
 /* ── COUNTDOWN TIMER ───────────────────────────────── */
 (function() {
-  // Diwali 2026 (Lakshmi Puja): November 8, 2026 at 6 PM IST
-  const TARGET = new Date('2026-11-08T18:00:00+05:30').getTime();
+  const TARGET = new Date(DIWALI_AT).getTime();
+  const wrap = document.querySelector('.countdown-wrap');
+  let timer;
   function pad(n) { return String(n).padStart(2, '0'); }
   function tick() {
     const diff = TARGET - Date.now();
-    if (diff <= 0) {
-      document.getElementById('cd-d').textContent = dg('00');
-      document.getElementById('cd-h').textContent = dg('00');
-      document.getElementById('cd-m').textContent = dg('00');
-      document.getElementById('cd-s').textContent = dg('00');
+    if (diff <= 0) { // festival is here: hide the countdown instead of showing 00:00:00:00
+      wrap.style.display = 'none';
+      clearInterval(timer);
       return;
     }
     const d = Math.floor(diff / 864e5);
@@ -2683,7 +2715,7 @@ function closeSuccess() {
   }
   renderCountdown = tick;
   tick();
-  setInterval(tick, 1000);
+  timer = setInterval(tick, 1000);
 })();
 
 /* ── FLOATING SPARKLES ─────────────────────────────── */
