@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+<head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Shri Gurudev Datta Fataka Traders</title>
@@ -1233,6 +1234,25 @@ body.cart-open { overflow: hidden; }
 }
 .fg input:focus, .fg textarea:focus, .fg select:focus { outline: none; border-color: var(--gold); background: white; }
 .fg input.err, .fg textarea.err, .fg select.err { border-color: var(--red); }
+.fg-err { color: var(--red); font-size: 0.76rem; font-weight: 600; line-height: 1.35; margin-top: 0.35rem; }
+.fg-err:empty { display: none; }
+.suc-warn { background: #fff4e5; border: 1px solid #f5c26b; color: #7a4a00; border-radius: 8px; padding: 0.6rem 0.8rem; font-size: 0.76rem; line-height: 1.45; margin: 0 0 1rem; text-align: left; }
+.suc-warn[hidden] { display: none; }
+.noscript-msg { background: var(--red); color: #fff; text-align: center; padding: 0.9rem 1rem; font-size: 0.9rem; font-weight: 600; }
+.noscript-msg a { color: #fff; text-decoration: underline; }
+
+/* Nav links (#shop, #brands, #contact) stop below the sticky header instead of under it */
+html { scroll-padding-top: 5rem; }
+
+/* Keyboard focus: a clear ring on every control (inputs also keep their gold border) */
+:focus-visible { outline: 3px solid var(--org); outline-offset: 2px; }
+.search-input:focus-visible, .fg input:focus-visible, .fg textarea:focus-visible, .fg select:focus-visible { outline: 3px solid var(--org); outline-offset: 1px; }
+
+/* Less motion for visitors who ask for it */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; scroll-behavior: auto !important; }
+  .sparkle-layer, .cursor-spark { display: none !important; }
+}
 .order-type { display: flex; gap: 0.5rem; flex-wrap: wrap; }
 .fg .ot-opt {
   flex: 1; min-width: 140px; display: flex; align-items: center; gap: 0.45rem;
@@ -1358,7 +1378,7 @@ body.cart-open { overflow: hidden; }
   header { padding: 0.5rem 0.75rem; padding-left: max(0.75rem, env(safe-area-inset-left)); padding-right: max(0.75rem, env(safe-area-inset-right)); }
   .logo { min-width: 0; }
   .logo span { overflow: hidden; text-overflow: ellipsis; }
-  .cart-btn { flex-shrink: 0; min-height: 40px; }
+  .cart-btn { flex-shrink: 0; min-height: 44px; }
 
   /* Countdown: always one line */
   .countdown-boxes { flex-wrap: nowrap; gap: 0.3rem; }
@@ -1370,22 +1390,26 @@ body.cart-open { overflow: hidden; }
   .prod-title { font-size: 0.85rem; }
   .card-atc-row { flex-direction: column; align-items: stretch; gap: 0.45rem; }
   .card-qty-ctrl { justify-content: space-between; }
-  .card-qty-btn { width: 36px; height: 36px; font-size: 1.15rem; }
+  .card-qty-btn { width: 44px; height: 44px; font-size: 1.15rem; }
   .card-qty-num { flex: 1; font-size: 0.95rem; }
-  .card-atc-row .add-to-cart { min-height: 38px; font-size: 0.8rem; }
-  .opt-select { min-height: 38px; font-size: 16px; }
+  .card-atc-row .add-to-cart { min-height: 44px; font-size: 0.8rem; }
+  .opt-select { min-height: 44px; font-size: 16px; }
+  .cat-btn { min-height: 44px; }
+  a[href^="tel:"] { display: inline-block; padding: 0.7rem 0; }
+  .lang-toggle button { min-height: 44px; min-width: 44px; }
   .product-card:hover { transform: none; box-shadow: none; }
 
   /* Search and sort side by side, full width */
   .shop-toolbar .result-count { width: 100%; }
-  .search-input { flex: 1 1 0; min-width: 0; max-width: none; min-height: 40px; }
-  .sort-select { flex: 0 0 auto; max-width: 46%; min-height: 40px; }
+  .search-input { flex: 1 1 0; min-width: 0; max-width: none; min-height: 44px; }
+  .sort-select { flex: 0 0 auto; max-width: 46%; min-height: 44px; }
 
   /* 16px text in every field stops iPhones zooming in when it is tapped */
   .search-input, .sort-select, .fg input, .fg textarea, .fg select { font-size: 16px; }
 
   /* Cart drawer */
-  .qty-btn { width: 34px; height: 34px; }
+  .qty-btn { width: 44px; height: 44px; }
+  .wa-retry, .btn-continue { min-height: 48px; display: flex; align-items: center; justify-content: center; }
   .cart-close, .modal-x { min-width: 44px; min-height: 44px; }
   .cart-footer { padding-bottom: max(1rem, env(safe-area-inset-bottom)); }
   .checkout-btn { min-height: 48px; }
@@ -1423,6 +1447,15 @@ body.cart-open { overflow: hidden; }
   .products-grid { grid-template-columns: 1fr; }
 }
 </style>
+</head>
+<body>
+
+<noscript>
+  <div class="noscript-msg">
+    Please turn on JavaScript to see our products and place an order. To order without it, call or WhatsApp
+    <a href="tel:+919922493694">+91 99224 93694</a>.
+  </div>
+</noscript>
 
 <!-- CART OVERLAY -->
 <div class="overlay" id="overlay"></div>
@@ -1703,38 +1736,38 @@ body.cart-open { overflow: hidden; }
     </div>
     <div class="modal-body">
       <div class="fg">
-        <label data-i18n="fullName">Full Name <span class="req">*</span></label>
+        <label for="f-name" data-i18n="fullName">Full Name <span class="req">*</span></label>
         <input type="text" id="f-name" placeholder="e.g. Ramesh Kumar" data-i18n-ph="namePh" autocomplete="name">
       </div>
       <div class="fg">
-        <label data-i18n="phone">Phone Number <span class="req">*</span></label>
+        <label for="f-phone" data-i18n="phone">Phone Number <span class="req">*</span></label>
         <input type="tel" id="f-phone" placeholder="+91 XXXXX XXXXX" autocomplete="tel">
       </div>
       <div class="fg">
-        <label data-i18n="howOrder">How do you want your order? <span class="req">*</span></label>
-        <div class="order-type">
+        <label id="howOrderLbl" data-i18n="howOrder">How do you want your order? <span class="req">*</span></label>
+        <div class="order-type" role="radiogroup" aria-labelledby="howOrderLbl">
           <label class="ot-opt"><input type="radio" name="otype" value="pickup" checked onchange="setOrderType()"> <span data-i18n="optPickup">🏪 Pickup from shop</span></label>
           <label class="ot-opt"><input type="radio" name="otype" value="delivery" onchange="setOrderType()"> <span data-i18n="optDelivery">🚚 Home delivery</span></label>
         </div>
       </div>
       <div id="pickupFields">
         <div class="fg">
-          <label data-i18n="pickupDay">Pickup Day <span class="req">*</span></label>
+          <label for="f-day" data-i18n="pickupDay">Pickup Day <span class="req">*</span></label>
           <select id="f-day" onchange="fillPickupSlots()"></select>
         </div>
         <div class="fg">
-          <label data-i18n="pickupTime">Pickup Time <span class="req">*</span></label>
+          <label for="f-slot" data-i18n="pickupTime">Pickup Time <span class="req">*</span></label>
           <select id="f-slot"></select>
         </div>
         <p class="pay-note" data-i18n="pickupNote">We pack your order before you arrive, so there is no waiting at the counter. Pay at the shop by cash or UPI.</p>
       </div>
       <div id="deliveryFields" hidden>
         <div class="fg">
-          <label data-i18n="address2">Delivery Address <span class="req">*</span></label>
+          <label for="f-address" data-i18n="address2">Delivery Address <span class="req">*</span></label>
           <textarea id="f-address" rows="3" placeholder="House/Flat No., Street, Area, City" data-i18n-ph="addressPh" autocomplete="street-address"></textarea>
         </div>
         <div class="fg">
-          <label data-i18n="pincode">Pincode <span class="req">*</span></label>
+          <label for="f-pin" data-i18n="pincode">Pincode <span class="req">*</span></label>
           <input type="text" id="f-pin" placeholder="411019" maxlength="6" inputmode="numeric">
         </div>
         <p class="pay-note" data-i18n="porterNote"><strong>Delivery by Porter.</strong> Porter delivery charges are to be paid by the customer, directly to the Porter driver at delivery.</p>
@@ -1757,12 +1790,13 @@ body.cart-open { overflow: hidden; }
 
 <!-- SUCCESS OVERLAY -->
 <div class="success-overlay" id="successOverlay">
-  <div class="success-card">
+  <div class="success-card" role="dialog" aria-modal="true" aria-labelledby="sucTitle">
     <img class="suc-emoji suc-logo" src="images/logo-400.webp" alt="" width="84" height="84">
-    <h2 data-i18n="orderPlaced">Order Placed!</h2>
+    <h2 id="sucTitle" data-i18n="orderPlaced">Order Placed!</h2>
     <p class="suc-sub" data-i18n="sentTo">Your order has been sent to<br><strong>Shri Gurudev Datta Fataka Traders</strong></p>
     <div class="order-num-badge" id="sucOrderNum">GD-XXXXX</div>
     <p class="suc-note" id="sucNote"></p>
+    <p class="suc-warn" id="sucWarn" role="alert" hidden></p>
     <a class="btn-continue wa-retry" id="sucWaLink" target="_blank" rel="noopener"></a>
     <button class="btn-continue" onclick="closeSuccess()" data-i18n="continue">🛒 Continue Shopping</button>
   </div>
@@ -1896,6 +1930,11 @@ const T = {
     cartEmpty: 'Your cart is empty.<br>Start adding crackers! 🎇',
     qtyDec: 'Decrease quantity', qtyInc: 'Increase quantity', closeCart: 'Close cart',
     removed: n => `${n} removed`, undo: 'Undo',
+    searchLabel: 'Search products', sortLabel: 'Sort products', closeLabel: 'Close',
+    errName: 'Please enter your name.', errPhone: 'Enter a 10-digit mobile number, e.g. 98765 43210.',
+    errSlot: 'Please choose a pickup day and time.', errAddress: 'Please enter the delivery address.',
+    errPin: 'Enter a valid 6-digit pincode.',
+    saveFailed: 'We could not save your order online. Please make sure the WhatsApp message is sent so the shop receives it.',
     waRetry: 'WhatsApp did not open? Tap here to send your order',
     today: 'Today', closed: 'Online pickup booking is closed. Please call us.', sending: 'Sending…',
     sucPickup: slot => `Your order will be packed and ready for pickup on ${slot}. Show this order number at the shop and pay by cash or UPI.`,
@@ -1909,6 +1948,11 @@ const T = {
     cartEmpty: 'तुमचे कार्ट रिकामे आहे.<br>फटाके निवडा! 🎇',
     qtyDec: 'संख्या कमी करा', qtyInc: 'संख्या वाढवा', closeCart: 'कार्ट बंद करा',
     removed: n => `${n} काढले`, undo: 'पूर्ववत करा',
+    searchLabel: 'उत्पादने शोधा', sortLabel: 'उत्पादनांची क्रमवारी', closeLabel: 'बंद करा',
+    errName: 'कृपया तुमचे नाव लिहा.', errPhone: '१० अंकी मोबाईल नंबर लिहा, उदा. 98765 43210.',
+    errSlot: 'कृपया पिकअपचा दिवस आणि वेळ निवडा.', errAddress: 'कृपया डिलिव्हरीचा पत्ता लिहा.',
+    errPin: '६ अंकी योग्य पिनकोड लिहा.',
+    saveFailed: 'तुमची ऑर्डर ऑनलाइन सेव्ह होऊ शकली नाही. दुकानापर्यंत ऑर्डर पोहोचण्यासाठी व्हॉट्सॲप मेसेज नक्की पाठवा.',
     waRetry: 'व्हॉट्सॲप उघडले नाही? ऑर्डर पाठवण्यासाठी येथे टॅप करा',
     today: 'आज', closed: 'ऑनलाइन पिकअप बुकिंग बंद आहे. कृपया आम्हाला कॉल करा.', sending: 'पाठवत आहे…',
     sucPickup: slot => `तुमची ऑर्डर ${slot} या वेळेत पिकअपसाठी पॅक करून तयार असेल. दुकानात हा ऑर्डर नंबर दाखवा आणि रोख किंवा UPI ने पैसे द्या.`,
@@ -1979,6 +2023,18 @@ function initLang() {
   if (lang === 'mr') applyLang('mr');
 }
 
+// Spoken labels for controls that show only an icon or a placeholder, plus any visible form error
+function setLabels() {
+  const set = (id, key) => document.getElementById(id).setAttribute('aria-label', t(key));
+  set('cartClose', 'closeCart');
+  set('searchInput', 'searchLabel');
+  set('sortSelect', 'sortLabel');
+  document.querySelector('#orderModal .modal-x').setAttribute('aria-label', t('closeLabel'));
+  document.querySelectorAll('.fg-err').forEach(m => { if (m.textContent) m.textContent = t(m.dataset.k); });
+  const warn = document.getElementById('sucWarn');
+  if (!warn.hidden) warn.textContent = t('saveFailed');
+}
+
 function applyLang(next) {
   lang = next;
   try { localStorage.setItem('gd_lang', lang); } catch (e) {}
@@ -1998,6 +2054,7 @@ function applyLang(next) {
   renderCountdown();
   if (document.getElementById('orderModal').classList.contains('show')) refreshOrderModal();
   renderSuccess();
+  setLabels();
 }
 
 // Marathi shows Devanagari digits (₹१०००). Phone numbers, pincode and order number stay as typed.
@@ -2214,7 +2271,6 @@ function updateCartUI() {
   saveCart();
   const total = cart.reduce((s,c) => s + c.qty, 0);
   document.getElementById('cartCount').textContent = dg(total);
-  document.getElementById('cartClose').setAttribute('aria-label', t('closeCart'));
   document.querySelectorAll('.product-card').forEach(card => card.refresh && card.refresh());
 
   const itemsEl = document.getElementById('cartItems');
@@ -2273,10 +2329,12 @@ function leaveDialog() {
 document.addEventListener('keydown', (e) => {
   const cart = document.getElementById('cartDrawer');
   const modal = document.getElementById('orderModal');
-  const box = modal.classList.contains('show') ? modal.querySelector('.modal')
+  const success = document.getElementById('successOverlay');
+  const box = success.classList.contains('show') ? success.querySelector('.success-card')
+            : modal.classList.contains('show') ? modal.querySelector('.modal')
             : cart.classList.contains('open') ? cart : null;
   if (!box) return;
-  if (e.key === 'Escape') { box === cart ? closeCart() : closeOrderModal(); return; }
+  if (e.key === 'Escape') { box === cart ? closeCart() : box === success.querySelector('.success-card') ? closeSuccess() : closeOrderModal(); return; }
   if (e.key !== 'Tab') return;
   const f = focusables(box);
   if (!f.length) return;
@@ -2310,8 +2368,11 @@ document.getElementById('cartClose').addEventListener('click', closeCart);
 document.getElementById('overlay').addEventListener('click', closeCart);
 
 /* ── FIREWORKS ─────────────────────────────────────── */
+// Visitors who ask their device for less motion get no fireworks, sparkles or cursor effects
+const REDUCED_MOTION = matchMedia('(prefers-reduced-motion: reduce)').matches;
 (function() {
   const canvas = document.getElementById('fw-canvas');
+  if (REDUCED_MOTION) { canvas.style.display = 'none'; return; }
   const ctx = canvas.getContext('2d');
   let W, H, P = [];
 
@@ -2384,6 +2445,7 @@ const SPARKS = ['🎇','✨','💥','🌟','⭐','🎆'];
 let lastSpark = 0;
 
 document.addEventListener('mousemove', (e) => {
+  if (REDUCED_MOTION) return;
   const now = Date.now();
   if (now - lastSpark < 120) return; // throttle
   lastSpark = now;
@@ -2401,6 +2463,7 @@ buildCategories();
 applyFilters();
 updateCartUI();
 initLang();
+setLabels();
 setTimeout(initScrollReveal, 100);
 
 /* ── GOOGLE SHEETS CONFIG ──────────────────────────── */
@@ -2551,6 +2614,30 @@ function genOrderId(now) {
 // Spreadsheets run cell text that starts with = + - @ as a formula; a leading apostrophe stops that
 function safeCell(s) { return /^[=+\-@\t\r]/.test(s) ? "'" + s : s; }
 
+// Form field -> message shown under it when it is not valid
+const FIELD_ERR = { 'f-name': 'errName', 'f-phone': 'errPhone', 'f-slot': 'errSlot', 'f-address': 'errAddress', 'f-pin': 'errPin' };
+
+function setFieldError(id, on) {
+  const el = document.getElementById(id);
+  let msg = document.getElementById('e-' + id);
+  if (!msg) {
+    msg = document.createElement('div');
+    msg.id = 'e-' + id;
+    msg.className = 'fg-err';
+    msg.dataset.k = FIELD_ERR[id];
+    msg.setAttribute('role', 'alert');
+    el.after(msg);
+    el.setAttribute('aria-describedby', msg.id);
+  }
+  el.classList.toggle('err', on);
+  el.setAttribute('aria-invalid', on);
+  msg.textContent = on ? t(FIELD_ERR[id]) : '';
+}
+
+// An error goes away as soon as the customer starts fixing that field
+document.getElementById('orderModal').addEventListener('input', e => { if (FIELD_ERR[e.target.id]) setFieldError(e.target.id, false); });
+document.getElementById('orderModal').addEventListener('change', e => { if (FIELD_ERR[e.target.id]) setFieldError(e.target.id, false); });
+
 // Indian mobile number: 10 digits starting 6-9, optionally written with +91, 91 or a leading 0
 function validPhone(v) {
   if (/[^\d\s+()-]/.test(v)) return false;
@@ -2570,12 +2657,10 @@ function placeOrder() {
   const checks = [['f-name', name], ['f-phone', validPhone(phone)]];
   if (pickup) checks.push(['f-slot', slotSel.value]);
   else checks.push(['f-address', address], ['f-pin', /^\d{6}$/.test(pin)]);
-  let valid = true;
-  ['f-name','f-phone','f-address','f-pin','f-slot'].forEach(id => document.getElementById(id).classList.remove('err'));
-  checks.forEach(([id, ok]) => {
-    if (!ok) { document.getElementById(id).classList.add('err'); valid = false; }
-  });
-  if (!valid) return;
+  Object.keys(FIELD_ERR).forEach(id => setFieldError(id, false));
+  const bad = checks.filter(([, ok]) => !ok).map(([id]) => id);
+  bad.forEach(id => setFieldError(id, true));
+  if (bad.length) { document.getElementById(bad[0]).focus(); return; }
 
   const btn = document.getElementById('btnPlaceOrder');
   const btnLabel = document.getElementById('btnPlaceLabel');
@@ -2639,7 +2724,12 @@ function submitOrder({ name, phone, address, pin, pickup }) {
         total: sum, status: 'Pending',
         createdAt: now.toISOString(), dateStr, timeStr,
       }),
-    }).catch(() => {});
+    }).then(res => { if (!res.ok) throw new Error(res.status); })
+      .catch(() => { // the WhatsApp message is still the way the shop gets the order, so say so
+        const warn = document.getElementById('sucWarn');
+        warn.textContent = t('saveFailed');
+        warn.hidden = false;
+      });
   }
 
   // open WhatsApp. If the browser blocks the popup the success screen still has a link to it
@@ -2663,7 +2753,9 @@ function submitOrder({ name, phone, address, pin, pickup }) {
   document.getElementById('sucOrderNum').textContent = orderId;
   lastSuccess = { pickup, slotDay, slotHour };
   renderSuccess();
+  document.getElementById('sucWarn').hidden = true;
   document.getElementById('successOverlay').classList.add('show');
+  enterDialog(document.querySelector('#successOverlay .success-card'), document.querySelector('#successOverlay button'));
 
   // clear cart (product cards refresh from updateCartUI)
   cart = [];
@@ -2681,13 +2773,13 @@ function renderSuccess() {
 
 function closeSuccess() {
   lastSuccess = null;
+  if (document.getElementById('successOverlay').classList.contains('show')) leaveDialog();
   document.getElementById('successOverlay').classList.remove('show');
   // reset form
   ['f-name','f-phone','f-address','f-pin'].forEach(id => {
-    const el = document.getElementById(id);
-    el.value = '';
-    el.classList.remove('err');
+    document.getElementById(id).value = '';
   });
+  Object.keys(FIELD_ERR).forEach(id => setFieldError(id, false));
   document.querySelector('input[name="otype"][value="pickup"]').checked = true;
 }
 
@@ -2721,6 +2813,7 @@ function closeSuccess() {
 /* ── FLOATING SPARKLES ─────────────────────────────── */
 (function() {
   const layer = document.getElementById('sparkleLayer');
+  if (REDUCED_MOTION) return;
   const CHARS = ['✦','✧','⋆','✺','✸','·','✦'];
   const COLORS = ['rgba(255,215,0,0.7)','rgba(255,122,26,0.6)','rgba(255,255,255,0.5)','rgba(255,180,70,0.65)'];
 
@@ -2749,3 +2842,5 @@ function closeSuccess() {
   setInterval(addSparkle, 600);
 })();
 </script>
+</body>
+</html>
