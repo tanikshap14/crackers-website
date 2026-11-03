@@ -924,21 +924,6 @@ body.cart-open { overflow: hidden; }
   border-top: 2px solid var(--bdr);
   background: #fafafa;
 }
-.cart-breakdown {
-  margin-bottom: 0.6rem;
-  padding-bottom: 0.6rem;
-  border-bottom: 1px dashed var(--bdr);
-  max-height: 18vh;
-  max-height: 18dvh; /* long carts scroll here instead of pushing the total off-screen */
-  overflow-y: auto;
-  overscroll-behavior: contain;
-}
-.cart-breakdown-row {
-  display: flex; justify-content: space-between; align-items: baseline;
-  font-size: 0.78rem; color: #555;
-  padding: 0.18rem 0;
-}
-.cart-breakdown-row span:last-child { font-weight: 600; color: var(--dk); font-variant-numeric: tabular-nums; }
 .cart-total {
   display: flex; justify-content: space-between;
   font-weight: 700; font-size: 0.95rem;
@@ -1278,6 +1263,8 @@ body.cart-open { overflow: hidden; }
 .suc-note { font-size: 0.76rem; color: #999; margin-bottom: 1.5rem; line-height: 1.5; }
 .btn-continue { width: 100%; background: var(--dk); color: var(--gold); border: none; border-radius: 8px; padding: 0.85rem; font-family: 'Poppins', sans-serif; font-size: 0.88rem; font-weight: 700; cursor: pointer; transition: background 0.2s; margin-top: 0.3rem; }
 .btn-continue:hover { background: var(--gold); color: var(--dk); }
+.wa-retry { display: block; box-sizing: border-box; text-align: center; text-decoration: none; background: #25D366; color: #fff; font-size: 0.8rem; margin-bottom: 0.6rem; }
+.wa-retry:hover { background: #1ebe5a; color: #fff; }
 
 /* ── ADMIN PANEL ─────────────────────────────────────── */
 .status-pill { display: inline-block; padding: 0.12rem 0.5rem; border-radius: 20px; font-size: 0.68rem; font-weight: 700; background: #e8f5e9; color: #2e7d32; }
@@ -1472,15 +1459,14 @@ body.cart-open { overflow: hidden; }
 <div class="overlay" id="overlay"></div>
 
 <!-- CART DRAWER -->
-<div class="cart-drawer" id="cartDrawer">
+<div class="cart-drawer" id="cartDrawer" role="dialog" aria-modal="true" aria-labelledby="cartTitle" inert>
   <div class="cart-header">
-    <span data-i18n="myCart">🛒 My Cart</span>
+    <span id="cartTitle" data-i18n="myCart">🛒 My Cart</span>
     <button class="cart-close" id="cartClose">✕</button>
   </div>
   <div class="cart-items" id="cartItems">
   </div>
   <div class="cart-footer">
-    <div class="cart-breakdown" id="cartBreakdown"></div>
     <div class="cart-total">
       <span data-i18n="total">Total</span>
       <span id="cartTotal">₹0.00</span>
@@ -1739,9 +1725,9 @@ body.cart-open { overflow: hidden; }
 
 <!-- ORDER MODAL -->
 <div class="modal-overlay" id="orderModal">
-  <div class="modal">
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="orderModalTitle">
     <div class="modal-hd">
-      <span data-i18n="completeOrder">📋 Complete Your Order</span>
+      <span id="orderModalTitle" data-i18n="completeOrder">📋 Complete Your Order</span>
       <button class="modal-x" onclick="closeOrderModal()">✕</button>
     </div>
     <div class="modal-body">
@@ -1806,6 +1792,7 @@ body.cart-open { overflow: hidden; }
     <p class="suc-sub" data-i18n="sentTo">Your order has been sent to<br><strong>Shri Gurudev Datta Fataka Traders</strong></p>
     <div class="order-num-badge" id="sucOrderNum">GD-XXXXX</div>
     <p class="suc-note" id="sucNote"></p>
+    <a class="btn-continue wa-retry" id="sucWaLink" target="_blank" rel="noopener"></a>
     <button class="btn-continue" onclick="closeSuccess()" data-i18n="continue">🛒 Continue Shopping</button>
   </div>
 </div>
@@ -1936,6 +1923,8 @@ const T = {
     showing: (n, all) => `Showing <strong>${n}</strong> of <strong>${all}</strong> results`,
     noResults: 'No products found.<br>Try a different filter.',
     cartEmpty: 'Your cart is empty.<br>Start adding crackers! 🎇',
+    qtyDec: 'Decrease quantity', qtyInc: 'Increase quantity', closeCart: 'Close cart',
+    waRetry: 'WhatsApp did not open? Tap here to send your order',
     today: 'Today', closed: 'Online pickup booking is closed. Please call us.', sending: 'Sending…',
     sucPickup: slot => `Your order will be packed and ready for pickup on ${slot}. Show this order number at the shop and pay by cash or UPI.`,
     sucDelivery: 'Please save this order number. We will contact you soon to confirm delivery. Delivery is by Porter, and Porter charges are paid by you to the driver.',
@@ -1946,6 +1935,8 @@ const T = {
     showing: (n, all) => `<strong>${dg(all, 'mr')}</strong> पैकी <strong>${dg(n, 'mr')}</strong> उत्पादने`,
     noResults: 'कोणतेही उत्पादन सापडले नाही.<br>दुसरा पर्याय निवडून पहा.',
     cartEmpty: 'तुमचे कार्ट रिकामे आहे.<br>फटाके निवडा! 🎇',
+    qtyDec: 'संख्या कमी करा', qtyInc: 'संख्या वाढवा', closeCart: 'कार्ट बंद करा',
+    waRetry: 'व्हॉट्सॲप उघडले नाही? ऑर्डर पाठवण्यासाठी येथे टॅप करा',
     today: 'आज', closed: 'ऑनलाइन पिकअप बुकिंग बंद आहे. कृपया आम्हाला कॉल करा.', sending: 'पाठवत आहे…',
     sucPickup: slot => `तुमची ऑर्डर ${slot} या वेळेत पिकअपसाठी पॅक करून तयार असेल. दुकानात हा ऑर्डर नंबर दाखवा आणि रोख किंवा UPI ने पैसे द्या.`,
     sucDelivery: 'हा ऑर्डर नंबर जपून ठेवा. डिलिव्हरी कन्फर्म करण्यासाठी आम्ही लवकरच संपर्क करू. डिलिव्हरी पोर्टरद्वारे होईल, आणि पोर्टरचे शुल्क तुम्ही ड्रायव्हरला द्यायचे आहे.',
@@ -2136,9 +2127,9 @@ function renderProducts(items) {
         <div class="opt-note"></div>
         <div class="card-atc-row">
           <div class="card-qty-ctrl">
-            <button class="card-qty-btn card-qty-minus">−</button>
+            <button class="card-qty-btn card-qty-minus" aria-label="${t('qtyDec')}">−</button>
             <span class="card-qty-num">0</span>
-            <button class="card-qty-btn card-qty-plus">+</button>
+            <button class="card-qty-btn card-qty-plus" aria-label="${t('qtyInc')}">+</button>
           </div>
           <button class="add-to-cart">${t('add')}</button>
         </div>
@@ -2196,29 +2187,23 @@ function changeQty(key, delta) {
 function updateCartUI() {
   const total = cart.reduce((s,c) => s + c.qty, 0);
   document.getElementById('cartCount').textContent = dg(total);
+  document.getElementById('cartClose').setAttribute('aria-label', t('closeCart'));
   document.querySelectorAll('.product-card').forEach(card => card.refresh && card.refresh());
 
   const itemsEl = document.getElementById('cartItems');
   const totalEl = document.getElementById('cartTotal');
 
-  const breakdownEl = document.getElementById('cartBreakdown');
-
   if (!cart.length) {
     itemsEl.innerHTML = `<div class="cart-empty">${t('cartEmpty')}</div>`;
     totalEl.textContent = '₹0.00';
-    breakdownEl.innerHTML = '';
-    breakdownEl.hidden = true;
     return;
   }
 
-  breakdownEl.hidden = false;
   itemsEl.innerHTML = '';
   let sum = 0;
-  const breakdownRows = [];
   cart.forEach(item => {
     const lineTotal = item.price * item.qty;
     sum += lineTotal;
-    breakdownRows.push(`<div class="cart-breakdown-row"><span>${itemName(item)} ×${dg(item.qty)}</span><span>${fmt(lineTotal)}</span></div>`);
     const cat = CAT_BY_ID[item.cat];
     const div = document.createElement('div');
     div.className = 'cart-item';
@@ -2229,9 +2214,9 @@ function updateCartUI() {
         <div class="cart-item-company">${catLabel(cat)}${item.min > 1 ? t('minShort', item.min) : ''}</div>
         <div class="cart-item-price">${fmt(item.price)} / ${unitLabel(item.unit)}</div>
         <div class="cart-item-qty">
-          <button class="qty-btn" data-op="minus">−</button>
+          <button class="qty-btn" data-op="minus" aria-label="${t('qtyDec')}">−</button>
           <span class="qty-val">${dg(item.qty)}</span>
-          <button class="qty-btn" data-op="plus">+</button>
+          <button class="qty-btn" data-op="plus" aria-label="${t('qtyInc')}">+</button>
         </div>
       </div>`;
 
@@ -2241,20 +2226,56 @@ function updateCartUI() {
 
     itemsEl.appendChild(div);
   });
-  breakdownEl.innerHTML = breakdownRows.join('');
   totalEl.textContent = fmt(sum);
 }
 
+// Dialog focus handling: focus moves into the dialog, Tab stays inside it, and focus returns on close
+let focusReturn = null;
+function focusables(box) {
+  return [...box.querySelectorAll('a[href], button, input, select, textarea, [tabindex]:not([tabindex="-1"])')]
+    .filter(el => !el.disabled && !el.closest('[hidden]') && el.offsetParent !== null);
+}
+function enterDialog(box, first) {
+  focusReturn = document.activeElement;
+  (first || focusables(box)[0] || box).focus();
+}
+function leaveDialog() {
+  if (focusReturn && focusReturn.isConnected) focusReturn.focus();
+  focusReturn = null;
+}
+document.addEventListener('keydown', (e) => {
+  const cart = document.getElementById('cartDrawer');
+  const modal = document.getElementById('orderModal');
+  const box = modal.classList.contains('show') ? modal.querySelector('.modal')
+            : cart.classList.contains('open') ? cart : null;
+  if (!box) return;
+  if (e.key === 'Escape') { box === cart ? closeCart() : closeOrderModal(); return; }
+  if (e.key !== 'Tab') return;
+  const f = focusables(box);
+  if (!f.length) return;
+  const first = f[0], last = f[f.length - 1];
+  if (!box.contains(document.activeElement)) { e.preventDefault(); first.focus(); }
+  else if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+  else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+});
+
 function openCart() {
-  document.getElementById('cartDrawer').classList.add('open');
+  const drawer = document.getElementById('cartDrawer');
+  drawer.inert = false;
+  drawer.classList.add('open');
   document.getElementById('overlay').classList.add('show');
   document.body.classList.add('cart-open');
+  enterDialog(drawer, document.getElementById('cartClose'));
 }
 
 function closeCart() {
-  document.getElementById('cartDrawer').classList.remove('open');
+  const drawer = document.getElementById('cartDrawer');
+  const wasOpen = drawer.classList.contains('open');
+  drawer.classList.remove('open');
+  drawer.inert = true; // keeps the off-screen drawer out of the tab order and screen readers
   document.getElementById('overlay').classList.remove('show');
   document.body.classList.remove('cart-open');
+  if (wasOpen) leaveDialog();
 }
 
 document.getElementById('cartToggle').addEventListener('click', openCart);
@@ -2292,16 +2313,20 @@ document.getElementById('overlay').addEventListener('click', closeCart);
   }
 
   function burst(x,y) { for(let i=0;i<35;i++) P.push(new Spark(x,y,true)); }
-  let lb=0;
+  let lb=0, raf=0;
   function loop(ts) {
-    requestAnimationFrame(loop);
+    raf=requestAnimationFrame(loop);
     ctx.clearRect(0,0,W,H);
     if (ts-lb > 2000) { burst(W*0.2+Math.random()*W*0.6, H*0.1+Math.random()*H*0.5); lb=ts; }
     if (Math.random()<0.25) P.push(new Spark(Math.random()*W, Math.random()*H*0.8, false));
     P=P.filter(p=>p.alpha>0);
     P.forEach(p=>{p.update();p.draw();});
   }
-  requestAnimationFrame(loop);
+  // Only animate while the canvas is on screen (saves battery once the visitor scrolls past the hero)
+  new IntersectionObserver(([e]) => {
+    if (e.isIntersecting) { if (!raf) raf=requestAnimationFrame(loop); }
+    else { cancelAnimationFrame(raf); raf=0; }
+  }).observe(canvas);
   setTimeout(()=>burst(W*0.3,H*0.3),400);
   setTimeout(()=>burst(W*0.7,H*0.25),1000);
 })();
@@ -2337,19 +2362,22 @@ function promptVideo(e) {
 }
 
 /* ── SCROLL REVEAL ─────────────────────────────────── */
+// One shared observer: each re-render drops the old (now detached) cards and watches only the new ones
+let revealObs;
 function initScrollReveal() {
-  const obs = new IntersectionObserver((entries) => {
-    entries.forEach((entry, i) => {
+  revealObs ??= new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
       if (entry.isIntersecting) {
         const el = entry.target;
         const delay = (Array.from(el.parentElement.children).indexOf(el) % 4) * 80;
         setTimeout(() => el.classList.add('visible'), delay);
-        obs.unobserve(el);
+        revealObs.unobserve(el);
       }
     });
   }, { threshold: 0.1 });
 
-  document.querySelectorAll('.reveal-card').forEach(el => obs.observe(el));
+  revealObs.disconnect();
+  document.querySelectorAll('.reveal-card:not(.visible)').forEach(el => revealObs.observe(el));
 }
 
 // Re-run after filters applied
@@ -2395,11 +2423,21 @@ function hourLabel(h, l = lang) {
   return h12 + (h < 12 ? ' AM' : ' PM');
 }
 
-function dayLabel(d, l = lang) {
+// Today's date (YYYY-MM-DD) and hour in India, whatever the visitor's device time zone is
+function istNow() {
+  const p = Object.fromEntries(new Intl.DateTimeFormat('en-CA', {
+    timeZone: 'Asia/Kolkata', year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', hourCycle: 'h23',
+  }).formatToParts(new Date()).map(x => [x.type, x.value]));
+  return { day: `${p.year}-${p.month}-${p.day}`, hour: +p.hour };
+}
+
+// day is a YYYY-MM-DD string in India time
+function dayLabel(day, l = lang) {
   const loc = l === 'mr' ? 'mr-IN-u-nu-latn' : 'en-IN';
-  const today = d.toDateString() === new Date().toDateString();
-  return dg((today ? T[l].today : d.toLocaleDateString(loc, { weekday: 'short' })) + ', '
-    + d.toLocaleDateString(loc, { day: 'numeric', month: 'short' }), l);
+  const d = new Date(day + 'T12:00:00+05:30');
+  const fmtDay = o => d.toLocaleDateString(loc, { timeZone: 'Asia/Kolkata', ...o });
+  return dg((day === istNow().day ? T[l].today : fmtDay({ weekday: 'short' })) + ', '
+    + fmtDay({ day: 'numeric', month: 'short' }), l);
 }
 
 function slotLabel(h, l = lang) { return `${hourLabel(h, l)} – ${hourLabel(h + 1, l)}`; }
@@ -2407,16 +2445,16 @@ function slotLabel(h, l = lang) { return `${hourLabel(h, l)} – ${hourLabel(h +
 // Chosen pickup day and time as text, e.g. "Tue, 27 Oct, 5 PM – 6 PM"
 function slotText(l = lang) {
   const day = document.getElementById('f-day').value, h = document.getElementById('f-slot').value;
-  return day && h !== '' ? `${dayLabel(new Date(day), l)}, ${slotLabel(+h, l)}` : '';
+  return day && h !== '' ? `${dayLabel(day, l)}, ${slotLabel(+h, l)}` : '';
 }
 
 // Slots that can still be booked on the given day (today: only slots starting after the current hour)
 function slotsFor(day) {
-  const now = new Date();
-  const isToday = day.toDateString() === now.toDateString();
+  const now = istNow();
+  const isToday = day === now.day;
   const hours = [];
   for (let h = PICKUP_HOURS[0]; h < PICKUP_HOURS[1]; h++) {
-    if (!isToday || h > now.getHours()) hours.push(h);
+    if (!isToday || h > now.hour) hours.push(h);
   }
   return hours;
 }
@@ -2426,11 +2464,11 @@ function fillPickupDays() {
   const daySel = document.getElementById('f-day');
   const prev = daySel.value;
   daySel.innerHTML = '';
-  const last = new Date(PICKUP_LAST_DAY + 'T23:59:59');
-  const today = new Date();
-  for (let d = new Date(today.getFullYear(), today.getMonth(), today.getDate()); d <= last; d.setDate(d.getDate() + 1)) {
-    if (!slotsFor(d).length) continue;
-    daySel.add(new Option(dayLabel(d), d.toISOString()));
+  // Days are YYYY-MM-DD strings in India time; compare as strings, step with UTC date maths
+  const d = new Date(istNow().day + 'T00:00:00Z');
+  for (let day = d.toISOString().slice(0, 10); day <= PICKUP_LAST_DAY; d.setUTCDate(d.getUTCDate() + 1), day = d.toISOString().slice(0, 10)) {
+    if (!slotsFor(day).length) continue;
+    daySel.add(new Option(dayLabel(day), day));
   }
   if ([...daySel.options].some(o => o.value === prev)) daySel.value = prev;
   fillPickupSlots();
@@ -2445,7 +2483,7 @@ function fillPickupSlots() {
     slotSel.add(new Option(t('closed'), ''));
     return;
   }
-  slotsFor(new Date(daySel.value)).forEach(h => slotSel.add(new Option(slotLabel(h), h)));
+  slotsFor(daySel.value).forEach(h => slotSel.add(new Option(slotLabel(h), h)));
   if ([...slotSel.options].some(o => o.value === prev)) slotSel.value = prev;
 }
 
@@ -2465,7 +2503,8 @@ function openOrderModal() {
   refreshOrderModal();
   setOrderType();
   document.getElementById('orderModal').classList.add('show');
-  document.getElementById('f-name').focus();
+  document.getElementById('cartDrawer').inert = true; // the modal sits on top of the open drawer
+  enterDialog(document.querySelector('#orderModal .modal'), document.getElementById('f-name'));
 }
 
 // Order summary and pickup choices (also re-run when the language changes)
@@ -2486,17 +2525,25 @@ function refreshOrderModal() {
 }
 
 function closeOrderModal() {
-  document.getElementById('orderModal').classList.remove('show');
+  const modal = document.getElementById('orderModal');
+  if (!modal.classList.contains('show')) return;
+  modal.classList.remove('show');
+  const drawer = document.getElementById('cartDrawer');
+  if (drawer.classList.contains('open')) drawer.inert = false; // back to the cart behind the modal
+  leaveDialog();
 }
 
-// Day+month, time and two random digits, e.g. 2710-173042. Unique enough to tell orders
-// apart at the counter, unlike a per-browser counter that restarts at 1 for every customer.
+// Day+month, time down to the second and two random digits, e.g. 2710-17304207. Unique enough
+// to tell orders apart at the counter, unlike a per-browser counter that restarts at 1 for every customer.
 function genOrderId(now) {
   const p = n => String(n).padStart(2, '0');
-  return `${p(now.getDate())}${p(now.getMonth() + 1)}-${p(now.getHours())}${p(now.getMinutes())}${p(Math.floor(Math.random() * 100))}`;
+  return `${p(now.getDate())}${p(now.getMonth() + 1)}-${p(now.getHours())}${p(now.getMinutes())}${p(now.getSeconds())}${p(Math.floor(Math.random() * 100))}`;
 }
 
-async function placeOrder() {
+// Spreadsheets run cell text that starts with = + - @ as a formula; a leading apostrophe stops that
+function safeCell(s) { return /^[=+\-@\t\r]/.test(s) ? "'" + s : s; }
+
+function placeOrder() {
   const name    = document.getElementById('f-name').value.trim();
   const phone   = document.getElementById('f-phone').value.trim();
   const address = document.getElementById('f-address').value.trim();
@@ -2519,11 +2566,16 @@ async function placeOrder() {
   const btnLabel = document.getElementById('btnPlaceLabel');
   btn.disabled = true;
   btnLabel.textContent = t('sending');
+  // Always re-enable the button, even if building or sending the order throws
+  try { submitOrder({ name, phone, address, pin, pickup }); }
+  finally { btn.disabled = false; translateEl(btnLabel); }
+}
 
+function submitOrder({ name, phone, address, pin, pickup }) {
   const now = new Date();
   const orderId = genOrderId(now);
-  const dateStr = now.toLocaleDateString('en-IN', { day:'2-digit', month:'short', year:'numeric' });
-  const timeStr = now.toLocaleTimeString('en-IN', { hour:'2-digit', minute:'2-digit' });
+  const dateStr = now.toLocaleDateString('en-IN', { timeZone: 'Asia/Kolkata', day:'2-digit', month:'short', year:'numeric' });
+  const timeStr = now.toLocaleTimeString('en-IN', { timeZone: 'Asia/Kolkata', hour:'2-digit', minute:'2-digit' });
   const slotEn = pickup ? slotText('en') : '';
   const slotShown = pickup ? slotText() : '';
 
@@ -2564,8 +2616,8 @@ async function placeOrder() {
       method: 'POST',
       headers: { 'Content-Type': 'text/plain' },
       body: JSON.stringify({
-        orderId, name, phone,
-        address: pickup ? `PICKUP: ${slotEn}` : address,
+        orderId, name: safeCell(name), phone: safeCell(phone),
+        address: safeCell(pickup ? `PICKUP: ${slotEn}` : address),
         pincode: pickup ? '' : pin,
         orderType: pickup ? 'Pickup' : 'Delivery', pickupSlot: slotEn,
         items: cart.map(i => ({ name: itemName(i, 'en'), company: CAT_BY_ID[i.cat].label, qty: i.qty, price: i.price })),
@@ -2575,12 +2627,16 @@ async function placeOrder() {
     }).catch(() => {});
   }
 
-  // open WhatsApp
+  // open WhatsApp. If the browser blocks the popup the success screen still has a link to it
   const waUrl = `https://wa.me/919922493694?text=${encodeURIComponent(msg)}`;
-  window.open(waUrl, '_blank', 'noopener');
+  const waWin = window.open(waUrl, '_blank');
+  if (waWin) waWin.opener = null;
 
   // show success
   closeOrderModal();
+  const waLink = document.getElementById('sucWaLink');
+  waLink.href = waUrl;
+  waLink.textContent = t('waRetry');
   document.getElementById('sucOrderNum').textContent = orderId;
   document.getElementById('sucNote').textContent = pickup ? t('sucPickup', slotShown) : t('sucDelivery');
   document.getElementById('successOverlay').classList.add('show');
@@ -2589,9 +2645,6 @@ async function placeOrder() {
   cart = [];
   updateCartUI();
   closeCart();
-
-  btn.disabled = false;
-  translateEl(btnLabel);
 }
 
 function closeSuccess() {
